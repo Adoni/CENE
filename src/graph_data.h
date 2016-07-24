@@ -75,7 +75,7 @@ struct GraphData {
         get_node_count(graph_file_name, content_file_name);
         std::cout<<"Node count: "<<node_count<<std::endl;
         read_graph_from_file(graph_file_name);
-//        read_content_from_file(content_file_name, d);
+        read_content_from_file(content_file_name, d);
         vv_table_size=1e8;
         InitUnigramTable();
         std::string UNK = "UNKNOWN_WORD";
