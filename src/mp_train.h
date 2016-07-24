@@ -2,8 +2,7 @@
 // Created by Adoni1203 on 16/7/21.
 //
 
-#ifndef DLNE_MP_TRAIN_H
-#define DLNE_MP_TRAIN_H
+#pragma once
 
 #include "cnn/cnn.h"
 #include "cnn/training.h"
@@ -18,8 +17,6 @@
 #include <boost/interprocess/mapped_region.hpp>
 #include <boost/interprocess/sync/interprocess_semaphore.hpp>
 #include <boost/interprocess/anonymous_shared_memory.hpp>
-#include <boost/interprocess/managed_shared_memory.hpp>
-#include <boost/interprocess/shared_memory_object.hpp>
 
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -324,5 +321,3 @@ namespace mp_train {
         }
     }
 }
-
-#endif //DLNE_MP_TRAIN_H

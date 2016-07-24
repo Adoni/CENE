@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 project(DLNE)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Ofast -std=c++11")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Ofast -std=c++11 -g")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Ofast -std=c++11 -g")
 
 if (DEFINED ENV{BOOST_ROOT})
