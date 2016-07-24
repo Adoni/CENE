@@ -111,6 +111,7 @@ struct GraphData {
     }
 
     void read_graph_from_file(std::string graph_file_name){
+        std::cout<<"Load graph"<<std::endl;
         std::string line;
 
         vv_utov_graph.resize(node_count);
@@ -143,6 +144,7 @@ struct GraphData {
     }
 
     void read_content_from_file(std::string content_file_name, cnn::Dict &d){
+        std::cout<<"Load content"<<std::endl;
         std::string line;
         std::ifstream content_in(content_file_name);
         assert(content_in);
