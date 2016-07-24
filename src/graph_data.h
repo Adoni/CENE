@@ -19,34 +19,35 @@
 #include <unordered_set>
 
 struct Edge{
-    int u;
-    int v;
+    unsigned u;
+    unsigned v;
 };
 typedef std::vector<int> SENT_TYPE; //保存句子信息
 
 struct ID_MAP{
     std::vector<std::string> id_to_node;
-    std::unordered_map<std::string, int> node_to_int;
+    std::unordered_map<std::string, unsigned> node_to_int;
     std::vector<SENT_TYPE> id_to_content;
     bool frozen;
     ID_MAP(): frozen(false) {};
-    int get_node_id(std::string node){
+    unsigned get_node_id(std::string node){
         auto i=node_to_int.find(node);
         if (i !=node_to_int.end()){
             return i->second;
         }
         else{
             if(!frozen){
-                node_to_int[node]=node_to_int.size();
+                unsigned nid=node_to_int.size();
+                node_to_int[node]=nid;
                 return node_to_int.size()-1;
             }
             else{
-                return -1;
+                return -1U;
             }
 
         }
     }
-    int get_content_id(SENT_TYPE content){
+    unsigned get_content_id(SENT_TYPE content){
         id_to_content.push_back(content);
         return id_to_content.size()-1;
     }
@@ -57,8 +58,8 @@ struct ID_MAP{
 struct GraphData {
     ID_MAP id_map;
     unsigned node_count; // 节点数量
-    std::vector<std::unordered_set<int>> vv_utov_graph; //保存以u为中心点的vv邻接表
-    std::vector<std::unordered_set<int>> vv_vtou_graph; //保存以v为中心点的vc邻接表,作用是构建负采样表
+    std::vector<std::unordered_set<unsigned>> vv_utov_graph; //保存以u为中心点的vv邻接表
+    std::vector<std::unordered_set<unsigned>> vv_vtou_graph; //保存以v为中心点的vc邻接表,作用是构建负采样表
     unsigned long vv_table_size; //vv负采样表的大小
     std::vector<Edge> vv_edgelist; //保存所有vv边
     std::vector<Edge> vc_edgelist; //保存所有vc边
@@ -74,7 +75,7 @@ struct GraphData {
         get_node_count(graph_file_name, content_file_name);
         std::cout<<"Node count: "<<node_count<<std::endl;
         read_graph_from_file(graph_file_name);
-        read_content_from_file(content_file_name, d);
+//        read_content_from_file(content_file_name, d);
         vv_table_size=1e8;
         InitUnigramTable();
         std::string UNK = "UNKNOWN_WORD";
@@ -124,13 +125,12 @@ struct GraphData {
             std::vector<std::string> nodes((std::istream_iterator<std::string>(buffer)),
                                std::istream_iterator<std::string>());
 
-            std::vector<int> node_id;
+            std::vector<unsigned> node_id;
             for (auto node:nodes){
-                int id=id_map.get_node_id(node);
-                if(id==-1){
+                unsigned id=id_map.get_node_id(node);
+                if(id==-1U){
                     continue;
                 }
-                assert(id<node_count);
                 node_id.push_back(id);
             }
             for (int i=1;i<node_id.size();i++) {
@@ -150,16 +150,16 @@ struct GraphData {
         std::ifstream content_in(content_file_name);
         assert(content_in);
         while (getline(content_in, line)) {
-            int split_point = line.find(' ');
+            unsigned split_point = line.find(' ');
             std::string sub = line.substr(0, split_point - 0);
-            int node_id = id_map.get_node_id(sub);
+            unsigned node_id = id_map.get_node_id(sub);
             if (node_id >= node_count) {
                 std::cerr << "Error!" << std::endl;
                 std::cout << node_id << std::endl;
                 exit(0);
             }
             sub = line.substr(split_point + 1);
-            int content_id=id_map.get_content_id(ReadSentence(sub, &d));
+            unsigned content_id=id_map.get_content_id(ReadSentence(sub, &d));
             vc_edgelist.push_back(Edge{node_id,content_id});
         }
     }
