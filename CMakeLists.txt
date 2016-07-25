@@ -32,6 +32,7 @@ endforeach ()
 set(DLNE_MAIN_SOURCE
         src/dlne_main.cpp
         src/mp_train
+        src/sp_train
         src/simple_mp_train
         src/seperate_trainer
         )

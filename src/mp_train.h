@@ -255,6 +255,7 @@ namespace mp_train {
 
             // Run the actual training loop
             cnn::real loss = 0.0;
+            int child_counter=0;
             while (true) {
                 mq.receive(&i, sizeof(unsigned), recvd_size, priority);
                 if (i == -1U) {
@@ -273,8 +274,12 @@ namespace mp_train {
                 } else{
                     std::cout<<"Error"<<std::endl;
                 }
+                child_counter+=1;
             }
-            trainer->update_lookup_params(1.0/5000.0);
+            for(auto p:trainer->model->lookup_parameters_list()){
+                std::cout<<"nonzero: "<<p->non_zero_grads.size()<<std::endl;
+            }
+            trainer->update_lookup_params(1.0/child_counter);
 //            trainer->update_lookup_params();
 
 
