@@ -33,6 +33,7 @@
 
 #include "graph_data.h"
 #include "network_embedding.h"
+#include "seperate_trainer.h"
 
 using namespace cnn;
 
@@ -114,12 +115,9 @@ namespace mp_train {
 
 
     template<class CONTENT_EMBEDDING_METHOD>
-    void RunParent(GraphData &graph_data, DLNEModel<CONTENT_EMBEDDING_METHOD> *learner, Trainer *trainer,
+    void RunParent(GraphData &graph_data, DLNEModel<CONTENT_EMBEDDING_METHOD> *learner, SeperateSimpleSGDTrainer *trainer,
                    std::vector<Workload> &workloads, unsigned num_iterations,
                    float alpha, unsigned save_every_i, unsigned update_every_i, unsigned report_every_i) {
-
-        std::cout<<"Parent trainer: "<<trainer->model->lookup_parameters_list().size()<<std::endl;
-
         const unsigned num_children = unsigned(workloads.size());
         boost::interprocess::message_queue mq(boost::interprocess::open_or_create, queue_name.c_str(), 10000,
                                               sizeof(unsigned));
@@ -170,14 +168,8 @@ namespace mp_train {
                 }
                 loss+=RunDataSet(vv_begin, end, workloads, mq, {vv_or_vc});
 
-                std::cout<<*vv_begin<<std::endl;
-                std::cout<<learner->test_tmp(*vv_begin, graph_data)<<std::endl;
-                shared_object->update_mutex.wait();
-                trainer->update();
-                std::cout<<trainer->eta0<<std::endl;
-                shared_object->update_mutex.post();
-                std::cout<<learner->test_tmp(*vv_begin, graph_data)<<std::endl;
-//                vv_begin = end;
+                trainer->update_params();
+                vv_begin = end;
             }
             else {
                 vv_or_vc=1;
@@ -190,10 +182,7 @@ namespace mp_train {
                     end = vc_train_indices.end();
                 }
                 loss+=RunDataSet(vc_begin, end, workloads, mq, {vv_or_vc});
-
-//                shared_object->update_mutex.wait();
-//                trainer->update(1.0 / distance(vc_begin, end));
-//                shared_object->update_mutex.post();
+//                trainer->update_params();
                 vc_begin = end;
             }
 
@@ -242,7 +231,7 @@ namespace mp_train {
     }
 
     template<class CONTENT_EMBEDDING_METHOD>
-    int RunChild(unsigned cid, DLNEModel<CONTENT_EMBEDDING_METHOD> *learner, Trainer *trainer,
+    int RunChild(unsigned cid, DLNEModel<CONTENT_EMBEDDING_METHOD> *learner, SeperateSimpleSGDTrainer *trainer,
                  std::vector<Workload> &workloads, GraphData &graph_data) {
 
         std::cout<<"Child trainer: "<<trainer->model->lookup_parameters_list().size()<<std::endl;
@@ -285,24 +274,20 @@ namespace mp_train {
                     std::cout<<"Error"<<std::endl;
                 }
             }
-//            std::cout<<learner->test_tmp(0, graph_data)<<std::endl;
-//            shared_object->update_mutex.wait();
-//            trainer->update();
-//            shared_object->update_mutex.post();
-//            std::cout<<learner->test_tmp(0, graph_data)<<std::endl;
+            trainer->update_lookup_params(1.0/5000.0);
+//            trainer->update_lookup_params();
+
 
             // Let the parent know that we're done and return the loss value
             Write(workloads[cid].c2p[1], loss);
         }
         return 0;
     }
-
     template<class CONTENT_EMBEDDING_METHOD>
-    void RunMultiProcess(unsigned num_children, DLNEModel<CONTENT_EMBEDDING_METHOD> *learner, Trainer *trainer,
+    void RunMultiProcess(unsigned num_children, DLNEModel<CONTENT_EMBEDDING_METHOD> *learner, SeperateSimpleSGDTrainer *trainer,
                          GraphData &graph_data, unsigned num_iterations,
                          float alpha, unsigned save_every_i, unsigned updata_every_i, unsigned report_every_idate_every_i) {
         std::cout<< "==================" << std::endl << "START TRAINING" << std::endl << "==================" <<std::endl;
-//        assert (cnn::ps->is_shared());
         queue_name = GenerateQueueName();
         boost::interprocess::message_queue::remove(queue_name.c_str());
         boost::interprocess::message_queue::remove(queue_name.c_str());
@@ -311,7 +296,6 @@ namespace mp_train {
         shared_object = GetSharedMemory<SharedObject>();
         std::vector<Workload> workloads = CreateWorkloads(num_children);
         unsigned cid = SpawnChildren(workloads);
-//        std::cout<<trainer->model->parameters_list().size()<<std::endl;
         if (cid < num_children) {
             RunChild<CONTENT_EMBEDDING_METHOD>(cid, learner, trainer, workloads, graph_data);
         }

@@ -32,6 +32,8 @@ endforeach ()
 set(DLNE_MAIN_SOURCE
         src/dlne_main.cpp
         src/mp_train
+        src/simple_mp_train
+        src/seperate_trainer
         )
 add_executable(dlne_main ${DLNE_MAIN_SOURCE})
 target_link_libraries(dlne_main cnn ${LIBS} pthread)

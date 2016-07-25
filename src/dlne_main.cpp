@@ -8,8 +8,9 @@
 #include "graph_data.h"
 #include "embedding_methods.h"
 #include "network_embedding.h"
+#include "simple_mp_train.h"
 #include "mp_train.h"
-#include "sp_train.h"
+#include "seperate_trainer.h"
 
 using namespace std;
 using namespace cnn;
@@ -70,13 +71,11 @@ int main(int argc, char **argv) {
 
     DLNEModel<WordAvg> dlne(model, graph_data.node_count, 15, 15, 100, 100, 100, conf["embedding_file"].as<string>(),
                             d);
-    Trainer *sgd = nullptr;
-    sgd = new SimpleSGDTrainer(&model, 1e-6, conf["eta0"].as<float>());
+    SeperateSimpleSGDTrainer *sgd = new SeperateSimpleSGDTrainer(&model, 1e-6, conf["eta0"].as<float>());
     sgd->eta_decay = conf["eta_decay"].as<float>();
-    std::cout<<"DBLP trainer: "<<sgd->model->lookup_parameters_list().size()<<std::endl;
     mp_train::RunMultiProcess<WordAvg>(conf["workers"].as<unsigned>(), &dlne, sgd, graph_data, conf["iterations"].as<unsigned>(), conf["alpha"].as<float>(),
                     conf["save_every_i"].as<unsigned>(), conf["update_every_i"].as<unsigned>(), conf["report_every_i"].as<unsigned>());
-//    sp_train::RunSingleProcess<WordAvg>(&dlne, sgd, graph_data);
+
 
     return 0;
 }
