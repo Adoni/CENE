@@ -112,7 +112,7 @@ namespace simple_mp {
         return total_loss;
     }
 
-    void RunParent(DLNEModel<WordAvg> *learner, SeperateSimpleSGDTrainer* trainer, std::vector<Workload>& workloads, GraphData &graph_data) {
+    void RunParent(DLNEModel *learner, SeperateSimpleSGDTrainer* trainer, std::vector<Workload>& workloads, GraphData &graph_data) {
         const unsigned num_children = workloads.size();
         boost::interprocess::message_queue mq(boost::interprocess::open_or_create, queue_name.c_str(), 10000, sizeof(unsigned));
         std::vector<unsigned> train_indices(graph_data.vv_edgelist.size());
@@ -148,7 +148,7 @@ namespace simple_mp {
         }
     }
 
-    int RunChild(unsigned cid, DLNEModel<WordAvg> *learner, SeperateSimpleSGDTrainer* trainer,
+    int RunChild(unsigned cid, DLNEModel *learner, SeperateSimpleSGDTrainer* trainer,
                  std::vector<Workload>& workloads, GraphData &graph_data) {
         const unsigned num_children = workloads.size();
         assert (cid >= 0 && cid < num_children);
@@ -187,7 +187,7 @@ namespace simple_mp {
         return 0;
     }
 
-    void RunMultiProcess(unsigned num_children, DLNEModel<WordAvg> *learner, SeperateSimpleSGDTrainer* trainer, GraphData &graph_data) {
+    void RunMultiProcess(unsigned num_children, DLNEModel *learner, SeperateSimpleSGDTrainer* trainer, GraphData &graph_data) {
         assert (cnn::ps->is_shared());
         queue_name = GenerateQueueName();
         boost::interprocess::message_queue::remove(queue_name.c_str());

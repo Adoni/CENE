@@ -114,11 +114,11 @@ namespace simple_mp {
     // Called by the parent to process a chunk of data
     cnn::real RunDataSet(std::vector<unsigned>::iterator begin, std::vector<unsigned>::iterator end, const std::vector<Workload>& workloads,
                  boost::interprocess::message_queue& mq, const WorkloadHeader& header);
-    void RunParent(DLNEModel<WordAvg> *learner, SeperateSimpleSGDTrainer* trainer, std::vector<Workload>& workloads, GraphData &graph_data);
+    void RunParent(DLNEModel *learner, SeperateSimpleSGDTrainer* trainer, std::vector<Workload>& workloads, GraphData &graph_data);
 
-    int RunChild(unsigned cid, DLNEModel<WordAvg> *learner, SeperateSimpleSGDTrainer* trainer,
+    int RunChild(unsigned cid, DLNEModel *learner, SeperateSimpleSGDTrainer* trainer,
                  std::vector<Workload>& workloads, GraphData &graph_data);
 
-    void RunMultiProcess(unsigned num_children, DLNEModel<WordAvg> *learner, SeperateSimpleSGDTrainer* trainer, GraphData &graph_data);
+    void RunMultiProcess(unsigned num_children, DLNEModel *learner, SeperateSimpleSGDTrainer* trainer, GraphData &graph_data);
 }
 

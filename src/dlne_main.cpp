@@ -32,6 +32,7 @@ void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
             ("update_epoch_every_i", po::value<unsigned>(), "Update frequency")
             ("report_every_i", po::value<unsigned>(), "Report frequency")
             ("alpha", po::value<float>(), "alpha to control the proportion of VV and VC")
+            ("embedding_method", po::value<std::string>(), "method to learn embedding from content: WordAvg or GRU")
 
             ("help", "Help");
     po::options_description dcmdline_options;
@@ -69,14 +70,28 @@ int main(int argc, char **argv) {
     Model model;
     std::cout<<"DBLP trainer: "<<model.parameters_list().size()<<std::endl;
 
-    DLNEModel<WordAvg> dlne(model, graph_data.node_count, 15, 15, 100, 100, 100, conf["embedding_file"].as<string>(),
-                            d);
+
+    unsigned V_NEG=15;
+    unsigned C_NEG=15;
+    unsigned V_EM_DIM=100;
+    unsigned W_EM_DIM=100;
+    unsigned C_EM_DIM=100;
+
+    ContentEmbeddingMethod *content_embedding_method;
+    if (conf["embedding_method"].as<std::string>()=="WordAvg"){
+        content_embedding_method = new WordAvg_CE(model, W_EM_DIM, C_EM_DIM, conf["embedding_file"].as<string>(), d);
+    } else if(conf["embedding_method"].as<std::string>()=="GRU"){
+        content_embedding_method = new GRU_CE(model, W_EM_DIM, C_EM_DIM, conf["embedding_file"].as<string>(), d);
+    }else{
+        std::cerr<<"Unsupported embedding method"<<std::endl;
+        return 1;
+    }
+
+    DLNEModel dlne(model, graph_data.node_count, V_NEG, C_NEG, V_EM_DIM, content_embedding_method);
     Trainer *sgd = nullptr;
     sgd=new SimpleSGDTrainer(&model, 1e-6, conf["eta0"].as<float>());
     sgd->eta_decay = conf["eta_decay"].as<float>();
-    mp_train::RunMultiProcess<WordAvg>(conf["workers"].as<unsigned>(), &dlne, sgd, graph_data, conf["iterations"].as<unsigned>(), conf["alpha"].as<float>(),
+    mp_train::RunMultiProcess(conf["workers"].as<unsigned>(), &dlne, sgd, graph_data, conf["iterations"].as<unsigned>(), conf["alpha"].as<float>(),
                     conf["save_every_i"].as<unsigned>(), conf["update_epoch_every_i"].as<unsigned>(), conf["report_every_i"].as<unsigned>(), conf["batch_size"].as<unsigned>());
-//    sp_train::RunSingleProcess(&dlne, sgd, graph_data);
-
     return 0;
 }

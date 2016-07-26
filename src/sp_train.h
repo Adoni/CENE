@@ -11,8 +11,7 @@
 using namespace std;
 using namespace cnn;
 namespace sp_train {
-    template <class CONTENT_EMBEDDING_METHOD>
-    void RunSingleProcess(DLNEModel <CONTENT_EMBEDDING_METHOD> *learner, Trainer *trainer, GraphData &graph_data) {
+    void RunSingleProcess(DLNEModel *learner, Trainer *trainer, GraphData &graph_data) {
         std::cout << "==================" << std::endl << "START TRAINING" << std::endl << "==================" <<
         std::endl;
         std::cout<<"Single trainer: "<<trainer->model->lookup_parameters_list().size()<<std::endl;

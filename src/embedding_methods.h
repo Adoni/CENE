@@ -33,7 +33,7 @@ public:
         unsigned em_count, em_size;
         unsigned unknow_id = d.Convert(UNK);
         em_in >> em_count >> em_size;
-        assert(em_size==INPUT_SIZE);
+        assert(em_size==W_EM_DIM);
         std::vector<float> e(em_size);
         std::string w;
         int initialized_word_count=0;
@@ -52,28 +52,28 @@ public:
         std::cout << d.size() - initialized_word_count << " words not initialized" << std::endl;
     }
     LookupParameters *p;
-    unsigned INPUT_SIZE;
-    unsigned OUTPUT_SIZE;
+    unsigned W_EM_DIM;
+    unsigned C_EM_DIM;
     std::string method_name;
 };
 
-class WordAvg : public ContentEmbeddingMethod {
+class WordAvg_CE : public ContentEmbeddingMethod {
 public:
-    explicit WordAvg(
+    explicit WordAvg_CE(
             Model& model,
             unsigned word_embedding_size,
             unsigned content_embedding_size,
             std::string word_embedding_file,
             Dict &d){
         assert(word_embedding_size==content_embedding_size);
-        this->INPUT_SIZE = word_embedding_size;
-        this->OUTPUT_SIZE = content_embedding_size;
+        this->W_EM_DIM = word_embedding_size;
+        this->C_EM_DIM = content_embedding_size;
         this->method_name = "WordAvg";
-        p = model.add_lookup_parameters(d.size(), {INPUT_SIZE});
+        p = model.add_lookup_parameters(d.size(), {W_EM_DIM});
         initial_look_up_table(word_embedding_file, d);
     }
 
-    ~WordAvg() {}
+    ~WordAvg_CE() {}
 
     Expression get_embedding(const SENT_TYPE &content, ComputationGraph &cg){
         std::vector<Expression> all_word_embedding;
@@ -83,4 +83,36 @@ public:
         return average(all_word_embedding);
     }
 };
+
+class GRU_CE : public ContentEmbeddingMethod {
+public:
+    GRUBuilder builder;
+    explicit GRU_CE(
+            Model& model,
+            unsigned word_embedding_size,
+            unsigned content_embedding_size,
+            std::string word_embedding_file,
+            Dict &d){
+        assert(word_embedding_size==content_embedding_size);
+        this->W_EM_DIM = word_embedding_size;
+        this->C_EM_DIM = content_embedding_size;
+        this->method_name = "GRU";
+        builder=GRUBuilder(1, W_EM_DIM, C_EM_DIM, &model);
+        p = model.add_lookup_parameters(d.size(), {W_EM_DIM});
+        initial_look_up_table(word_embedding_file, d);
+    }
+
+    ~GRU_CE() {}
+
+    Expression get_embedding(const SENT_TYPE &content, ComputationGraph &cg){
+        builder.new_graph(cg);
+        builder.start_new_sequence();
+        for (auto w:content){
+            Expression i_x_t = lookup(cg, p, w);
+            builder.add_input(i_x_t);
+        }
+        return builder.back();
+    }
+};
+
 #endif //DLNE_EMBEDDING_METHODS_H

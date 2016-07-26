@@ -13,8 +13,10 @@
 #include "cnn/gru.h"
 #include "cnn/lstm.h"
 #include "cnn/dict.h"
-#include "graph_data.h"
 # include "cnn/expr.h"
+
+#include "graph_data.h"
+#include "embedding_methods.h"
 
 #include <iostream>
 #include <fstream>
@@ -25,28 +27,23 @@
 
 using namespace cnn;
 
-template<class CONTENT_EMBEDDING_METHOD>
 struct DLNEModel {
     LookupParameters *p_u; //lookup table for U nodes
     LookupParameters *p_v; //lookup table for V nodes
     unsigned NODE_SIZE;
     unsigned V_EM_DIM;
-    unsigned C_EM_DIM;
-    unsigned W_EM_DIM;
     unsigned V_NEG;
     unsigned C_NEG;
-    CONTENT_EMBEDDING_METHOD* content_embedding_method;
+    ContentEmbeddingMethod *content_embedding_method;
 
 
-    explicit DLNEModel(Model &model, unsigned NODE_SIZE, unsigned V_NEG, unsigned C_NEG, unsigned V_EM_DIM,
-                       unsigned W_EM_DIM, unsigned C_EM_DIM, std::string word_embedding_file, cnn::Dict &d)
-            : NODE_SIZE(NODE_SIZE), V_EM_DIM(V_EM_DIM), W_EM_DIM(W_EM_DIM), C_EM_DIM(C_EM_DIM), V_NEG(V_NEG),
-              C_NEG(C_NEG) {
-        assert(C_EM_DIM==V_EM_DIM);
+    explicit DLNEModel(Model &model, unsigned NODE_SIZE, unsigned V_NEG, unsigned C_NEG, unsigned V_EM_DIM, ContentEmbeddingMethod *content_embedding_method)
+            : NODE_SIZE(NODE_SIZE), V_EM_DIM(V_EM_DIM),V_NEG(V_NEG),
+              C_NEG(C_NEG), content_embedding_method(content_embedding_method) {
+        assert(content_embedding_method->C_EM_DIM==V_EM_DIM);
         p_u = model.add_lookup_parameters(NODE_SIZE, {V_EM_DIM});
         p_v = model.add_lookup_parameters(NODE_SIZE, {V_EM_DIM});
         init_params();
-        content_embedding_method = new CONTENT_EMBEDDING_METHOD(model, W_EM_DIM, C_EM_DIM, word_embedding_file, d);
         std::cout<<"Method name: "<<content_embedding_method->get_method_name()<<std::endl;
     }
 
