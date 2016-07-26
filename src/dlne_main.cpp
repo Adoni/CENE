@@ -32,7 +32,6 @@ void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
             ("report_every_i", po::value<unsigned>(), "Report frequency")
             ("alpha", po::value<float>(), "alpha to control the proportion of VV and VC")
 
-
             ("help", "Help");
     po::options_description dcmdline_options;
     dcmdline_options.add(opts);
