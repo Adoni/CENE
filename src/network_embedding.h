@@ -113,6 +113,7 @@ struct DLNEModel {
     }
 
     void SaveEmbedding(std::string file_name, GraphData &graph_data) {
+        std::cout<<"Saving to "<<file_name<<std::endl;
         ComputationGraph cg;
         std::ofstream output_file(file_name);
         output_file << NODE_SIZE << " " << V_EM_DIM << "\n";
