@@ -39,6 +39,8 @@ struct ID_MAP{
             if(!frozen){
                 unsigned nid=node_to_int.size();
                 node_to_int[node]=nid;
+                id_to_node.push_back(node);
+                assert(id_to_node[nid]==node);
                 return node_to_int.size()-1;
             }
             else{
