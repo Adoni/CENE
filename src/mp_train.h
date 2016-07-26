@@ -33,7 +33,6 @@
 
 #include "graph_data.h"
 #include "network_embedding.h"
-#include "seperate_trainer.h"
 
 using namespace cnn;
 
@@ -115,7 +114,7 @@ namespace mp_train {
 
 
     template<class CONTENT_EMBEDDING_METHOD>
-    void RunParent(GraphData &graph_data, DLNEModel<CONTENT_EMBEDDING_METHOD> *learner, SeperateSimpleSGDTrainer *trainer,
+    void RunParent(GraphData &graph_data, DLNEModel<CONTENT_EMBEDDING_METHOD> *learner, Trainer *trainer,
                    std::vector<Workload> &workloads, unsigned num_iterations,
                    float alpha, unsigned save_every_i, unsigned update_every_i, unsigned report_every_i) {
         const unsigned num_children = unsigned(workloads.size());
@@ -167,8 +166,7 @@ namespace mp_train {
                     end = vv_train_indices.end();
                 }
                 loss+=RunDataSet(vv_begin, end, workloads, mq, {vv_or_vc});
-
-                trainer->update_params();
+//                trainer->update();
                 vv_begin = end;
             }
             else {
@@ -231,7 +229,7 @@ namespace mp_train {
     }
 
     template<class CONTENT_EMBEDDING_METHOD>
-    int RunChild(unsigned cid, DLNEModel<CONTENT_EMBEDDING_METHOD> *learner, SeperateSimpleSGDTrainer *trainer,
+    int RunChild(unsigned cid, DLNEModel<CONTENT_EMBEDDING_METHOD> *learner, Trainer *trainer,
                  std::vector<Workload> &workloads, GraphData &graph_data) {
 
         std::cout<<"Child trainer: "<<trainer->model->lookup_parameters_list().size()<<std::endl;
@@ -274,22 +272,18 @@ namespace mp_train {
                 } else{
                     std::cout<<"Error"<<std::endl;
                 }
+                trainer->update();
                 child_counter+=1;
             }
-            for(auto p:trainer->model->lookup_parameters_list()){
-                std::cout<<"nonzero: "<<p->non_zero_grads.size()<<std::endl;
-            }
-            trainer->update_lookup_params(1.0/child_counter);
-//            trainer->update_lookup_params();
-
 
             // Let the parent know that we're done and return the loss value
             Write(workloads[cid].c2p[1], loss);
         }
         return 0;
     }
+
     template<class CONTENT_EMBEDDING_METHOD>
-    void RunMultiProcess(unsigned num_children, DLNEModel<CONTENT_EMBEDDING_METHOD> *learner, SeperateSimpleSGDTrainer *trainer,
+    void RunMultiProcess(unsigned num_children, DLNEModel<CONTENT_EMBEDDING_METHOD> *learner, Trainer *trainer,
                          GraphData &graph_data, unsigned num_iterations,
                          float alpha, unsigned save_every_i, unsigned updata_every_i, unsigned report_every_idate_every_i) {
         std::cout<< "==================" << std::endl << "START TRAINING" << std::endl << "==================" <<std::endl;
