@@ -70,7 +70,7 @@ public:
         this->OUTPUT_SIZE = content_embedding_size;
         this->method_name = "WordAvg";
         p = model.add_lookup_parameters(d.size(), {INPUT_SIZE});
-//        initial_look_up_table(word_embedding_file, d);
+        initial_look_up_table(word_embedding_file, d);
     }
 
     ~WordAvg() {}

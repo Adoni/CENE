@@ -27,8 +27,9 @@ void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
             ("eta_decay", po::value<float>(), "eta_decay for sgd")
             ("workers", po::value<unsigned>(), "workers count")
             ("iterations", po::value<unsigned>(), "iterations number")
+            ("batch_size", po::value<unsigned>(), "Update frequency")
             ("save_every_i", po::value<unsigned>(), "Save frequency as well as the update_epoch frequency")
-            ("update_every_i", po::value<unsigned>(), "Update frequency")
+            ("update_epoch_every_i", po::value<unsigned>(), "Update frequency")
             ("report_every_i", po::value<unsigned>(), "Report frequency")
             ("alpha", po::value<float>(), "alpha to control the proportion of VV and VC")
 
@@ -46,7 +47,7 @@ void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
         exit(1);
     }
     vector<string> required_options{"graph_file", "content_file", "embedding_file", "eta0", "eta_decay", "workers",
-                                    "iterations", "save_every_i", "update_every_i", "report_every_i", "alpha"};
+                                    "iterations", "batch_size", "save_every_i", "update_epoch_every_i", "report_every_i", "alpha"};
 
     for (auto opt_str:required_options) {
         if (conf->count(opt_str) == 0) {
@@ -74,7 +75,7 @@ int main(int argc, char **argv) {
     sgd=new SimpleSGDTrainer(&model, 1e-6, conf["eta0"].as<float>());
     sgd->eta_decay = conf["eta_decay"].as<float>();
     mp_train::RunMultiProcess<WordAvg>(conf["workers"].as<unsigned>(), &dlne, sgd, graph_data, conf["iterations"].as<unsigned>(), conf["alpha"].as<float>(),
-                    conf["save_every_i"].as<unsigned>(), conf["update_every_i"].as<unsigned>(), conf["report_every_i"].as<unsigned>());
+                    conf["save_every_i"].as<unsigned>(), conf["update_epoch_every_i"].as<unsigned>(), conf["report_every_i"].as<unsigned>(), conf["batch_size"].as<unsigned>());
 //    sp_train::RunSingleProcess(&dlne, sgd, graph_data);
 
     return 0;

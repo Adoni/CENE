@@ -67,6 +67,9 @@
   <component name="ChangeListManager">
     <list default="true" id="e8e586c5-adc0-4ac0-aa43-320980d1abe5" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cnn" afterPath="$PROJECT_DIR$/cnn" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dlne_main.cpp" afterPath="$PROJECT_DIR$/src/dlne_main.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/embedding_methods.h" afterPath="$PROJECT_DIR$/src/embedding_methods.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mp_train.h" afterPath="$PROJECT_DIR$/src/mp_train.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/network_embedding.h" afterPath="$PROJECT_DIR$/src/network_embedding.h" />
     </list>
     <ignored path="DLNE.iws" />
@@ -92,7 +95,7 @@
         <entry file="file://$PROJECT_DIR$/src/dlne_main.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="32" column="89" selection-start-line="32" selection-start-column="89" selection-end-line="32" selection-end-column="89" />
+              <caret line="77" column="174" selection-start-line="77" selection-start-column="174" selection-end-line="77" selection-end-column="174" />
               <folding>
                 <element signature="e#92#128#0" expanded="true" />
               </folding>
@@ -100,11 +103,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="network_embedding.h" pinned="false" current-in-tab="true">
+      <file leaf-file-name="network_embedding.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/network_embedding.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.58229816">
-              <caret line="125" column="33" selection-start-line="125" selection-start-column="33" selection-end-line="125" selection-end-column="33" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="48" column="21" selection-start-line="48" selection-start-column="21" selection-end-line="48" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="embedding_methods.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/embedding_methods.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="73" column="5" selection-start-line="73" selection-start-column="5" selection-end-line="73" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -120,68 +133,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mp_train.h" pinned="false" current-in-tab="false">
+      <file leaf-file-name="mp_train.h" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/mp_train.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="208" column="62" selection-start-line="208" selection-start-column="62" selection-end-line="208" selection-end-column="62" />
+            <state vertical-scroll-proportion="0.7670807">
+              <caret line="199" column="33" selection-start-line="199" selection-start-column="33" selection-end-line="199" selection-end-column="33" />
               <folding>
                 <element signature="e#57#77#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="expr.cc" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cnn/cnn/expr.cc">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="108" selection-start-line="15" selection-start-column="108" selection-end-line="15" selection-end-column="108" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="seperate_trainer.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/seperate_trainer.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="18" column="29" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="29" />
-              <folding>
-                <element signature="e#108#133#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="seperate_trainer.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/seperate_trainer.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
-              <folding>
-                <element signature="e#2031#2131#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="model.cc" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cnn/cnn/model.cc">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="157" column="31" selection-start-line="157" selection-start-column="0" selection-end-line="158" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="model.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cnn/cnn/model.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="40" column="10" selection-start-line="40" selection-start-column="10" selection-end-line="40" selection-end-column="10" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -201,7 +160,6 @@
         <option value="$PROJECT_DIR$/src/dlne.cpp" />
         <option value="$PROJECT_DIR$/src/network_embedding.h.h" />
         <option value="$PROJECT_DIR$/src/mp_trah.cpp" />
-        <option value="$PROJECT_DIR$/src/embedding_methods.h" />
         <option value="$PROJECT_DIR$/src/sp_train.h" />
         <option value="$PROJECT_DIR$/cnn/cnn/mp.h" />
         <option value="$PROJECT_DIR$/src/simple_mp_train.h.h" />
@@ -212,10 +170,11 @@
         <option value="$PROJECT_DIR$/src/mp_train.cpp" />
         <option value="$PROJECT_DIR$/src/simple_mp_train.cpp" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/src/dlne_main.cpp" />
-        <option value="$PROJECT_DIR$/src/mp_train.h" />
         <option value="$PROJECT_DIR$/src/graph_data.h" />
+        <option value="$PROJECT_DIR$/src/dlne_main.cpp" />
         <option value="$PROJECT_DIR$/src/network_embedding.h" />
+        <option value="$PROJECT_DIR$/src/embedding_methods.h" />
+        <option value="$PROJECT_DIR$/src/mp_train.h" />
       </list>
     </option>
   </component>
@@ -370,7 +329,7 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19115324" sideWeight="0.4940476" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33465347" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33465347" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32871288" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5018431" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -590,13 +549,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/embedding_methods.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="73" column="5" selection-start-line="73" selection-start-column="5" selection-end-line="73" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cnn/cnn/cnn.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -779,26 +731,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/mp_train.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="208" column="62" selection-start-line="208" selection-start-column="62" selection-end-line="208" selection-end-column="62" />
-          <folding>
-            <element signature="e#57#77#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/dlne_main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="32" column="89" selection-start-line="32" selection-start-column="89" selection-end-line="32" selection-end-column="89" />
-          <folding>
-            <element signature="e#92#128#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/graph_data.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -807,11 +739,39 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/dlne_main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="77" column="174" selection-start-line="77" selection-start-column="174" selection-end-line="77" selection-end-column="174" />
+          <folding>
+            <element signature="e#92#128#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/embedding_methods.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="73" column="5" selection-start-line="73" selection-start-column="5" selection-end-line="73" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/network_embedding.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.58229816">
-          <caret line="125" column="33" selection-start-line="125" selection-start-column="33" selection-end-line="125" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="48" column="21" selection-start-line="48" selection-start-column="21" selection-end-line="48" selection-end-column="21" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mp_train.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7670807">
+          <caret line="199" column="33" selection-start-line="199" selection-start-column="33" selection-end-line="199" selection-end-column="33" />
+          <folding>
+            <element signature="e#57#77#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -45,7 +45,7 @@ struct DLNEModel {
         assert(C_EM_DIM==V_EM_DIM);
         p_u = model.add_lookup_parameters(NODE_SIZE, {V_EM_DIM});
         p_v = model.add_lookup_parameters(NODE_SIZE, {V_EM_DIM});
-//        init_params();
+        init_params();
         content_embedding_method = new CONTENT_EMBEDDING_METHOD(model, W_EM_DIM, C_EM_DIM, word_embedding_file, d);
         std::cout<<"Method name: "<<content_embedding_method->get_method_name()<<std::endl;
     }
