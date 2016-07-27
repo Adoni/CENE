@@ -105,13 +105,14 @@ public:
     ~GRU_CE() {}
 
     Expression get_embedding(const SENT_TYPE &content, ComputationGraph &cg){
+        std::vector<Expression> all_hidden;
         builder.new_graph(cg);
         builder.start_new_sequence();
         for (auto w:content){
             Expression i_x_t = lookup(cg, p, w);
-            builder.add_input(i_x_t);
+            all_hidden.push_back(builder.add_input(i_x_t));
         }
-        return builder.back();
+        return average(all_hidden);
     }
 };
 

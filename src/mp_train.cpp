@@ -233,12 +233,9 @@ namespace mp_train {
             wait(NULL);
         }
     }
-    
+
     int RunChild(unsigned cid, DLNEModel *learner, Trainer *trainer,
                  std::vector<Workload> &workloads, GraphData &graph_data) {
-
-        std::cout<<"Child trainer: "<<trainer->model->lookup_parameters_list().size()<<std::endl;
-
         const unsigned num_children = workloads.size();
         assert (cid >= 0 && cid < num_children);
         unsigned i;
