@@ -67,7 +67,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e8e586c5-adc0-4ac0-aa43-320980d1abe5" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cnn" afterPath="$PROJECT_DIR$/cnn" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/graph_data.h" afterPath="$PROJECT_DIR$/src/graph_data.h" />
     </list>
     <ignored path="DLNE.iws" />
@@ -154,8 +153,8 @@
       <file leaf-file-name="graph_data.h" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/graph_data.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.80590063">
-              <caret line="172" column="34" selection-start-line="172" selection-start-column="34" selection-end-line="172" selection-end-column="34" />
+            <state vertical-scroll-proportion="0.18478261">
+              <caret line="156" column="60" selection-start-line="156" selection-start-column="60" selection-end-line="156" selection-end-column="60" />
               <folding>
                 <element signature="e#171#191#0" expanded="true" />
               </folding>
@@ -375,7 +374,7 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1263823" sideWeight="0.4940476" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33465347" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33465347" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22574258" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5018431" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -813,8 +812,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/graph_data.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.80590063">
-          <caret line="172" column="34" selection-start-line="172" selection-start-column="34" selection-end-line="172" selection-end-column="34" />
+        <state vertical-scroll-proportion="0.18478261">
+          <caret line="156" column="60" selection-start-line="156" selection-start-column="60" selection-end-line="156" selection-end-column="60" />
           <folding>
             <element signature="e#171#191#0" expanded="true" />
           </folding>
