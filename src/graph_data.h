@@ -23,11 +23,12 @@ struct Edge{
     unsigned v;
 };
 typedef std::vector<int> SENT_TYPE; //保存句子信息
+typedef std::vector<SENT_TYPE> CONTENT_TYPE; //保存content信息
 
 struct ID_MAP{
     std::vector<std::string> id_to_node;
     std::unordered_map<std::string, unsigned> node_to_int;
-    std::vector<SENT_TYPE> id_to_content;
+    std::vector<CONTENT_TYPE> id_to_content;
     bool frozen;
     ID_MAP(): frozen(false) {};
     unsigned get_node_id(std::string node){
@@ -49,7 +50,7 @@ struct ID_MAP{
 
         }
     }
-    unsigned get_content_id(SENT_TYPE content){
+    unsigned get_content_id(CONTENT_TYPE content){
         id_to_content.push_back(content);
         return id_to_content.size()-1;
     }
@@ -152,16 +153,27 @@ struct GraphData {
         std::ifstream content_in(content_file_name);
         assert(content_in);
         while (getline(content_in, line)) {
-            unsigned split_point = line.find(' ');
-            std::string sub = line.substr(0, split_point - 0);
+            std::string::size_type split_pos = line.find(' ');
+            std::string sub = line.substr(0, split_pos - 0);
             unsigned node_id = id_map.get_node_id(sub);
             if (node_id >= node_count) {
                 std::cerr << "Error!" << std::endl;
                 std::cout << node_id << std::endl;
                 exit(0);
             }
-            sub = line.substr(split_point + 1);
-            unsigned content_id=id_map.get_content_id(ReadSentence(sub, &d));
+            std::string::size_type start_pos=split_pos + 1;
+            CONTENT_TYPE content;
+            while(1){
+                std::string::size_type end_pos=line.find("||||", start_pos + 1);
+                if(end_pos==std::string::npos){
+                    break;
+                }
+                sub = line.substr(start_pos + 1, end_pos-start_pos);
+                content.push_back(ReadSentence(sub, &d));
+                start_pos+=4;
+            }
+
+            unsigned content_id=id_map.get_content_id(content);
             vc_edgelist.push_back(Edge{node_id,content_id});
         }
     }

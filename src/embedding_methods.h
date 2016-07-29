@@ -20,7 +20,7 @@ class ContentEmbeddingMethod {
 public:
     virtual ~ContentEmbeddingMethod() { }
 
-    virtual Expression get_embedding(const SENT_TYPE &content, ComputationGraph &cg) = 0;
+    virtual Expression get_embedding(const CONTENT_TYPE &content, ComputationGraph &cg) = 0;
 
     std::string get_method_name() {
         return method_name;
@@ -75,10 +75,12 @@ public:
 
     ~WordAvg_CE() {}
 
-    Expression get_embedding(const SENT_TYPE &content, ComputationGraph &cg){
+    Expression get_embedding(const CONTENT_TYPE &content, ComputationGraph &cg){
         std::vector<Expression> all_word_embedding;
-        for (auto w:content){
-            all_word_embedding.push_back(lookup(cg, p, w));
+        for (auto c:content){
+            for (auto w:c){
+                all_word_embedding.push_back(lookup(cg, p, w));
+            }
         }
         return average(all_word_embedding);
     }
@@ -93,7 +95,6 @@ public:
             unsigned content_embedding_size,
             std::string word_embedding_file,
             Dict &d){
-        assert(word_embedding_size==content_embedding_size);
         this->W_EM_DIM = word_embedding_size;
         this->C_EM_DIM = content_embedding_size;
         this->method_name = "GRU";
@@ -104,13 +105,18 @@ public:
 
     ~GRU_CE() {}
 
-    Expression get_embedding(const SENT_TYPE &content, ComputationGraph &cg){
+    Expression get_embedding(const CONTENT_TYPE &content, ComputationGraph &cg){
         std::vector<Expression> all_hidden;
-        builder.new_graph(cg);
-        builder.start_new_sequence();
-        for (auto w:content){
-            Expression i_x_t = lookup(cg, p, w);
-            all_hidden.push_back(builder.add_input(i_x_t));
+
+        for (auto c:content){
+            builder.new_graph(cg);
+            builder.start_new_sequence();
+            std::vector<Expression> sent;
+            for(auto w:c){
+                Expression i_x_t = lookup(cg, p, w);
+                sent.push_back(builder.add_input(i_x_t));
+            }
+            all_hidden.push_back(average(sent));
         }
         return average(all_hidden);
     }
