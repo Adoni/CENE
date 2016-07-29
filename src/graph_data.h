@@ -154,7 +154,7 @@ struct GraphData {
         assert(content_in);
         while (getline(content_in, line)) {
             std::string::size_type split_pos = line.find(' ');
-            std::string sub = line.substr(0, split_pos - 0);
+            std::string sub = line.substr(0, split_point - 0);
             unsigned node_id = id_map.get_node_id(sub);
             if (node_id >= node_count) {
                 std::cerr << "Error!" << std::endl;
@@ -168,9 +168,9 @@ struct GraphData {
                 if(end_pos==std::string::npos){
                     break;
                 }
-                sub = line.substr(start_pos + 1, end_pos-start_pos);
+                sub = line.substr(start_pos, end_pos-start_pos);
                 content.push_back(ReadSentence(sub, &d));
-                start_pos+=4;
+                start_pos=end_pos+4;
             }
 
             unsigned content_id=id_map.get_content_id(content);
