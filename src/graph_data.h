@@ -71,11 +71,12 @@ struct GraphData {
 
     explicit GraphData(std::string graph_file_name,
                        std::string content_file_name,
+                       bool strictly_content_required,
                        cnn::Dict &d) {
         std::cout << "Graph file: " << graph_file_name << std::endl;
         std::cout << "Content file: " << content_file_name << std::endl;
 
-        get_node_count(graph_file_name, content_file_name);
+        get_node_count(graph_file_name, content_file_name, strictly_content_required);
         std::cout<<"Node count: "<<node_count<<std::endl;
         read_graph_from_file(graph_file_name);
         read_content_from_file(content_file_name, d);
@@ -86,15 +87,22 @@ struct GraphData {
         d.SetUnk(UNK);
     }
 
-    void get_node_count(std::string graph_file_name, std::string content_file_name){
+    void get_node_count(std::string graph_file_name, std::string content_file_name, bool strictly_content_required){
         std::string line;
 
         std::ifstream content_in(content_file_name);
         assert(content_in);
         while (getline(content_in, line)) {
-            unsigned split_point = line.find(' ');
-            std::string sub = line.substr(0, split_point - 0);
-            id_map.get_node_id(sub);
+            std::istringstream buffer(line);
+            std::vector<std::string> nodes((std::istream_iterator<std::string>(buffer)),
+                                           std::istream_iterator<std::string>());
+            id_map.get_node_id(nodes[0]);
+            if(!strictly_content_required){
+                for (auto node:nodes) {
+                    id_map.get_node_id(node);
+                }
+            }
+
         }
 
         id_map.Freeze();
