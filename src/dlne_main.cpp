@@ -31,6 +31,8 @@ void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
             ("save_every_i", po::value<unsigned>(), "Save frequency as well as the update_epoch frequency")
             ("update_epoch_every_i", po::value<unsigned>(), "Update frequency")
             ("report_every_i", po::value<unsigned>(), "Report frequency")
+            ("vertex_negative", po::value<unsigned>(), "Negative sampling count for vertex")
+            ("content_negative", po::value<unsigned>(), "Negative sampling count for content")
             ("alpha", po::value<float>(), "alpha to control the proportion of VV and VC")
             ("embedding_method", po::value<std::string>(), "method to learn embedding from content: WordAvg or GRU")
             ("strictly_content_required", po::value<bool>(), "if the content for each vertex is strictly required")
@@ -49,7 +51,8 @@ void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
         exit(1);
     }
     vector<string> required_options{"graph_file", "content_file", "embedding_file", "eta0", "eta_decay", "workers",
-                                    "iterations", "batch_size", "save_every_i", "update_epoch_every_i", "report_every_i", "alpha", "strictly_content_required"};
+                                    "iterations", "batch_size", "save_every_i", "update_epoch_every_i", "report_every_i",
+                                    "vertex_negative", "content_negative", "alpha", "strictly_content_required"};
 
     for (auto opt_str:required_options) {
         if (conf->count(opt_str) == 0) {
@@ -72,8 +75,8 @@ int main(int argc, char **argv) {
     std::cout<<"DBLP trainer: "<<model.parameters_list().size()<<std::endl;
 
 
-    unsigned V_NEG=15;
-    unsigned C_NEG=15;
+    unsigned V_NEG=conf["vertex_negative"].as<unsigned>();
+    unsigned C_NEG=conf["content_negative"].as<unsigned>();
     unsigned V_EM_DIM=100;
     unsigned W_EM_DIM=100;
     unsigned C_EM_DIM=100;
