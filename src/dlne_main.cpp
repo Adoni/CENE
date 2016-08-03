@@ -69,8 +69,10 @@ int main(int argc, char **argv) {
     InitCommandLine(argc, argv, &conf);
     cnn::Dict d;
     GraphData graph_data(conf["graph_file"].as<string>(), conf["content_file"].as<string>(), conf["strictly_content_required"].as<bool>(), d);
-    cout << "Vocabulary size: " << d.size() << endl;
-    cout << "Node size: " << graph_data.node_count << endl;
+    cout << "Vocabulary count: " << d.size() << endl;
+    cout << "Node count: " << graph_data.node_count << endl;
+    cout << "VV link count: " << graph_data.vv_edgelist.size() << endl;
+    cout << "VV link count: " << graph_data.vc_edgelist.size() << endl;
     Model model;
     std::cout<<"DBLP trainer: "<<model.parameters_list().size()<<std::endl;
 
