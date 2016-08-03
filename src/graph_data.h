@@ -190,7 +190,8 @@ struct GraphData {
         long long normalizer = 0;
         double d1, power = 0.75;
         for (int a = 0; a < node_count; a++) normalizer += pow(vv_vtou_graph[a].size(), power);
-        int i = 0;
+        std::cout<<"normalizer: "<<normalizer<<std::endl;
+        unsigned i = 0;
         d1 = std::pow(vv_vtou_graph[i].size(), power) / (double) normalizer;
         for (int a = 0; a < vv_table_size; a++) {
             vv_unitable[a] = i;
