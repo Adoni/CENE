@@ -190,7 +190,7 @@ namespace mp_train {
 
             if (iter % update_epoch_every_i == 0) {
 //                trainer->update_epoch();
-                trainer->eta=trainer->eta0*(1-iter/num_iterations);
+                trainer->eta=trainer->eta0*(1.0-1.0*iter/num_iterations);
                 if (trainer->eta < trainer->eta0*(cnn::real)0.0001){
                     trainer->eta=trainer->eta0*(cnn::real)0.0001;
                 }
