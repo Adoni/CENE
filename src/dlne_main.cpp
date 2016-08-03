@@ -72,7 +72,7 @@ int main(int argc, char **argv) {
     cout << "Vocabulary count: " << d.size() << endl;
     cout << "Node count: " << graph_data.node_count << endl;
     cout << "VV link count: " << graph_data.vv_edgelist.size() << endl;
-    cout << "VV link count: " << graph_data.vc_edgelist.size() << endl;
+    cout << "VC link count: " << graph_data.vc_edgelist.size() << endl;
     Model model;
     std::cout<<"DBLP trainer: "<<model.parameters_list().size()<<std::endl;
 
