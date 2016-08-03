@@ -217,10 +217,11 @@ struct GraphData {
         std::random_device rd;
         std::uniform_int_distribution<> dis(0, node_count - 1);
         while (i < sample_size) {
+            i++;
             unsigned nv = dis(*cnn::rndeng);
             if (nv == edge.u || nv == edge.v || relation_type(edge.u, nv) == 1) continue;
             vs[i] = nv;
-            i++;
+
         }
         return vs;
     }
