@@ -149,10 +149,12 @@ namespace mp_train {
         save_every_i=save_every_i/batch_size;
         report_every_i=report_every_i/batch_size;
         update_epoch_every_i=update_epoch_every_i/batch_size;
+        num_iterations = num_iterations/batch_size;
         int save_model_every_i=1000000;
         cnn::real loss=0.0;
 
         std::cout<<"Batch size: "<<batch_size<<std::endl;
+        std::cout<<"Iteration number: "<<num_iterations<<" batch"<<std::endl;
         std::cout<<"Update epoch every "<<update_epoch_every_i<<" batch"<<std::endl;
         std::cout<<"Save every "<<save_every_i<<" batch"<<std::endl;
         std::cout<<"Report every "<<report_every_i<<" batch"<<std::endl;
