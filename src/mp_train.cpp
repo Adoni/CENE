@@ -4,6 +4,7 @@
 
 #include "mp_train.h"
 #include <chrono>
+#include <iomanip>
 
 using namespace std;
 using namespace boost::interprocess;
@@ -25,8 +26,8 @@ namespace mp_train {
     }
 
     cnn::real RunDataSet(std::vector<unsigned>::iterator begin, std::vector<unsigned>::iterator end,
-                    const std::vector<Workload> &workloads,
-                    boost::interprocess::message_queue &mq, const WorkloadHeader &header) {
+                         const std::vector<Workload> &workloads,
+                         boost::interprocess::message_queue &mq, const WorkloadHeader &header) {
 
         const unsigned num_children = workloads.size();
 
@@ -50,9 +51,9 @@ namespace mp_train {
         }
 
         // Wait for each child to finish training its load
-        cnn::real loss=0.0;
+        cnn::real loss = 0.0;
         for (unsigned cid = 0; cid < num_children; ++cid) {
-            loss  += Read<cnn::real>(workloads[cid].c2p[0]);
+            loss += Read<cnn::real>(workloads[cid].c2p[0]);
         };
         return loss;
     }
@@ -72,13 +73,16 @@ namespace mp_train {
         return SumValues(values) / values.size();
     }
 
-    std::string ElapsedTimeString(const std::chrono::time_point<std::chrono::high_resolution_clock> start, double fractional_iter) {
+    std::string ElapsedTimeString(const std::chrono::time_point<std::chrono::high_resolution_clock> start,
+                                  double fractional_iter) {
         std::ostringstream ss;
         auto now_time = std::chrono::high_resolution_clock::now();
 
-        ss << std::chrono::duration<double, std::milli>(now_time - start).count() / 3600000 << " hours for " <<fractional_iter<<" epoch"
+        ss << std::chrono::duration<double, std::milli>(now_time - start).count() / 3600000 << " hours for " <<
+        fractional_iter << " epoch"
         << std::endl;
-        ss << std::chrono::duration<double, std::milli>(now_time - start).count() / 3600000/ fractional_iter << " hours for each epoch"
+        ss << std::chrono::duration<double, std::milli>(now_time - start).count() / 3600000 / fractional_iter <<
+        " hours for each epoch"
         << std::endl;
 
         return ss.str();
@@ -118,7 +122,8 @@ namespace mp_train {
 
     void RunParent(GraphData &graph_data, DLNEModel *learner, Trainer *trainer,
                    std::vector<Workload> &workloads, unsigned num_iterations,
-                   float alpha, unsigned save_every_i, unsigned update_epoch_every_i, unsigned report_every_i, unsigned batch_size) {
+                   float alpha, unsigned save_every_i, unsigned update_epoch_every_i, unsigned report_every_i,
+                   unsigned batch_size) {
         const unsigned num_children = unsigned(workloads.size());
         boost::interprocess::message_queue mq(boost::interprocess::open_or_create, queue_name.c_str(), 10000,
                                               sizeof(unsigned));
@@ -140,31 +145,31 @@ namespace mp_train {
         std::vector<unsigned>::iterator vv_begin = vv_train_indices.begin();
         std::vector<unsigned>::iterator vc_begin = vc_train_indices.begin();
 
-        std::cout<<"Batch size: "<<batch_size<<std::endl;
-        std::cout<<"Update epoch every "<<update_epoch_every_i<<std::endl;
-        std::cout<<"Save every "<<save_every_i<<std::endl;
-        std::cout<<"Report every "<<report_every_i<<std::endl;
+        std::cout << "Batch size: " << batch_size << std::endl;
+        std::cout << "Update epoch every " << update_epoch_every_i << std::endl;
+        std::cout << "Save every " << save_every_i << std::endl;
+        std::cout << "Report every " << report_every_i << std::endl;
 
         std::uniform_real_distribution<> dis(0.0, 1.0);
-        save_every_i=save_every_i/batch_size;
-        report_every_i=report_every_i/batch_size;
-        update_epoch_every_i=update_epoch_every_i/batch_size;
-        num_iterations = num_iterations/batch_size;
-        int save_model_every_i=1000000;
-        cnn::real loss=0.0;
+        save_every_i = save_every_i / batch_size;
+        report_every_i = report_every_i / batch_size;
+        update_epoch_every_i = update_epoch_every_i / batch_size;
+        num_iterations = num_iterations / batch_size;
+        int save_model_every_i = 1000000;
+        cnn::real loss = 0.0;
 
-        std::cout<<"Batch size: "<<batch_size<<std::endl;
-        std::cout<<"Iteration number: "<<num_iterations<<" batch"<<std::endl;
-        std::cout<<"Update epoch every "<<update_epoch_every_i<<" batch"<<std::endl;
-        std::cout<<"Save every "<<save_every_i<<" batch"<<std::endl;
-        std::cout<<"Report every "<<report_every_i<<" batch"<<std::endl;
+        std::cout << "Batch size: " << batch_size << std::endl;
+        std::cout << "Iteration number: " << num_iterations << " batch" << std::endl;
+        std::cout << "Update epoch every " << update_epoch_every_i << " batch" << std::endl;
+        std::cout << "Save every " << save_every_i << " batch" << std::endl;
+        std::cout << "Report every " << report_every_i << " batch" << std::endl;
 
 
         for (unsigned iter = 1; iter < num_iterations; ++iter) {
             unsigned vv_or_vc;
 
             if (dis(*cnn::rndeng) < alpha) {
-                vv_or_vc=0;
+                vv_or_vc = 0;
                 if (vv_begin == vv_train_indices.end()) {
                     vv_begin = vv_train_indices.begin();
                     std::shuffle(vv_train_indices.begin(), vv_train_indices.end(), (*cnn::rndeng));
@@ -173,11 +178,11 @@ namespace mp_train {
                 if (end > vv_train_indices.end()) {
                     end = vv_train_indices.end();
                 }
-                loss+=RunDataSet(vv_begin, end, workloads, mq, {vv_or_vc});
+                loss += RunDataSet(vv_begin, end, workloads, mq, {vv_or_vc});
                 vv_begin = end;
             }
             else {
-                vv_or_vc=1;
+                vv_or_vc = 1;
                 if (vc_begin == vc_train_indices.end()) {
                     vc_begin = vc_train_indices.begin();
                     std::shuffle(vc_train_indices.begin(), vc_train_indices.end(), (*cnn::rndeng));
@@ -186,42 +191,43 @@ namespace mp_train {
                 if (end > vc_train_indices.end()) {
                     end = vc_train_indices.end();
                 }
-                loss+=RunDataSet(vc_begin, end, workloads, mq, {vv_or_vc});
+                loss += RunDataSet(vc_begin, end, workloads, mq, {vv_or_vc});
                 vc_begin = end;
             }
 
             if (iter % update_epoch_every_i == 0) {
 //                trainer->update_epoch();
-                trainer->eta=trainer->eta0*(1.0-1.0*iter/num_iterations);
-                if (trainer->eta < trainer->eta0*(cnn::real)0.0001){
-                    trainer->eta=trainer->eta0*(cnn::real)0.0001;
+                trainer->eta = trainer->eta0 * (1.0 - 1.0 * iter / num_iterations);
+                if (trainer->eta < trainer->eta0 * (cnn::real) 0.0001) {
+                    trainer->eta = trainer->eta0 * (cnn::real) 0.0001;
                 }
             }
             if (iter % report_every_i == 0) {
                 std::ostringstream ss;
-                if (vv_or_vc==0){
-                    ss << "Eta = " << trainer->eta << "\tVV"<< " loss = " << loss << std::endl;
+                if (vv_or_vc == 0) {
+                    ss << "Eta = " << trainer->eta << "\tVV" << " loss = " << loss << std::endl;
                     std::string loss_info = ss.str();
                     std::cout << loss_info;
                     out_for_vv_losses << loss_info;
-                }else{
-                    ss  << "Eta = " << trainer->eta << "\tVC"<< " loss = " << loss << std::endl;
+                } else {
+                    ss << "Eta = " << trainer->eta << "\tVC" << " loss = " << loss << std::endl;
                     std::string loss_info = ss.str();
-                    std::cout << loss_info <<std::endl;
+                    std::cout << loss_info << std::endl;
                     out_for_vc_losses << loss_info;
                 }
-                loss=0.0;
+                loss = 0.0;
 //                std::string info = ElapsedTimeString(total_start_time, iter*update_every_i / 100000);
 //                std::cerr << info;
             }
 
             if (iter % save_every_i == 0) {
                 std::ostringstream ss;
-                ss << learner->get_learner_name() << "_embedding_pid" << getpid() << alpha << "_" << int(iter/save_every_i) <<".data";
-                learner->SaveEmbedding( ss.str(), graph_data);
+                ss << learner->get_learner_name() << "_embedding_pid" << getpid() << "_alpha_" <<
+                std::setprecision(2) << alpha << "_" << int(iter / save_every_i) << ".data";
+                learner->SaveEmbedding(ss.str(), graph_data);
             }
 
-            if (iter % save_model_every_i ==0) {
+            if (iter % save_model_every_i == 0) {
                 std::ostringstream ss;
                 ss << learner->get_learner_name() << "_mp_model" << getpid() << ".data";
                 std::string fname = ss.str();
@@ -261,27 +267,27 @@ namespace mp_train {
 
             // Run the actual training loop
             cnn::real loss = 0.0;
-            int child_counter=0;
+            int child_counter = 0;
             while (true) {
                 mq.receive(&i, sizeof(unsigned), recvd_size, priority);
                 if (i == -1U) {
                     break;
                 }
 
-                if (header.vv_or_vc==0){
+                if (header.vv_or_vc == 0) {
                     assert (i < graph_data.vv_edgelist.size());
                     const Edge edge = graph_data.vv_edgelist[i];
                     loss += learner->TrainVVEdge(edge, graph_data);
                 }
-                else if (header.vv_or_vc==1){
+                else if (header.vv_or_vc == 1) {
                     assert (i < graph_data.vc_edgelist.size());
                     const Edge edge = graph_data.vc_edgelist[i];
                     loss += learner->TrainVCEdge(edge, graph_data);
-                } else{
-                    std::cout<<"Error"<<std::endl;
+                } else {
+                    std::cout << "Error" << std::endl;
                 }
                 trainer->update();
-                child_counter+=1;
+                child_counter += 1;
             }
 
             // Let the parent know that we're done and return the loss value
@@ -292,8 +298,10 @@ namespace mp_train {
 
     void RunMultiProcess(unsigned num_children, DLNEModel *learner, Trainer *trainer,
                          GraphData &graph_data, unsigned num_iterations,
-                         float alpha, unsigned save_every_i, unsigned updata_epoch_every_i, unsigned report_every_idate_every_i, unsigned batch_size) {
-        std::cout<< "==================" << std::endl << "START TRAINING" << std::endl << "==================" <<std::endl;
+                         float alpha, unsigned save_every_i, unsigned updata_epoch_every_i,
+                         unsigned report_every_idate_every_i, unsigned batch_size) {
+        std::cout << "==================" << std::endl << "START TRAINING" << std::endl << "==================" <<
+        std::endl;
         queue_name = GenerateQueueName();
         boost::interprocess::message_queue::remove(queue_name.c_str());
         boost::interprocess::message_queue::remove(queue_name.c_str());
