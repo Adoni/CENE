@@ -217,7 +217,7 @@ namespace mp_train {
 
             if (iter % save_every_i == 0) {
                 std::ostringstream ss;
-                ss << learner->get_learner_name() << "_embedding_pid" << getpid() << "_" << int(iter/save_every_i)<<".data";
+                ss << learner->get_learner_name() << "_embedding_pid" << getpid() << alpha << "_" << int(iter/save_every_i) <<".data";
                 learner->SaveEmbedding( ss.str(), graph_data);
             }
 
