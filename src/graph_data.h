@@ -17,6 +17,7 @@
 #include <string>
 #include <vector>
 #include <unordered_set>
+#include <boost/algorithm/string.hpp>
 
 struct Edge{
     unsigned u;
@@ -88,24 +89,22 @@ struct GraphData {
     }
 
     void get_node_count(std::string graph_file_name, std::string content_file_name, bool strictly_content_required){
+        std::cout<<"Strict: "<<strictly_content_required<<std::endl;
         std::string line;
 
         std::ifstream content_in(content_file_name);
         assert(content_in);
         while (getline(content_in, line)) {
-            std::istringstream buffer(line);
-            std::vector<std::string> nodes((std::istream_iterator<std::string>(buffer)),
-                                           std::istream_iterator<std::string>());
-            id_map.get_node_id(nodes[0]);
-            if(!strictly_content_required){
-                for (auto node:nodes) {
-                    id_map.get_node_id(node);
-                }
-            }
+            boost::trim(line);
+            std::string::size_type split_pos = line.find(' ');
+            std::string sub = line.substr(0, split_pos - 0);
+            id_map.get_node_id(sub);
         }
 
-        id_map.Freeze();
-        node_count=id_map.node_to_int.size();
+
+        if(strictly_content_required){
+            id_map.Freeze();
+        }
 
         std::ifstream graph_in(graph_file_name);
         assert(graph_in);
@@ -114,11 +113,12 @@ struct GraphData {
             std::vector<std::string> nodes((std::istream_iterator<std::string>(buffer)),
                                       std::istream_iterator<std::string>());
 
-            for (int i=0;i<nodes.size();i++){
-                id_map.get_node_id(nodes[i]);
+            for (auto node:nodes) {
+                id_map.get_node_id(node);
             }
         }
         node_count=id_map.node_to_int.size();
+        id_map.Freeze();
     }
 
     void read_graph_from_file(std::string graph_file_name){
@@ -131,6 +131,7 @@ struct GraphData {
         std::ifstream graph_in(graph_file_name);
         assert(graph_in);
         while (getline(graph_in, line)) {
+            boost::trim(line);
             std::istringstream buffer(line);
             std::vector<std::string> nodes((std::istream_iterator<std::string>(buffer)),
                                std::istream_iterator<std::string>());
@@ -188,7 +189,7 @@ struct GraphData {
     void InitUnigramTable() {
         vv_unitable.resize(vv_table_size);
         long long normalizer = 0;
-        double d1, power = 0.75;
+        double d1, power = 1.0;
         for (int a = 0; a < node_count; a++) normalizer += pow(vv_vtou_graph[a].size(), power);
         std::cout<<"normalizer: "<<normalizer<<std::endl;
         unsigned i = 0;

@@ -119,7 +119,6 @@ struct DLNEModel {
             output_file << node << " ";
             auto value_u = as_vector(lookup(cg, p_u, node_id).value());
             std::copy(value_u.begin(), value_u.end(), std::ostream_iterator<float>(output_file, " "));
-//            output_file << " ";
             auto value_v = as_vector(lookup(cg, p_v, node_id).value());
             std::copy(value_v.begin(), value_v.end(), std::ostream_iterator<float>(output_file, " "));
             output_file << "\n";
