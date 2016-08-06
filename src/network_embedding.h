@@ -35,6 +35,7 @@ struct DLNEModel {
     unsigned V_NEG;
     unsigned C_NEG;
     ContentEmbeddingMethod *content_embedding_method;
+    std::vector<int> to_be_saved_index;
 
 
     explicit DLNEModel(Model &model, unsigned NODE_SIZE, unsigned V_NEG, unsigned C_NEG, unsigned V_EM_DIM, ContentEmbeddingMethod *content_embedding_method)
@@ -45,6 +46,8 @@ struct DLNEModel {
         p_v = model.add_lookup_parameters(NODE_SIZE, {V_EM_DIM});
         init_params();
         std::cout<<"Method name: "<<content_embedding_method->get_method_name()<<std::endl;
+        to_be_saved_index.resize(NODE_SIZE);
+        std::iota(to_be_saved_index.begin(), to_be_saved_index.end(), 0);
     }
 
     void init_params() {
@@ -64,6 +67,18 @@ struct DLNEModel {
         }
     }
 
+    void set_to_be_saved_index(std::string to_be_saved_index_file_name, GraphData &graph_data){
+        to_be_saved_index.resize(0);
+        std::ifstream to_be_saved_index_file_in(to_be_saved_index_file_name);
+        assert(to_be_saved_index_file_in);
+        std::string line;
+        while (getline(to_be_saved_index_file_in, line)) {
+            boost::trim(line);
+            unsigned id=graph_data.id_map.get_node_id(line);
+            assert(id!=-1U);
+            to_be_saved_index.push_back(id);
+        }
+    }
     // return Expression of total loss
     cnn::real TrainVVEdge(const Edge edge, GraphData &graph_data) {
         ComputationGraph cg;

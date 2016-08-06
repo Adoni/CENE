@@ -21,8 +21,9 @@ void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
     opts.add_options()
             // Data option
             ("graph_file", po::value<string>(), "Graph file, adjacency list")
-            ("content_file", po::value<string>(), "content file")
-            ("embedding_file", po::value<string>(), "emebdding file of word2vec-format")
+            ("content_file", po::value<string>(), "Content file")
+            ("embedding_file", po::value<string>(), "Emebdding file of word2vec-format")
+            ("to_be_saved_index_file_name", po::value<string>(), "Indexes whose embeddings would be saved")
             ("eta0", po::value<float>(), "eta0 for sgd")
             ("eta_decay", po::value<float>(), "eta_decay for sgd")
             ("workers", po::value<unsigned>(), "workers count")
@@ -94,6 +95,9 @@ int main(int argc, char **argv) {
     }
 
     DLNEModel dlne(model, graph_data.node_count, V_NEG, C_NEG, V_EM_DIM, content_embedding_method);
+    if(conf.count("to_be_saved_index_file_name")){
+        dlne.set_to_be_saved_index(conf["to_be_saved_index_file_name"].as<string>(), graph_data);
+    }
     Trainer *sgd = nullptr;
     sgd=new SimpleSGDTrainer(&model, 1e-6, conf["eta0"].as<float>());
     sgd->eta_decay = conf["eta_decay"].as<float>();
