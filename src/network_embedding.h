@@ -129,7 +129,7 @@ struct DLNEModel {
         ComputationGraph cg;
         std::ofstream output_file(file_name);
         output_file << NODE_SIZE << " " << V_EM_DIM << "\n";
-        for (int node_id = 0; node_id < NODE_SIZE; node_id++) {
+        for (auto node_id:to_be_saved_index) {
             std::string node = graph_data.id_map.id_to_node[node_id];
             output_file << node << " ";
             auto value_u = as_vector(lookup(cg, p_u, node_id).value());
