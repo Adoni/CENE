@@ -31,7 +31,7 @@ public:
         std::ifstream em_in(file_name);
         assert(em_in);
         unsigned em_count, em_size;
-        unsigned unknow_id = d.Convert(UNK);
+        int unknow_id = d.Convert(UNK);
         em_in >> em_count >> em_size;
         assert(em_size==W_EM_DIM);
         std::vector<float> e(em_size);
@@ -42,7 +42,7 @@ public:
             for (int j = 0; j < em_size; j++) {
                 em_in >> e[j];
             }
-            unsigned index = d.Convert(w);
+            int index = d.Convert(w);
             if (index == unknow_id) continue;
             initialized_word_count++;
             assert(index<d.size() && index>=0);

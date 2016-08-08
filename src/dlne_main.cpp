@@ -22,7 +22,8 @@ void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
             // Data option
             ("graph_file", po::value<string>(), "Graph file, adjacency list")
             ("content_file", po::value<string>(), "Content file")
-            ("embedding_file", po::value<string>(), "Emebdding file of word2vec-format")
+            ("word_embedding_file", po::value<string>(), "Emebdding file of word2vec-format")
+            ("vertex_embedding_file", po::value<string>(), "Pre-trained vertex embedding")
             ("to_be_saved_index_file_name", po::value<string>(), "Indexes whose embeddings would be saved")
             ("eta0", po::value<float>(), "eta0 for sgd")
             ("eta_decay", po::value<float>(), "eta_decay for sgd")
@@ -51,7 +52,7 @@ void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
         cerr << dcmdline_options << endl;
         exit(1);
     }
-    vector<string> required_options{"graph_file", "content_file", "embedding_file", "eta0", "eta_decay", "workers",
+    vector<string> required_options{"graph_file", "content_file", "word_embedding_file", "eta0", "eta_decay", "workers",
                                     "iterations", "batch_size", "save_every_i", "update_epoch_every_i", "report_every_i",
                                     "vertex_negative", "content_negative", "alpha", "strictly_content_required"};
 
@@ -86,15 +87,18 @@ int main(int argc, char **argv) {
 
     ContentEmbeddingMethod *content_embedding_method;
     if (conf["embedding_method"].as<std::string>()=="WordAvg"){
-        content_embedding_method = new WordAvg_CE(model, W_EM_DIM, C_EM_DIM, conf["embedding_file"].as<string>(), d);
+        content_embedding_method = new WordAvg_CE(model, W_EM_DIM, C_EM_DIM, conf["word_embedding_file"].as<string>(), d);
     } else if(conf["embedding_method"].as<std::string>()=="GRU"){
-        content_embedding_method = new GRU_CE(model, W_EM_DIM, C_EM_DIM, conf["embedding_file"].as<string>(), d);
+        content_embedding_method = new GRU_CE(model, W_EM_DIM, C_EM_DIM, conf["word_embedding_file"].as<string>(), d);
     }else{
         std::cerr<<"Unsupported embedding method"<<std::endl;
         return 1;
     }
 
     DLNEModel dlne(model, graph_data.node_count, V_NEG, C_NEG, V_EM_DIM, content_embedding_method);
+    if(conf.count("vertex_embedding_file")){
+        dlne.initialize_from_pretrained_vertex_embedding(conf["vertex_embedding_file"].as<string>(), graph_data);
+    }
     if(conf.count("to_be_saved_index_file_name")){
         dlne.set_to_be_saved_index(conf["to_be_saved_index_file_name"].as<string>(), graph_data);
     }

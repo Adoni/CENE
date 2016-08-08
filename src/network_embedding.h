@@ -67,6 +67,37 @@ struct DLNEModel {
         }
     }
 
+    void initialize_from_pretrained_vertex_embedding(std::string file_name, GraphData &graph_data){
+        std::cout << "Initializing lookup table from " << file_name << " ..." <<std::endl;
+        std::ifstream em_in(file_name);
+        assert(em_in);
+        unsigned em_count, em_size;
+        em_in >> em_count >> em_size;
+        assert(em_size==V_EM_DIM*2);
+        std::vector<float> eu(em_size/2);
+        std::vector<float> ev(em_size/2);
+
+        std::string w;
+        int initialized_word_count=0;
+        for (int i = 0; i < em_count; i++) {
+            em_in >> w;
+            unsigned index = graph_data.id_map.get_node_id(w);
+            for (int j = 0; j < em_size/2; j++) {
+                em_in >> eu[j];
+            }
+            for (int j = 0; j < em_size/2; j++) {
+                em_in >> ev[j];
+            }
+            if (index == -1U) continue;
+            initialized_word_count++;
+            assert(index<NODE_SIZE);
+            p_u->Initialize(index, eu);
+            p_v->Initialize(index, ev);
+        }
+        std::cout << "Initialize " << initialized_word_count << " vertices" << std::endl;
+        std::cout << NODE_SIZE - initialized_word_count << " vertices not initialized" << std::endl;
+    }
+
     void set_to_be_saved_index(std::string to_be_saved_index_file_name, GraphData &graph_data){
         to_be_saved_index.resize(0);
         std::ifstream to_be_saved_index_file_in(to_be_saved_index_file_name);
