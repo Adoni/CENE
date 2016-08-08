@@ -159,7 +159,7 @@ struct DLNEModel {
         std::cout<<"Saving to "<<file_name<<std::endl;
         ComputationGraph cg;
         std::ofstream output_file(file_name);
-        output_file << NODE_SIZE << " " << V_EM_DIM << "\n";
+        output_file << NODE_SIZE << " " << V_EM_DIM*2 << "\n";
         for (auto node_id:to_be_saved_index) {
             std::string node = graph_data.id_map.id_to_node[node_id];
             output_file << node << " ";
