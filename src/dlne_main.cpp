@@ -73,7 +73,7 @@ int main(int argc, char **argv) {
     cnn::Dict d;
     GraphData graph_data(conf["graph_file"].as<string>(), conf["content_file"].as<string>(), conf["strictly_content_required"].as<bool>(), d);
     if(conf.count("tfidf_file")){
-        graph_data.read_tfidf_from_file(conf["to_be_saved_index_file_name"].as<string>());
+        graph_data.read_tfidf_from_file(conf["tfidf_file"].as<string>());
     }
     cout << "Vocabulary count: " << d.size() << endl;
     cout << "Node count: " << graph_data.node_count << endl;
