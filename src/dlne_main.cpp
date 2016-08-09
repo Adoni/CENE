@@ -24,6 +24,7 @@ void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
             ("content_file", po::value<string>(), "Content file")
             ("word_embedding_file", po::value<string>(), "Emebdding file of word2vec-format")
             ("vertex_embedding_file", po::value<string>(), "Pre-trained vertex embedding")
+            ("tfidf_file", po::value<string>(), "TF-IDF for each word in each document")
             ("to_be_saved_index_file_name", po::value<string>(), "Indexes whose embeddings would be saved")
             ("eta0", po::value<float>(), "eta0 for sgd")
             ("eta_decay", po::value<float>(), "eta_decay for sgd")
@@ -71,6 +72,9 @@ int main(int argc, char **argv) {
     InitCommandLine(argc, argv, &conf);
     cnn::Dict d;
     GraphData graph_data(conf["graph_file"].as<string>(), conf["content_file"].as<string>(), conf["strictly_content_required"].as<bool>(), d);
+    if(conf.count("tfidf_file")){
+        graph_data.read_tfidf_from_file(conf["to_be_saved_index_file_name"].as<string>());
+    }
     cout << "Vocabulary count: " << d.size() << endl;
     cout << "Node count: " << graph_data.node_count << endl;
     cout << "VV link count: " << graph_data.vv_edgelist.size() << endl;

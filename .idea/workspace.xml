@@ -67,7 +67,11 @@
   <component name="ChangeListManager">
     <list default="true" id="e8e586c5-adc0-4ac0-aa43-320980d1abe5" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cnn" afterPath="$PROJECT_DIR$/cnn" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dictionaries/sunxiaofei.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/sunxiaofei.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dlne_main.cpp" afterPath="$PROJECT_DIR$/src/dlne_main.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/embedding_methods.h" afterPath="$PROJECT_DIR$/src/embedding_methods.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/graph_data.h" afterPath="$PROJECT_DIR$/src/graph_data.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/network_embedding.h" afterPath="$PROJECT_DIR$/src/network_embedding.h" />
     </list>
     <ignored path="DLNE.iws" />
@@ -93,7 +97,7 @@
         <entry file="file://$PROJECT_DIR$/src/dlne_main.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="29" column="31" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
+              <caret line="76" column="5" selection-start-line="76" selection-start-column="5" selection-end-line="76" selection-end-column="5" />
               <folding>
                 <element signature="e#92#128#0" expanded="true" />
               </folding>
@@ -101,11 +105,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="network_embedding.h" pinned="false" current-in-tab="true">
+      <file leaf-file-name="network_embedding.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/network_embedding.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.634058">
-              <caret line="161" column="53" selection-start-line="161" selection-start-column="53" selection-end-line="161" selection-end-column="53" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="143" column="36" selection-start-line="143" selection-start-column="36" selection-end-line="143" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -115,7 +119,7 @@
         <entry file="file://$PROJECT_DIR$/src/embedding_methods.h">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="43" column="13" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
+              <caret line="84" column="71" selection-start-line="84" selection-start-column="71" selection-end-line="84" selection-end-column="71" />
               <folding>
                 <element signature="e#110#133#0" expanded="true" />
               </folding>
@@ -158,20 +162,18 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="graph_data.h" pinned="false" current-in-tab="false">
+      <file leaf-file-name="graph_data.h" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/graph_data.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="140" column="52" selection-start-line="140" selection-start-column="28" selection-end-line="140" selection-end-column="52" />
+            <state vertical-scroll-proportion="0.8124031">
+              <caret line="212" column="68" selection-start-line="212" selection-start-column="68" selection-end-line="212" selection-end-column="68" />
               <folding>
                 <element signature="e#171#191#0" expanded="true" />
-                <element signature="e#551#1449#1" expanded="false" />
-                <element signature="e#1870#2600#0" expanded="false" />
-                <element signature="e#2606#3730#0" expanded="false" />
-                <element signature="e#6148#6855#0" expanded="false" />
-                <element signature="e#6861#7031#0" expanded="false" />
-                <element signature="e#7037#7593#0" expanded="false" />
-                <element signature="e#7599#8105#0" expanded="false" />
+                <element signature="e#1963#2693#0" expanded="false" />
+                <element signature="e#2699#3823#0" expanded="false" />
+                <element signature="e#8534#8704#0" expanded="false" />
+                <element signature="e#8710#9266#0" expanded="false" />
+                <element signature="e#9272#9778#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -236,11 +238,11 @@
         <option value="$PROJECT_DIR$/src/simple_mp_train.cpp" />
         <option value="$PROJECT_DIR$/src/sp_train.h" />
         <option value="$PROJECT_DIR$/src/mp_train.h" />
-        <option value="$PROJECT_DIR$/src/graph_data.h" />
         <option value="$PROJECT_DIR$/src/mp_train.cpp" />
         <option value="$PROJECT_DIR$/src/embedding_methods.h" />
-        <option value="$PROJECT_DIR$/src/dlne_main.cpp" />
         <option value="$PROJECT_DIR$/src/network_embedding.h" />
+        <option value="$PROJECT_DIR$/src/dlne_main.cpp" />
+        <option value="$PROJECT_DIR$/src/graph_data.h" />
       </list>
     </option>
   </component>
@@ -387,18 +389,18 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-217" y="-1080" width="1920" height="1080" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10268562" sideWeight="0.4848131" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10268562" sideWeight="0.48291233" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33366337" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33366337" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16237624" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5018431" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3049505" sideWeight="0.49815693" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15247525" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10268562" sideWeight="0.5151869" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15247525" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10268562" sideWeight="0.51708764" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.49815693" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -761,6 +763,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33229813">
           <caret line="552" column="0" selection-start-line="552" selection-start-column="0" selection-end-line="552" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -792,23 +795,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/graph_data.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="140" column="52" selection-start-line="140" selection-start-column="28" selection-end-line="140" selection-end-column="52" />
-          <folding>
-            <element signature="e#171#191#0" expanded="true" />
-            <element signature="e#551#1449#1" expanded="false" />
-            <element signature="e#1870#2600#0" expanded="false" />
-            <element signature="e#2606#3730#0" expanded="false" />
-            <element signature="e#6148#6855#0" expanded="false" />
-            <element signature="e#6861#7031#0" expanded="false" />
-            <element signature="e#7037#7593#0" expanded="false" />
-            <element signature="e#7599#8105#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cnn/cnn/dict.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -817,31 +803,46 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/embedding_methods.h">
+    <entry file="file://$PROJECT_DIR$/src/network_embedding.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="43" column="13" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
-          <folding>
-            <element signature="e#110#133#0" expanded="true" />
-          </folding>
+          <caret line="143" column="36" selection-start-line="143" selection-start-column="36" selection-end-line="143" selection-end-column="36" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dlne_main.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="29" column="31" selection-start-line="29" selection-start-column="31" selection-end-line="29" selection-end-column="31" />
+          <caret line="76" column="5" selection-start-line="76" selection-start-column="5" selection-end-line="76" selection-end-column="5" />
           <folding>
             <element signature="e#92#128#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/network_embedding.h">
+    <entry file="file://$PROJECT_DIR$/src/embedding_methods.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.634058">
-          <caret line="161" column="53" selection-start-line="161" selection-start-column="53" selection-end-line="161" selection-end-column="53" />
-          <folding />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="84" column="71" selection-start-line="84" selection-start-column="71" selection-end-line="84" selection-end-column="71" />
+          <folding>
+            <element signature="e#110#133#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/graph_data.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8124031">
+          <caret line="212" column="68" selection-start-line="212" selection-start-column="68" selection-end-line="212" selection-end-column="68" />
+          <folding>
+            <element signature="e#171#191#0" expanded="true" />
+            <element signature="e#1963#2693#0" expanded="false" />
+            <element signature="e#2699#3823#0" expanded="false" />
+            <element signature="e#8534#8704#0" expanded="false" />
+            <element signature="e#8710#9266#0" expanded="false" />
+            <element signature="e#9272#9778#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -20,7 +20,7 @@ class ContentEmbeddingMethod {
 public:
     virtual ~ContentEmbeddingMethod() { }
 
-    virtual Expression get_embedding(const CONTENT_TYPE &content, ComputationGraph &cg) = 0;
+    virtual Expression get_embedding(const CONTENT_TYPE &content, const TFIDF_TYPE &tfidf, ComputationGraph &cg) = 0;
 
     std::string get_method_name() {
         return method_name;
@@ -75,12 +75,14 @@ public:
 
     ~WordAvg_CE() {}
 
-    Expression get_embedding(const CONTENT_TYPE &content, ComputationGraph &cg){
+    Expression get_embedding(const CONTENT_TYPE &content, const TFIDF_TYPE &tfidf, ComputationGraph &cg){
         std::vector<Expression> all_word_embedding;
-        for (auto c:content){
-            for (auto w:c){
-                all_word_embedding.push_back(lookup(cg, p, w));
+        for (int i=0;i<content.size();i++){
+            std::vector<Expression> sentence_expression;
+            for (int j=0;j<content[i].size();j++){
+                sentence_expression.push_back(tfidf[i][j]*lookup(cg, p, content[i][j]));
             }
+            all_word_embedding.push_back(average(sentence_expression));
         }
         return average(all_word_embedding);
     }
@@ -105,7 +107,7 @@ public:
 
     ~GRU_CE() {}
 
-    Expression get_embedding(const CONTENT_TYPE &content, ComputationGraph &cg){
+    Expression get_embedding(const CONTENT_TYPE &content, const TFIDF_TYPE &tfidf, ComputationGraph &cg){
         std::vector<Expression> all_hidden;
 
         for (auto c:content){

@@ -25,11 +25,13 @@ struct Edge{
 };
 typedef std::vector<int> SENT_TYPE; //保存句子信息
 typedef std::vector<SENT_TYPE> CONTENT_TYPE; //保存content信息
+typedef std::vector<std::vector<float>> TFIDF_TYPE;
 
 struct ID_MAP{
     std::vector<std::string> id_to_node;
     std::unordered_map<std::string, unsigned> node_to_int;
     std::vector<CONTENT_TYPE> id_to_content;
+    std::vector<TFIDF_TYPE> id_to_tfidf;
     bool frozen;
     ID_MAP(): frozen(false) {};
     unsigned get_node_id(std::string node){
@@ -171,6 +173,7 @@ struct GraphData {
             }
             std::string::size_type start_pos=split_pos + 1;
             CONTENT_TYPE content;
+            TFIDF_TYPE tfidf;
             while(1){
                 std::string::size_type end_pos=line.find("||||", start_pos + 1);
                 if(end_pos==std::string::npos){
@@ -178,11 +181,46 @@ struct GraphData {
                 }
                 sub = line.substr(start_pos, end_pos-start_pos);
                 content.push_back(ReadSentence(sub, &d));
+                tfidf.push_back(std::vector<float>(content.back().size(),  1.0/content.back().size()));
                 start_pos=end_pos+4;
             }
 
             unsigned content_id=id_map.get_content_id(content);
+            id_map.id_to_tfidf.push_back(tfidf);
             vc_edgelist.push_back(Edge{node_id,content_id});
+        }
+    }
+
+    void read_tfidf_from_file(std::string tfidf_file_name){
+        std::cout<<"Load tf-idf"<<std::endl;
+        std::string line;
+        std::ifstream content_in(tfidf_file_name);
+        assert(content_in);
+        id_map.id_to_tfidf.clear();
+        assert(id_map.id_to_tfidf.size()==0);
+        while (getline(content_in, line)) {
+            std::string::size_type split_pos = line.find(' ');
+            std::string sub = line.substr(0, split_pos - 0);
+            unsigned node_id = id_map.get_node_id(sub);
+            if (node_id >= node_count) {
+                std::cerr << "Error!" << std::endl;
+                std::cout << node_id << std::endl;
+                exit(0);
+            }
+            std::string::size_type start_pos=split_pos + 1;
+            TFIDF_TYPE tfidf;
+            while(1){
+                std::string::size_type end_pos=line.find("||||", start_pos + 1);
+                if(end_pos==std::string::npos){
+                    break;
+                }
+                sub = line.substr(start_pos, end_pos-start_pos);
+                std::istringstream buffer(sub);
+                tfidf.push_back(std::vector<float>((std::istream_iterator<float>(buffer)),
+                                                         std::istream_iterator<float>()));
+                start_pos=end_pos+4;
+            }
+            id_map.id_to_tfidf.push_back(tfidf);
         }
     }
 

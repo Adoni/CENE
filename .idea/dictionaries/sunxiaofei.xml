@@ -2,6 +2,7 @@
   <dictionary name="sunxiaofei">
     <words>
       <w>interprocess</w>
+      <w>tfidf</w>
     </words>
   </dictionary>
 </component>
