@@ -25,7 +25,7 @@ public:
     std::string get_method_name() {
         return method_name;
     }
-    void initial_look_up_table(std::string file_name, Dict &d) {
+    void initial_look_up_table_from_file(std::string file_name, Dict &d) {
         std::cout << "Initializing lookup table from " << file_name << " ..." <<std::endl;
         std::string UNK="UNKNOWN_WORD";
         std::ifstream em_in(file_name);
@@ -51,6 +51,18 @@ public:
         std::cout << "Initialize " << initialized_word_count << " words" << std::endl;
         std::cout << d.size() - initialized_word_count << " words not initialized" << std::endl;
     }
+
+    void initial_look_up_table(unsigned lookup_table_size) {
+        std::vector<float> init(W_EM_DIM);
+        std::uniform_real_distribution<> dis(-0.5, 0.5);
+        for (int i = 0; i < lookup_table_size; i++) {
+            for (int j = 0; j < init.size(); j++) {
+                init[j] = (float) dis(*cnn::rndeng) / W_EM_DIM;
+            }
+            p->Initialize(i, init);
+        }
+    }
+
     LookupParameters *p;
     unsigned W_EM_DIM;
     unsigned C_EM_DIM;
@@ -63,24 +75,25 @@ public:
             Model& model,
             unsigned word_embedding_size,
             unsigned content_embedding_size,
-            std::string word_embedding_file,
             Dict &d){
         assert(word_embedding_size==content_embedding_size);
         this->W_EM_DIM = word_embedding_size;
         this->C_EM_DIM = content_embedding_size;
         this->method_name = "WordAvg";
         p = model.add_lookup_parameters(d.size(), {W_EM_DIM});
-        initial_look_up_table(word_embedding_file, d);
+        initial_look_up_table(d.size());
     }
 
     ~WordAvg_CE() {}
 
     Expression get_embedding(const CONTENT_TYPE &content, const TFIDF_TYPE &tfidf, ComputationGraph &cg){
         std::vector<Expression> all_word_embedding;
+        assert(content.size()==tfidf.size());
         for (int i=0;i<content.size();i++){
             std::vector<Expression> sentence_expression;
+//            assert(content[j].size()==tfidf[j].size());
             for (int j=0;j<content[i].size();j++){
-                sentence_expression.push_back(tfidf[i][j]*lookup(cg, p, content[i][j]));
+                sentence_expression.push_back(lookup(cg, p, content[i][j]));
             }
             all_word_embedding.push_back(average(sentence_expression));
         }
@@ -95,14 +108,13 @@ public:
             Model& model,
             unsigned word_embedding_size,
             unsigned content_embedding_size,
-            std::string word_embedding_file,
             Dict &d){
         this->W_EM_DIM = word_embedding_size;
         this->C_EM_DIM = content_embedding_size;
         this->method_name = "GRU";
         builder=GRUBuilder(1, W_EM_DIM, C_EM_DIM, &model);
         p = model.add_lookup_parameters(d.size(), {W_EM_DIM});
-        initial_look_up_table(word_embedding_file, d);
+        initial_look_up_table(d.size());
     }
 
     ~GRU_CE() {}

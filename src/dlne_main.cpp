@@ -53,7 +53,7 @@ void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
         cerr << dcmdline_options << endl;
         exit(1);
     }
-    vector<string> required_options{"graph_file", "content_file", "word_embedding_file", "eta0", "eta_decay", "workers",
+    vector<string> required_options{"graph_file", "content_file", "eta0", "eta_decay", "workers",
                                     "iterations", "batch_size", "save_every_i", "update_epoch_every_i", "report_every_i",
                                     "vertex_negative", "content_negative", "alpha", "strictly_content_required"};
 
@@ -91,12 +91,16 @@ int main(int argc, char **argv) {
 
     ContentEmbeddingMethod *content_embedding_method;
     if (conf["embedding_method"].as<std::string>()=="WordAvg"){
-        content_embedding_method = new WordAvg_CE(model, W_EM_DIM, C_EM_DIM, conf["word_embedding_file"].as<string>(), d);
+        content_embedding_method = new WordAvg_CE(model, W_EM_DIM, C_EM_DIM, d);
     } else if(conf["embedding_method"].as<std::string>()=="GRU"){
-        content_embedding_method = new GRU_CE(model, W_EM_DIM, C_EM_DIM, conf["word_embedding_file"].as<string>(), d);
+        content_embedding_method = new GRU_CE(model, W_EM_DIM, C_EM_DIM,  d);
     }else{
         std::cerr<<"Unsupported embedding method"<<std::endl;
         return 1;
+    }
+
+    if (conf.count("word_embedding_file")){
+        content_embedding_method->initial_look_up_table_from_file(conf["word_embedding_file"].as<string>(), d);
     }
 
     DLNEModel dlne(model, graph_data.node_count, V_NEG, C_NEG, V_EM_DIM, content_embedding_method);
