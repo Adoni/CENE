@@ -81,6 +81,8 @@ int main(int argc, char **argv) {
     po::variables_map conf;
     InitCommandLine(argc, argv, &conf);
     cnn::Dict d;
+    cout << "Pid: " << getpid() << endl;
+    output_all_information(argc, argv);
     GraphData graph_data(conf["graph_file"].as<string>(), conf["content_file"].as<string>(), conf["strictly_content_required"].as<bool>(), d);
     if(conf.count("tfidf_file")){
         graph_data.read_tfidf_from_file(conf["tfidf_file"].as<string>());
