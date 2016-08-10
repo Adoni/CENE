@@ -66,6 +66,16 @@ void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
     }
 }
 
+void output_all_information(int argc, char **argv){
+    std::ostringstream ss;
+    ss << getpid() << "_info.data";
+    std::ofstream output_file(ss.str());
+    for(int i=0; i < argc; i++){
+        output_file<<argv[i]<<std::endl;
+    }
+}
+
+
 int main(int argc, char **argv) {
     cnn::Initialize(argc, argv, 1, true);
     po::variables_map conf;
