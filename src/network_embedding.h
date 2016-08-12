@@ -131,7 +131,7 @@ struct DLNEModel {
                 errs.push_back(log(logistic( dot_product(i_x_u, i_x_v) )));
             }
             else {
-                errs.push_back(log(logistic(-1 * dot_product(i_x_u, i_x_v) )));
+                errs.push_back(log(logistic(-1 * dot_product(i_x_u, i_W_vv*i_x_v) )));
             }
         }
 
