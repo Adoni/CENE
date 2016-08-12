@@ -128,10 +128,10 @@ struct DLNEModel {
             int relation_type = graph_data.relation_type(edge.u, v);
             if (relation_type == 1) {
 //                errs.push_back(log(logistic(dot_product(i_x_u, i_x_v))));
-                errs.push_back(log(logistic(i_x_u*i_W_vv*i_x_v)));
+                errs.push_back(log(logistic(dot_product(i_x_u*i_W_vv, i_x_v))));
             }
             else {
-                errs.push_back(log(logistic(-1 * i_x_u*i_W_vv*i_x_v)));
+                errs.push_back(log(logistic(-1 * dot_product(i_x_u*i_W_vv, i_x_v))));
             }
         }
 
