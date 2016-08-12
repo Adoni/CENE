@@ -30,6 +30,8 @@ using namespace cnn;
 struct DLNEModel {
     LookupParameters *p_u; //lookup table for U nodes
     LookupParameters *p_v; //lookup table for V nodes
+    Parameters *W_vv;
+    Parameters *W_vc;
     unsigned NODE_SIZE;
     unsigned V_EM_DIM;
     unsigned V_NEG;
@@ -45,6 +47,8 @@ struct DLNEModel {
         assert(content_embedding_method->C_EM_DIM == V_EM_DIM);
         p_u = model.add_lookup_parameters(NODE_SIZE, {V_EM_DIM});
         p_v = model.add_lookup_parameters(NODE_SIZE, {V_EM_DIM});
+        W_vv = model.add_parameters({V_EM_DIM,V_EM_DIM});
+        W_vv = model.add_parameters({V_EM_DIM,content_embedding_method->C_EM_DIM});
         init_params();
         std::cout << "Method name: " << content_embedding_method->get_method_name() << std::endl;
         to_be_saved_index.resize(NODE_SIZE);
@@ -118,14 +122,16 @@ struct DLNEModel {
         std::vector<Expression> errs;
         Expression i_x_u = lookup(cg, p_u, edge.u);
         auto negative_samples = graph_data.vv_neg_sample(V_NEG + 1, edge);
+        Expression i_W_vv = parameter(cg, W_vv);
         for (int v:negative_samples) {
             Expression i_x_v = lookup(cg, p_v, v);
             int relation_type = graph_data.relation_type(edge.u, v);
             if (relation_type == 1) {
-                errs.push_back(log(logistic(dot_product(i_x_u, i_x_v))));
+//                errs.push_back(log(logistic(dot_product(i_x_u, i_x_v))));
+                errs.push_back(log(logistic(i_x_u*i_W_vv*i_x_v)));
             }
             else {
-                errs.push_back(log(logistic(-1 * dot_product(i_x_u, i_x_v))));
+                errs.push_back(log(logistic(-1 * i_x_u*i_W_vv*i_x_v)));
             }
         }
 
