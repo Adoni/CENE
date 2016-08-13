@@ -147,7 +147,7 @@ struct DLNEModel {
         Expression i_x_u_v = lookup(cg, p_v, edge.u);
         Expression i_x_u = concatenate({i_x_u_u,i_x_u_v});
         auto negative_samples = graph_data.vc_neg_sample(V_NEG + 1, edge);
-        Expression i_W_vc = parameter(cg, W_vv);
+        Expression i_W_vc = parameter(cg, W_vc);
         for (int i = 0; i < negative_samples.size(); i++) {
             int c = negative_samples[i];
             Expression i_x_c = content_embedding_method->get_embedding(graph_data.id_map.id_to_content[c],

@@ -104,8 +104,8 @@
       <file leaf-file-name="network_embedding.h" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/network_embedding.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6031363">
-              <caret line="47" column="47" selection-start-line="47" selection-start-column="47" selection-end-line="47" selection-end-column="47" />
+            <state vertical-scroll-proportion="0.66827506">
+              <caret line="149" column="40" selection-start-line="149" selection-start-column="40" selection-end-line="149" selection-end-column="40" />
               <folding />
             </state>
           </provider>
@@ -857,8 +857,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/network_embedding.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6031363">
-          <caret line="47" column="47" selection-start-line="47" selection-start-column="47" selection-end-line="47" selection-end-column="47" />
+        <state vertical-scroll-proportion="0.66827506">
+          <caret line="149" column="40" selection-start-line="149" selection-start-column="40" selection-end-line="149" selection-end-column="40" />
           <folding />
         </state>
       </provider>
