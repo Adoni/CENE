@@ -44,11 +44,11 @@ struct DLNEModel {
                        ContentEmbeddingMethod *content_embedding_method)
             : NODE_SIZE(NODE_SIZE), V_EM_DIM(V_EM_DIM), V_NEG(V_NEG),
               C_NEG(C_NEG), content_embedding_method(content_embedding_method) {
-        assert(content_embedding_method->C_EM_DIM == V_EM_DIM);
+        assert(content_embedding_method->C_EM_DIM == V_EM_DIM*2);
         p_u = model.add_lookup_parameters(NODE_SIZE, {V_EM_DIM});
         p_v = model.add_lookup_parameters(NODE_SIZE, {V_EM_DIM});
         W_vv = model.add_parameters({V_EM_DIM,V_EM_DIM});
-        W_vv = model.add_parameters({V_EM_DIM,content_embedding_method->C_EM_DIM});
+        W_vc = model.add_parameters({V_EM_DIM*2,content_embedding_method->C_EM_DIM});
         init_params();
         std::cout << "Method name: " << content_embedding_method->get_method_name() << std::endl;
         to_be_saved_index.resize(NODE_SIZE);
@@ -127,8 +127,7 @@ struct DLNEModel {
             Expression i_x_v = lookup(cg, p_v, v);
             int relation_type = graph_data.relation_type(edge.u, v);
             if (relation_type == 1) {
-//                errs.push_back(log(logistic(dot_product(i_x_u, i_x_v))));
-                errs.push_back(log(logistic( dot_product(i_x_u, i_x_v) )));
+                errs.push_back(log(logistic( dot_product(i_x_u, i_W_vv*i_x_v) )));
             }
             else {
                 errs.push_back(log(logistic(-1 * dot_product(i_x_u, i_W_vv*i_x_v) )));
@@ -144,7 +143,9 @@ struct DLNEModel {
     cnn::real TrainVCEdge(const Edge edge, GraphData &graph_data) {
         ComputationGraph cg;
         std::vector<Expression> errs;
-        Expression i_x_u = lookup(cg, p_u, edge.u);
+        Expression i_x_u_u = lookup(cg, p_u, edge.u);
+        Expression i_x_u_v = lookup(cg, p_v, edge.u);
+        Expression i_x_u = concatenate({i_x_u_u,i_x_u_v});
         auto negative_samples = graph_data.vc_neg_sample(V_NEG + 1, edge);
         Expression i_W_vc = parameter(cg, W_vv);
         for (int i = 0; i < negative_samples.size(); i++) {
