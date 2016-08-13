@@ -99,7 +99,7 @@ int main(int argc, char **argv) {
     unsigned C_NEG=conf["content_negative"].as<unsigned>();
     unsigned V_EM_DIM=100;
     unsigned W_EM_DIM=100;
-    unsigned C_EM_DIM=200;
+    unsigned C_EM_DIM=100;
 
     ContentEmbeddingMethod *content_embedding_method;
     if (conf["embedding_method"].as<std::string>()=="WordAvg"){
