@@ -122,15 +122,15 @@ struct DLNEModel {
         std::vector<Expression> errs;
         Expression i_x_u = lookup(cg, p_u, edge.u);
         auto negative_samples = graph_data.vv_neg_sample(V_NEG + 1, edge);
-        Expression i_W_vv = parameter(cg, W_vv);
+        // Expression i_W_vv = parameter(cg, W_vv);
         for (int v:negative_samples) {
             Expression i_x_v = lookup(cg, p_v, v);
             int relation_type = graph_data.relation_type(edge.u, v);
             if (relation_type == 1) {
-                errs.push_back(log(logistic( dot_product(i_x_u, i_W_vv*i_x_v) )));
+                errs.push_back(log(logistic( dot_product(i_x_u, i_x_v) )));
             }
             else {
-                errs.push_back(log(logistic(-1 * dot_product(i_x_u, i_W_vv*i_x_v) )));
+                errs.push_back(log(logistic(-1 * dot_product(i_x_u, i_x_v) )));
             }
         }
 
@@ -153,10 +153,10 @@ struct DLNEModel {
             Expression i_x_c = content_embedding_method->get_embedding(graph_data.id_map.id_to_content[c],
                                                                        graph_data.id_map.id_to_tfidf[c], cg);
             if (i == 0) {
-                errs.push_back(log(logistic(dot_product(i_x_u, i_W_vc*i_x_c))));
+                errs.push_back(log(logistic(dot_product(i_x_u, i_x_c))));
             }
             else {
-                errs.push_back(log(logistic(-1 * dot_product(i_x_u, i_W_vc*i_x_c))));
+                errs.push_back(log(logistic(-1 * dot_product(i_x_u, i_x_c))));
             }
 
         }
