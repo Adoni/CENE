@@ -66,6 +66,7 @@ struct GraphData {
     unsigned node_count; // 节点数量
     std::vector<std::unordered_set<unsigned>> vv_utov_graph; //保存以u为中心点的vv邻接表
     std::vector<std::unordered_set<unsigned>> vv_vtou_graph; //保存以v为中心点的vc邻接表,作用是构建负采样表
+    std::vector<std::unordered_set<unsigned>> vc_graph;
     unsigned long vv_table_size; //vv负采样表的大小
     std::vector<Edge> vv_edgelist; //保存所有vv边
     std::vector<Edge> vc_edgelist; //保存所有vc边
@@ -162,6 +163,7 @@ struct GraphData {
         std::string line;
         std::ifstream content_in(content_file_name);
         assert(content_in);
+        vc_graph.resize(node_count);
         while (getline(content_in, line)) {
             std::string::size_type split_pos = line.find(' ');
             std::string sub = line.substr(0, split_pos - 0);
@@ -187,6 +189,7 @@ struct GraphData {
 
             unsigned content_id=id_map.get_content_id(content);
             id_map.id_to_tfidf.push_back(tfidf);
+            vc_graph[node_id].insert(content_id);
             vc_edgelist.push_back(Edge{node_id,content_id});
         }
     }

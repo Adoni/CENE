@@ -47,9 +47,9 @@ struct DLNEModel {
 //        assert(content_embedding_method->C_EM_DIM == V_EM_DIM*2);
         p_u = model.add_lookup_parameters(NODE_SIZE, {V_EM_DIM});
         p_v = model.add_lookup_parameters(NODE_SIZE, {V_EM_DIM});
-        W_vv = model.add_parameters({V_EM_DIM,V_EM_DIM});
-        W_vc = model.add_parameters({V_EM_DIM*2,content_embedding_method->C_EM_DIM});
-//        init_params();
+        W_vv = model.add_parameters({V_EM_DIM, V_EM_DIM});
+        W_vc = model.add_parameters({V_EM_DIM * 2, content_embedding_method->C_EM_DIM});
+        init_params();
         std::cout << "Method name: " << content_embedding_method->get_method_name() << std::endl;
         to_be_saved_index.resize(NODE_SIZE);
         std::iota(to_be_saved_index.begin(), to_be_saved_index.end(), 0);
@@ -127,10 +127,10 @@ struct DLNEModel {
             Expression i_x_v = lookup(cg, p_v, v);
             int relation_type = graph_data.relation_type(edge.u, v);
             if (relation_type == 1) {
-                errs.push_back(log(logistic( dot_product(i_x_u, i_x_v) )));
+                errs.push_back(log(logistic(dot_product(i_x_u, i_x_v))));
             }
             else {
-                errs.push_back(log(logistic(-1 * dot_product(i_x_u, i_x_v) )));
+                errs.push_back(log(logistic(-1 * dot_product(i_x_u, i_x_v))));
             }
         }
 
@@ -145,7 +145,7 @@ struct DLNEModel {
         std::vector<Expression> errs;
         Expression i_x_u_u = lookup(cg, p_u, edge.u);
         Expression i_x_u_v = lookup(cg, p_v, edge.u);
-        Expression i_x_u = concatenate({i_x_u_u,i_x_u_v});
+        Expression i_x_u = concatenate({i_x_u_u, i_x_u_v});
         auto negative_samples = graph_data.vc_neg_sample(V_NEG + 1, edge);
         Expression i_W_vc = parameter(cg, W_vc);
         for (int i = 0; i < negative_samples.size(); i++) {
@@ -168,24 +168,27 @@ struct DLNEModel {
 
     void SaveEmbedding(std::string file_name, GraphData &graph_data) {
         std::cout << "Saving to " << file_name << std::endl;
-        ComputationGraph cg;
+
         std::ofstream output_file(file_name);
         output_file << NODE_SIZE << " " << V_EM_DIM * 2 << "\n";
         for (auto node_id:to_be_saved_index) {
+            ComputationGraph cg;
             std::string node = graph_data.id_map.id_to_node[node_id];
             output_file << node << " ";
             auto value_u = as_vector(lookup(cg, p_u, node_id).value());
             std::copy(value_u.begin(), value_u.end(), std::ostream_iterator<float>(output_file, " "));
             auto value_v = as_vector(lookup(cg, p_v, node_id).value());
             std::copy(value_v.begin(), value_v.end(), std::ostream_iterator<float>(output_file, " "));
+            std::vector <Expression> content_embedding;
+            for (auto content_id:graph_data.vc_graph[node_id]) {
+                content_embedding.push_back(
+                        content_embedding_method->get_embedding(graph_data.id_map.id_to_content[content_id],
+                                                                graph_data.id_map.id_to_tfidf[content_id], cg));
+            }
+            auto value_c = as_vector(cg.forward());
+            std::copy(value_c.begin(), value_c.end(), std::ostream_iterator<float>(output_file, " "));
             output_file << "\n";
         }
-    }
-
-    float test_tmp(unsigned edge_id, GraphData &graph_data) {
-        ComputationGraph cg;
-        auto value_u = as_vector(lookup(cg, p_u, graph_data.vv_edgelist[edge_id].u).value());
-        return value_u[0];
     }
 
     std::string get_learner_name() {

@@ -8,7 +8,6 @@
 #include "graph_data.h"
 #include "embedding_methods.h"
 #include "network_embedding.h"
-#include "simple_mp_train.h"
 #include "mp_train.h"
 #include "sp_train.h"
 

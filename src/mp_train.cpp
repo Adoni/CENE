@@ -171,8 +171,8 @@ namespace mp_train {
             if (dis(*cnn::rndeng) < alpha) {
                 vv_or_vc = 0;
                 if (vv_begin == vv_train_indices.end()) {
-                    vv_begin = vv_train_indices.begin();
                     std::shuffle(vv_train_indices.begin(), vv_train_indices.end(), (*cnn::rndeng));
+                    vv_begin = vv_train_indices.begin();
                 }
                 std::vector<unsigned>::iterator end = vv_begin + batch_size;
                 if (end > vv_train_indices.end()) {
