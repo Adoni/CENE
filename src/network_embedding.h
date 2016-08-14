@@ -49,7 +49,7 @@ struct DLNEModel {
         p_v = model.add_lookup_parameters(NODE_SIZE, {V_EM_DIM});
         W_vv = model.add_parameters({V_EM_DIM,V_EM_DIM});
         W_vc = model.add_parameters({V_EM_DIM*2,content_embedding_method->C_EM_DIM});
-        init_params();
+//        init_params();
         std::cout << "Method name: " << content_embedding_method->get_method_name() << std::endl;
         to_be_saved_index.resize(NODE_SIZE);
         std::iota(to_be_saved_index.begin(), to_be_saved_index.end(), 0);
