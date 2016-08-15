@@ -44,7 +44,6 @@ struct DLNEModel {
                        ContentEmbeddingMethod *content_embedding_method)
             : NODE_SIZE(NODE_SIZE), V_EM_DIM(V_EM_DIM), V_NEG(V_NEG),
               C_NEG(C_NEG), content_embedding_method(content_embedding_method) {
-//        assert(content_embedding_method->C_EM_DIM == V_EM_DIM*2);
         p_u = model.add_lookup_parameters(NODE_SIZE, {V_EM_DIM});
         p_v = model.add_lookup_parameters(NODE_SIZE, {V_EM_DIM});
         W_vv = model.add_parameters({V_EM_DIM, V_EM_DIM});
