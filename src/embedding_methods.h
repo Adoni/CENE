@@ -126,12 +126,11 @@ public:
         for (auto c:content) {
             builder.new_graph(cg);
             builder.start_new_sequence();
-            std::vector<Expression> sent;
             for (auto w:c) {
                 Expression i_x_t = lookup(cg, p, w);
-                sent.push_back(builder.add_input(i_x_t));
+                builder.add_input(i_x_t);
             }
-            all_hidden.push_back(average(sent));
+            all_hidden.push_back(builder.back());
         }
         return average(all_hidden);
     }
