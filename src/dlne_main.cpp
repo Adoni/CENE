@@ -105,6 +105,8 @@ int main(int argc, char **argv) {
         content_embedding_method = new WordAvg_CE(model, W_EM_DIM, C_EM_DIM, d);
     } else if(conf["embedding_method"].as<std::string>()=="GRU"){
         content_embedding_method = new GRU_CE(model, W_EM_DIM, C_EM_DIM,  d);
+    }else if(conf["embedding_method"].as<std::string>()=="CNN"){
+        content_embedding_method = new CNN_CE(model, W_EM_DIM, C_EM_DIM, {{2,1},{3,1},{4,1}}, d);
     }else{
         std::cerr<<"Unsupported embedding method"<<std::endl;
         return 1;

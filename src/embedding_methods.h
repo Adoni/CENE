@@ -138,9 +138,15 @@ public:
 
 class CNN_CE : public ContentEmbeddingMethod {
 public:
-    explicit CNN_CE(cnn::Model &model, unsigned input_dim, unsigned output_dim,
-           const std::vector<std::pair<unsigned, unsigned>> &info) :
-            zeros(input_dim, 0.), filters_info(info) {
+    explicit CNN_CE(cnn::Model &model, unsigned word_embedding_size, unsigned content_embedding_size,
+           const std::vector<std::pair<unsigned, unsigned>> &info, Dict &d) :
+            zeros(word_embedding_size, 0.), filters_info(info) {
+        this->W_EM_DIM = word_embedding_size;
+        this->C_EM_DIM = content_embedding_size;
+        this->method_name = "CNN";
+        p = model.add_lookup_parameters(d.size(), {W_EM_DIM});
+        initial_look_up_table(d.size());
+
         unsigned n_filter_types = info.size();
         unsigned combined_dim = 0;
         p_filters.resize(n_filter_types);
@@ -151,19 +157,24 @@ public:
             p_filters[i].resize(nb_filters);
             p_biases[i].resize(nb_filters);
             for (unsigned j = 0; j < nb_filters; ++j) {
-                p_filters[i][j] = model.add_parameters({input_dim, filter_width});
-                p_biases[i][j] = model.add_parameters({input_dim});
-                combined_dim += input_dim;
+                p_filters[i][j] = model.add_parameters({W_EM_DIM, filter_width});
+                p_biases[i][j] = model.add_parameters({W_EM_DIM});
+                combined_dim += W_EM_DIM;
             }
         }
-        p_W = model.add_parameters({output_dim, combined_dim});
+        p_W = model.add_parameters({C_EM_DIM, combined_dim});
     }
 
 
-    cnn::expr::Expression get_embedding(cnn::ComputationGraph *cg, std::vector<cnn::expr::Expression> &c) {
-        unsigned len = c.size();
-        auto padding = cnn::expr::zeroes(*cg, {(unsigned int)zeros.size()});
-        std::vector<cnn::expr::Expression> s(c);
+    cnn::expr::Expression get_embedding(const CONTENT_TYPE &content, const TFIDF_TYPE &tfidf, ComputationGraph &cg) {
+        unsigned len = content.size();
+        auto padding = cnn::expr::zeroes(cg, {(unsigned int)zeros.size()});
+        std::vector<cnn::expr::Expression> s;
+        for(auto c:content){
+            for(auto w:c){
+                s.push_back(const_lookup(cg, p, w));
+            }
+        }
         std::vector<cnn::expr::Expression> tmp;
         for (unsigned ii = 0; ii < filters_info.size(); ++ii) {
             const auto &filter_width = filters_info[ii].first;
@@ -171,8 +182,8 @@ public:
 
             for (unsigned p = 0; p < filter_width - 1; ++p) { s.push_back(padding); }
             for (unsigned jj = 0; jj < nb_filters; ++jj) {
-                auto filter = cnn::expr::parameter(*cg, p_filters[ii][jj]);
-                auto bias = cnn::expr::parameter(*cg, p_biases[ii][jj]);
+                auto filter = cnn::expr::parameter(cg, p_filters[ii][jj]);
+                auto bias = cnn::expr::parameter(cg, p_biases[ii][jj]);
                 auto t = cnn::expr::conv1d_narrow(cnn::expr::concatenate_cols(s), filter);
                 t = colwise_add(t, bias);
                 t = cnn::expr::rectify(cnn::expr::kmax_pooling(t, 1));
@@ -180,7 +191,7 @@ public:
             }
             for (unsigned p = 0; p < filter_width - 1; ++p) { s.pop_back(); }
         }
-        return cnn::expr::parameter(*cg, p_W) * cnn::expr::concatenate(tmp);
+        return cnn::expr::parameter(cg, p_W) * cnn::expr::concatenate(tmp);
     }
 
     std::vector<std::vector<cnn::Parameters*>> p_filters;
