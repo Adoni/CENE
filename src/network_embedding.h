@@ -13,7 +13,7 @@
 #include "cnn/gru.h"
 #include "cnn/lstm.h"
 #include "cnn/dict.h"
-# include "cnn/expr.h"
+#include "cnn/expr.h"
 
 #include "graph_data.h"
 #include "embedding_methods.h"

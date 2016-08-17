@@ -53,7 +53,8 @@ void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
         exit(1);
     }
     vector<string> required_options{"graph_file", "content_file", "eta0", "eta_decay", "workers",
-                                    "iterations", "batch_size", "save_every_i", "update_epoch_every_i", "report_every_i",
+                                    "iterations", "batch_size", "save_every_i", "update_epoch_every_i",
+                                    "report_every_i",
                                     "vertex_negative", "content_negative", "alpha", "strictly_content_required"};
 
     for (auto opt_str:required_options) {
@@ -65,12 +66,12 @@ void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
     }
 }
 
-void output_all_information(int argc, char **argv){
+void output_all_information(int argc, char **argv) {
     std::ostringstream ss;
     ss << getpid() << "_info.data";
     std::ofstream output_file(ss.str());
-    for(int i=0; i < argc; i++){
-        output_file<<argv[i]<<std::endl;
+    for (int i = 0; i < argc; i++) {
+        output_file << argv[i] << std::endl;
     }
 }
 
@@ -82,8 +83,9 @@ int main(int argc, char **argv) {
     cnn::Dict d;
     cout << "Pid: " << getpid() << endl;
     output_all_information(argc, argv);
-    GraphData graph_data(conf["graph_file"].as<string>(), conf["content_file"].as<string>(), conf["strictly_content_required"].as<bool>(), d);
-    if(conf.count("tfidf_file")){
+    GraphData graph_data(conf["graph_file"].as<string>(), conf["content_file"].as<string>(),
+                         conf["strictly_content_required"].as<bool>(), d);
+    if (conf.count("tfidf_file")) {
         graph_data.read_tfidf_from_file(conf["tfidf_file"].as<string>());
     }
     cout << "Vocabulary count: " << d.size() << endl;
@@ -91,42 +93,46 @@ int main(int argc, char **argv) {
     cout << "VV link count: " << graph_data.vv_edgelist.size() << endl;
     cout << "VC link count: " << graph_data.vc_edgelist.size() << endl;
     Model model;
-    std::cout<<"DBLP trainer: "<<model.parameters_list().size()<<std::endl;
+    std::cout << "DBLP trainer: " << model.parameters_list().size() << std::endl;
 
 
-    unsigned V_NEG=conf["vertex_negative"].as<unsigned>();
-    unsigned C_NEG=conf["content_negative"].as<unsigned>();
-    unsigned V_EM_DIM=100;
-    unsigned W_EM_DIM=200;
-    unsigned C_EM_DIM=200;
+    unsigned V_NEG = conf["vertex_negative"].as<unsigned>();
+    unsigned C_NEG = conf["content_negative"].as<unsigned>();
+    unsigned V_EM_DIM = 100;
+    unsigned W_EM_DIM = 200;
+    unsigned C_EM_DIM = 200;
 
     ContentEmbeddingMethod *content_embedding_method;
-    if (conf["embedding_method"].as<std::string>()=="WordAvg"){
+    if (conf["embedding_method"].as<std::string>() == "WordAvg") {
         content_embedding_method = new WordAvg_CE(model, W_EM_DIM, C_EM_DIM, d);
-    } else if(conf["embedding_method"].as<std::string>()=="GRU"){
-        content_embedding_method = new GRU_CE(model, W_EM_DIM, C_EM_DIM,  d);
-    }else if(conf["embedding_method"].as<std::string>()=="CNN"){
-        content_embedding_method = new CNN_CE(model, W_EM_DIM, C_EM_DIM, {{2,1},{3,1},{4,1}}, d);
-    }else{
-        std::cerr<<"Unsupported embedding method"<<std::endl;
+    } else if (conf["embedding_method"].as<std::string>() == "GRU") {
+        content_embedding_method = new GRU_CE(model, W_EM_DIM, C_EM_DIM, d);
+    } else if (conf["embedding_method"].as<std::string>() == "CNN") {
+        content_embedding_method = new CNN_CE(model, W_EM_DIM, C_EM_DIM, {{2, 1},
+                                                                          {3, 1},
+                                                                          {4, 1}}, d);
+    } else {
+        std::cerr << "Unsupported embedding method" << std::endl;
         return 1;
     }
 
-    if (conf.count("word_embedding_file")){
+    if (conf.count("word_embedding_file")) {
         content_embedding_method->initial_look_up_table_from_file(conf["word_embedding_file"].as<string>(), d);
     }
 
     DLNEModel dlne(model, graph_data.node_count, V_NEG, C_NEG, V_EM_DIM, content_embedding_method);
-    if(conf.count("vertex_embedding_file")){
+    if (conf.count("vertex_embedding_file")) {
         dlne.initialize_from_pretrained_vertex_embedding(conf["vertex_embedding_file"].as<string>(), graph_data);
     }
-    if(conf.count("to_be_saved_index_file_name")){
+    if (conf.count("to_be_saved_index_file_name")) {
         dlne.set_to_be_saved_index(conf["to_be_saved_index_file_name"].as<string>(), graph_data);
     }
     Trainer *sgd = nullptr;
-    sgd=new SimpleSGDTrainer(&model, 1e-6, conf["eta0"].as<float>());
+    sgd = new SimpleSGDTrainer(&model, 1e-6, conf["eta0"].as<float>());
     sgd->eta_decay = conf["eta_decay"].as<float>();
-    mp_train::RunMultiProcess(conf["workers"].as<unsigned>(), &dlne, sgd, graph_data, conf["iterations"].as<unsigned>(), conf["alpha"].as<float>(),
-                    conf["save_every_i"].as<unsigned>(), conf["update_epoch_every_i"].as<unsigned>(), conf["report_every_i"].as<unsigned>(), conf["batch_size"].as<unsigned>());
+    mp_train::RunMultiProcess(conf["workers"].as<unsigned>(), &dlne, sgd, graph_data, conf["iterations"].as<unsigned>(),
+                              conf["alpha"].as<float>(),
+                              conf["save_every_i"].as<unsigned>(), conf["update_epoch_every_i"].as<unsigned>(),
+                              conf["report_every_i"].as<unsigned>(), conf["batch_size"].as<unsigned>());
     return 0;
 }

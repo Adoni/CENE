@@ -230,7 +230,7 @@ struct GraphData {
     void InitUnigramTable() {
         vv_unitable.resize(vv_table_size);
         long long normalizer = 0;
-        double d1, power = 1.0;
+        double d1, power = 0.75;
         for (int a = 0; a < node_count; a++) normalizer += pow(vv_vtou_graph[a].size(), power);
         std::cout<<"normalizer: "<<normalizer<<std::endl;
         unsigned i = 0;
