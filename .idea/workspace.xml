@@ -68,7 +68,6 @@
     <list default="true" id="e8e586c5-adc0-4ac0-aa43-320980d1abe5" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cnn" afterPath="$PROJECT_DIR$/cnn" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/graph_data.h" afterPath="$PROJECT_DIR$/src/graph_data.h" />
     </list>
     <ignored path="DLNE.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -126,7 +125,7 @@
       <file leaf-file-name="graph_data.h" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/graph_data.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5760135">
+            <state vertical-scroll-proportion="0.4493243">
               <caret line="263" column="44" selection-start-line="263" selection-start-column="44" selection-end-line="263" selection-end-column="44" />
               <folding>
                 <element signature="e#171#191#0" expanded="true" />
@@ -155,7 +154,7 @@
         <entry file="file://$PROJECT_DIR$/src/mp_train.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="102" column="50" selection-start-line="102" selection-start-column="47" selection-end-line="102" selection-end-column="50" />
+              <caret line="199" column="44" selection-start-line="199" selection-start-column="40" selection-end-line="199" selection-end-column="44" />
               <folding>
                 <element signature="e#43#64#0" expanded="true" />
               </folding>
@@ -788,16 +787,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/mp_train.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="102" column="50" selection-start-line="102" selection-start-column="47" selection-end-line="102" selection-end-column="50" />
-          <folding>
-            <element signature="e#43#64#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cnn/cnn/conv.cc">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6282528">
@@ -836,9 +825,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/mp_train.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="199" column="44" selection-start-line="199" selection-start-column="40" selection-end-line="199" selection-end-column="44" />
+          <folding>
+            <element signature="e#43#64#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/graph_data.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5760135">
+        <state vertical-scroll-proportion="0.4493243">
           <caret line="263" column="44" selection-start-line="263" selection-start-column="44" selection-end-line="263" selection-end-column="44" />
           <folding>
             <element signature="e#171#191#0" expanded="true" />
