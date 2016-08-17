@@ -257,9 +257,11 @@ struct GraphData {
         vs[0] = edge.v;
         unsigned i = 1;
         std::random_device rd;
-        std::uniform_int_distribution<> dis(0, vv_table_size - 1);
+//        std::uniform_int_distribution<> dis(0, vv_table_size - 1);
+        std::uniform_int_distribution<> dis(0, node_count - 1);
         while (i < sample_size) {
-            unsigned nv = vv_unitable[dis(*cnn::rndeng)];
+//            unsigned nv = vv_unitable[dis(*cnn::rndeng)];
+            unsigned nv = dis(*cnn::rndeng);
             assert(nv<node_count);
             if (nv == edge.u || nv == edge.v || relation_type(edge.u, nv) == 1) continue;
             vs[i] = nv;
