@@ -38,6 +38,7 @@ void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
             ("alpha", po::value<float>(), "alpha to control the proportion of VV and VC")
             ("embedding_method", po::value<std::string>(), "method to learn embedding from content: WordAvg or GRU")
             ("strictly_content_required", po::value<bool>(), "if the content for each vertex is strictly required")
+            ("use_const_lookup", po::value<bool>(), "use const_lookup or lookup")
 
             ("help", "Help");
     po::options_description dcmdline_options;
@@ -55,7 +56,7 @@ void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
     vector<string> required_options{"graph_file", "content_file", "eta0", "eta_decay", "workers",
                                     "iterations", "batch_size", "save_every_i", "update_epoch_every_i",
                                     "report_every_i",
-                                    "vertex_negative", "content_negative", "alpha", "strictly_content_required"};
+                                    "vertex_negative", "content_negative", "alpha", "strictly_content_required","use_const_lookup"};
 
     for (auto opt_str:required_options) {
         if (conf->count(opt_str) == 0) {
@@ -104,9 +105,9 @@ int main(int argc, char **argv) {
 
     ContentEmbeddingMethod *content_embedding_method;
     if (conf["embedding_method"].as<std::string>() == "WordAvg") {
-        content_embedding_method = new WordAvg_CE(model, W_EM_DIM, C_EM_DIM, d);
+        content_embedding_method = new WordAvg_CE(model, W_EM_DIM, C_EM_DIM, conf["use_const_lookup"].as<bool>(), d);
     } else if (conf["embedding_method"].as<std::string>() == "GRU") {
-        content_embedding_method = new GRU_CE(model, W_EM_DIM, C_EM_DIM, d);
+        content_embedding_method = new GRU_CE(model, W_EM_DIM, C_EM_DIM, conf["use_const_lookup"].as<bool>(), d);
     } else if (conf["embedding_method"].as<std::string>() == "CNN") {
         content_embedding_method = new CNN_CE(model, W_EM_DIM, C_EM_DIM, {{2, 1},
                                                                           {3, 1},

@@ -68,6 +68,7 @@ public:
     unsigned W_EM_DIM;
     unsigned C_EM_DIM;
     std::string method_name;
+    bool use_const_lookup;
 };
 
 class WordAvg_CE : public ContentEmbeddingMethod {
@@ -76,11 +77,13 @@ public:
             Model &model,
             unsigned word_embedding_size,
             unsigned content_embedding_size,
+            bool use_const_lookup,
             Dict &d) {
         assert(word_embedding_size == content_embedding_size);
         this->W_EM_DIM = word_embedding_size;
         this->C_EM_DIM = content_embedding_size;
         this->method_name = "WordAvg";
+        this->use_const_lookup = use_const_lookup;
         p = model.add_lookup_parameters(d.size(), {W_EM_DIM});
         initial_look_up_table(d.size());
     }
@@ -93,7 +96,12 @@ public:
         for (int i = 0; i < content.size(); i++) {
             std::vector<Expression> sentence_expression;
             for (int j = 0; j < content[i].size(); j++) {
-                sentence_expression.push_back(const_lookup(cg, p, content[i][j]));
+                if(use_const_lookup){
+                    sentence_expression.push_back(const_lookup(cg, p, content[i][j]));
+                }
+                else{
+                    sentence_expression.push_back(lookup(cg, p, content[i][j]));
+                }
             }
             all_word_embedding.push_back(average(sentence_expression));
         }
@@ -109,10 +117,12 @@ public:
             Model &model,
             unsigned word_embedding_size,
             unsigned content_embedding_size,
+            bool use_const_lookup,
             Dict &d) {
         this->W_EM_DIM = word_embedding_size;
         this->C_EM_DIM = content_embedding_size;
         this->method_name = "GRU";
+        this->use_const_lookup=use_const_lookup;
         builder = GRUBuilder(1, W_EM_DIM, C_EM_DIM, &model);
         p = model.add_lookup_parameters(d.size(), {W_EM_DIM});
         initial_look_up_table(d.size());
@@ -127,8 +137,12 @@ public:
             builder.new_graph(cg);
             builder.start_new_sequence();
             for (auto w:c) {
-                Expression i_x_t = lookup(cg, p, w);
-                builder.add_input(i_x_t);
+                if(use_const_lookup){
+                    builder.add_input(const_lookup(cg, p, w));
+                }
+                else{
+                    builder.add_input(lookup(cg, p, w));
+                }
             }
             all_hidden.push_back(builder.back());
         }
