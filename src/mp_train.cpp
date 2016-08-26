@@ -212,7 +212,7 @@ namespace mp_train {
                 } else {
                     ss << "Eta = " << trainer->eta << "\tVC" << " loss = " << loss << std::endl;
                     std::string loss_info = ss.str();
-                    std::cout << loss_info << std::endl;
+                    std::cout << loss_info;
                     out_for_vc_losses << loss_info;
                 }
                 loss = 0.0;

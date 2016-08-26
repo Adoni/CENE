@@ -131,22 +131,18 @@ public:
     ~GRU_CE() { }
 
     Expression get_embedding(const CONTENT_TYPE &content, const TFIDF_TYPE &tfidf, ComputationGraph &cg) {
-        std::vector<Expression> all_hidden;
-
-        for (auto c:content) {
-            builder.new_graph(cg);
-            builder.start_new_sequence();
-            for (auto w:c) {
-                if(use_const_lookup){
-                    builder.add_input(const_lookup(cg, p, w));
-                }
-                else{
-                    builder.add_input(lookup(cg, p, w));
-                }
+        assert(content.size()==1);
+        builder.new_graph(cg);
+        builder.start_new_sequence();
+        for (auto w:content[0]) {
+            if(use_const_lookup){
+                builder.add_input(const_lookup(cg, p, w));
             }
-            all_hidden.push_back(builder.back());
+            else{
+                builder.add_input(lookup(cg, p, w));
+            }
         }
-        return average(all_hidden);
+        return builder.back();
     }
 };
 
@@ -186,7 +182,7 @@ public:
         std::vector<cnn::expr::Expression> s;
         for(auto c:content){
             for(auto w:c){
-                s.push_back(const_lookup(cg, p, w));
+                s.push_back(lookup(cg, p, w));
             }
         }
         std::vector<cnn::expr::Expression> tmp;
