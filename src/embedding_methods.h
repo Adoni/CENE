@@ -134,15 +134,16 @@ public:
         assert(content.size()==1);
         builder.new_graph(cg);
         builder.start_new_sequence();
+        std::vector<Expression> all_hidden;
         for (auto w:content[0]) {
             if(use_const_lookup){
-                builder.add_input(const_lookup(cg, p, w));
+                all_hidden.push_back(builder.add_input(const_lookup(cg, p, w)));
             }
             else{
-                builder.add_input(lookup(cg, p, w));
+                all_hidden.push_back(builder.add_input(lookup(cg, p, w)));
             }
         }
-        return builder.back();
+        return average(all_hidden);
     }
 };
 
