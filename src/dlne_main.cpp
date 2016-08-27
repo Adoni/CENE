@@ -107,7 +107,7 @@ int main(int argc, char **argv) {
     if (conf["embedding_method"].as<std::string>() == "WordAvg") {
         content_embedding_method = new WordAvg_CE(model, W_EM_DIM, C_EM_DIM, conf["use_const_lookup"].as<bool>(), d);
     } else if (conf["embedding_method"].as<std::string>() == "GRU") {
-        content_embedding_method = new GRU_CE(model, W_EM_DIM, C_EM_DIM, conf["use_const_lookup"].as<bool>(), d);
+        content_embedding_method = new GRU_CE(model, W_EM_DIM, C_EM_DIM, conf["use_const_lookup"].as<bool>(), graph_data, d);
     } else if (conf["embedding_method"].as<std::string>() == "CNN") {
         content_embedding_method = new CNN_CE(model, W_EM_DIM, C_EM_DIM, {{2, 1},
                                                                           {3, 1},

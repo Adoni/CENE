@@ -124,6 +124,7 @@ public:
             unsigned word_embedding_size,
             unsigned content_embedding_size,
             bool use_const_lookup,
+            GraphData &graph_data,
             Dict &d) {
         this->W_EM_DIM = word_embedding_size;
         this->C_EM_DIM = content_embedding_size;
@@ -135,6 +136,7 @@ public:
         p_R = model.add_parameters({d.size(), content_embedding_size});
         p_bias = model.add_parameters({d.size()});
         initial_look_up_table(d.size());
+        pretraining(graph_data, model);
     }
 
     ~GRU_CE() { }
@@ -156,6 +158,7 @@ public:
     }
 
     void pretraining(GraphData &graph_data, Model &model){
+        std::cout<<"Pretraining"<<std::endl;
         Trainer* sgd = nullptr;
         sgd = new SimpleSGDTrainer(&model);
         int counter=0;
