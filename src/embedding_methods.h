@@ -188,6 +188,7 @@ public:
                 s.push_back(lookup(cg, p, w));
             }
         }
+        assert(s.size()>0);
         std::vector<cnn::expr::Expression> tmp;
         for (unsigned ii = 0; ii < filters_info.size(); ++ii) {
             const auto &filter_width = filters_info[ii].first;
