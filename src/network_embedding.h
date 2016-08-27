@@ -149,8 +149,7 @@ struct DLNEModel {
         Expression i_W_vc = parameter(cg, W_vc);
         for (int i = 0; i < negative_samples.size(); i++) {
             int c = negative_samples[i];
-            Expression i_x_c = content_embedding_method->get_embedding(graph_data.id_map.id_to_content[c],
-                                                                       graph_data.id_map.id_to_tfidf[c], cg);
+            Expression i_x_c = content_embedding_method->get_embedding(graph_data.id_map.id_to_content[c], cg);
             if (i == 0) {
                 errs.push_back(log(logistic(dot_product(i_x_u, i_x_c))));
             }
@@ -181,8 +180,7 @@ struct DLNEModel {
             std::vector <Expression> content_embedding;
             for (auto content_id:graph_data.vc_graph[node_id]) {
                 content_embedding.push_back(
-                        content_embedding_method->get_embedding(graph_data.id_map.id_to_content[content_id],
-                                                                graph_data.id_map.id_to_tfidf[content_id], cg));
+                        content_embedding_method->get_embedding(graph_data.id_map.id_to_content[content_id], cg));
             }
             auto value_c = as_vector(cg.forward());
             std::copy(value_c.begin(), value_c.end(), std::ostream_iterator<float>(output_file, " "));

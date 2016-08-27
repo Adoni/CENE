@@ -21,9 +21,7 @@ class ContentEmbeddingMethod {
 public:
     virtual ~ContentEmbeddingMethod() { }
 
-    virtual Expression get_embedding(const CONTENT_TYPE &content, const TFIDF_TYPE &tfidf, ComputationGraph &cg) = 0;
-
-    virtual void pretraining(GraphData &graph_data,Model &model)=0;
+    virtual Expression get_embedding(const CONTENT_TYPE &content, ComputationGraph &cg) = 0;
 
     std::string get_method_name() {
         return method_name;
@@ -93,9 +91,8 @@ public:
 
     ~WordAvg_CE() { }
 
-    Expression get_embedding(const CONTENT_TYPE &content, const TFIDF_TYPE &tfidf, ComputationGraph &cg) {
+    Expression get_embedding(const CONTENT_TYPE &content, ComputationGraph &cg) {
         std::vector<Expression> all_word_embedding;
-        assert(content.size() == tfidf.size());
         for (int i = 0; i < content.size(); i++) {
             std::vector<Expression> sentence_expression;
             for (int j = 0; j < content[i].size(); j++) {
@@ -110,21 +107,17 @@ public:
         }
         return average(all_word_embedding);
     }
-    void pretraining(GraphData &graph_data,Model &model){}
 };
 
 class GRU_CE : public ContentEmbeddingMethod {
 public:
     GRUBuilder builder;
-    Parameters* p_R;
-    Parameters* p_bias;
 
     explicit GRU_CE(
             Model &model,
             unsigned word_embedding_size,
             unsigned content_embedding_size,
             bool use_const_lookup,
-            GraphData &graph_data,
             Dict &d) {
         this->W_EM_DIM = word_embedding_size;
         this->C_EM_DIM = content_embedding_size;
@@ -133,66 +126,26 @@ public:
 
         builder = GRUBuilder(1, W_EM_DIM, C_EM_DIM, &model);
         p = model.add_lookup_parameters(d.size(), {W_EM_DIM});
-        p_R = model.add_parameters({d.size(), content_embedding_size});
-        p_bias = model.add_parameters({d.size()});
         initial_look_up_table(d.size());
-        pretraining(graph_data, model);
     }
 
     ~GRU_CE() { }
 
-    Expression get_embedding(const CONTENT_TYPE &content, const TFIDF_TYPE &tfidf, ComputationGraph &cg) {
-        assert(content.size()==1);
-        builder.new_graph(cg);
-        builder.start_new_sequence();
+    Expression get_embedding(const CONTENT_TYPE &content, ComputationGraph &cg){
         std::vector<Expression> all_hidden;
-        for (auto w:content[0]) {
-            if(use_const_lookup){
-                all_hidden.push_back(builder.add_input(const_lookup(cg, p, w)));
+        assert(content.size()>0);
+        for (auto s:content){
+            assert(s.size()>0);
+            builder.new_graph(cg);
+            builder.start_new_sequence();
+            std::vector<Expression> sent;
+            for(auto w:s){
+                Expression i_x_t = lookup(cg, p, w);
+                sent.push_back(builder.add_input(i_x_t));
             }
-            else{
-                all_hidden.push_back(builder.add_input(lookup(cg, p, w)));
-            }
+            all_hidden.push_back(average(sent));
         }
         return average(all_hidden);
-    }
-
-    void pretraining(GraphData &graph_data, Model &model){
-        std::cout<<"Pretraining"<<std::endl;
-        Trainer* sgd = nullptr;
-        sgd = new SimpleSGDTrainer(&model);
-        int counter=0;
-        int total=graph_data.id_map.id_to_content.size();
-        float loss=0.0;
-        for(auto& content:graph_data.id_map.id_to_content){
-            std::cout<<"Pretraining: "<<counter<<"/"<<total<<std::endl;
-            for(auto& sent:content){
-                ComputationGraph cg;
-                sentence_pretraining(sent,cg);
-                loss += as_scalar(cg.forward());
-                cg.backward();
-                sgd->update();
-            }
-            counter+=1;
-        }
-    }
-
-    Expression sentence_pretraining(const SENT_TYPE  &sent, ComputationGraph& cg){
-        const unsigned slen = sent.size();
-        builder.new_graph(cg);  // reset RNN builder for new graph
-        builder.start_new_sequence();
-        Expression i_R = parameter(cg, p_R); // hidden -> word rep parameter
-        Expression i_bias = parameter(cg, p_bias);  // word bias
-        std::vector<Expression> errs;
-        for (unsigned t = 0; t < slen-1; ++t) {
-            Expression i_x_t = lookup(cg, p, sent[t]);
-            Expression i_y_t = builder.add_input(i_x_t);
-            Expression i_r_t =  i_bias + i_R * i_y_t;
-            Expression i_err = pickneglogsoftmax(i_r_t, sent[t+1]);
-            errs.push_back(i_err);
-        }
-        Expression i_nerr = sum(errs);
-        return i_nerr;
     }
 };
 
@@ -226,7 +179,7 @@ public:
     }
 
 
-    cnn::expr::Expression get_embedding(const CONTENT_TYPE &content, const TFIDF_TYPE &tfidf, ComputationGraph &cg) {
+    cnn::expr::Expression get_embedding(const CONTENT_TYPE &content, ComputationGraph &cg) {
         unsigned len = content.size();
         auto padding = cnn::expr::zeroes(cg, {(unsigned int)zeros.size()});
         std::vector<cnn::expr::Expression> s;
@@ -253,7 +206,6 @@ public:
         }
         return cnn::expr::parameter(cg, p_W) * cnn::expr::concatenate(tmp);
     }
-    void pretraining(GraphData &graph_data,Model &model){}
 
 
     std::vector<std::vector<cnn::Parameters*>> p_filters;
