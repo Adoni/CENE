@@ -120,7 +120,7 @@ namespace mp_train {
         return workloads;
     }
 
-    void RunParent(GraphData &graph_data, DLNEModel *learner, Trainer *trainer,
+    void RunParent(GraphData &graph_data, DLNEModel *learner, Trainer *params_trainer, Trainer *lookup_params_trainer,
                    std::vector<Workload> &workloads, unsigned num_iterations,
                    float alpha, unsigned save_every_i, unsigned update_epoch_every_i, unsigned report_every_i,
                    unsigned batch_size) {
@@ -195,22 +195,21 @@ namespace mp_train {
                 vc_begin = end;
             }
 
+            params_trainer->update();
+
             if (iter % update_epoch_every_i == 0) {
-                trainer->update_epoch();
-//                trainer->eta = trainer->eta0 * ((cnn::real)1.0 - (cnn::real)1.0 * iter / num_iterations);
-//                if (trainer->eta < trainer->eta0 * (cnn::real) 0.0001) {
-//                    trainer->eta = trainer->eta0 * (cnn::real) 0.0001;
-//                }
+                params_trainer->update_epoch();
+                lookup_params_trainer->update_epoch();
             }
             if (iter % report_every_i == 0) {
                 std::ostringstream ss;
                 if (vv_or_vc == 0) {
-                    ss << "Eta = " << trainer->eta << "\tVV" << " loss = " << loss << std::endl;
+                    ss << "Eta = " << params_trainer->eta << "\tVV" << " loss = " << loss << std::endl;
                     std::string loss_info = ss.str();
                     std::cout << loss_info;
                     out_for_vv_losses << loss_info;
                 } else {
-                    ss << "Eta = " << trainer->eta << "\tVC" << " loss = " << loss << std::endl;
+                    ss << "Eta = " << params_trainer->eta << "\tVC" << " loss = " << loss << std::endl;
                     std::string loss_info = ss.str();
                     std::cout << loss_info;
                     out_for_vc_losses << loss_info;
@@ -234,7 +233,7 @@ namespace mp_train {
                 std::ofstream out(fname);
                 boost::archive::text_oarchive oa(out);
                 std::cerr << "Saving model to " << fname << std::endl;
-                oa << *(trainer->model);
+                oa << *(params_trainer->model);
             }
         }
 
@@ -246,7 +245,7 @@ namespace mp_train {
         }
     }
 
-    int RunChild(unsigned cid, DLNEModel *learner, Trainer *trainer,
+    int RunChild(unsigned cid, DLNEModel *learner, Trainer *params_trainer, Trainer *lookup_params_trainer,
                  std::vector<Workload> &workloads, GraphData &graph_data) {
         const unsigned num_children = workloads.size();
         assert (cid >= 0 && cid < num_children);
@@ -286,7 +285,7 @@ namespace mp_train {
                 } else {
                     std::cout << "Error" << std::endl;
                 }
-                trainer->update();
+                lookup_params_trainer->update();
                 child_counter += 1;
             }
 
@@ -296,7 +295,7 @@ namespace mp_train {
         return 0;
     }
 
-    void RunMultiProcess(unsigned num_children, DLNEModel *learner, Trainer *trainer,
+    void RunMultiProcess(unsigned num_children, DLNEModel *learner, Trainer *params_trainer, Trainer *lookup_params_trainer,
                          GraphData &graph_data, unsigned num_iterations,
                          float alpha, unsigned save_every_i, unsigned updata_epoch_every_i,
                          unsigned report_every_idate_every_i, unsigned batch_size) {
@@ -311,10 +310,10 @@ namespace mp_train {
         std::vector<Workload> workloads = CreateWorkloads(num_children);
         unsigned cid = SpawnChildren(workloads);
         if (cid < num_children) {
-            RunChild(cid, learner, trainer, workloads, graph_data);
+            RunChild(cid, learner, params_trainer, lookup_params_trainer, workloads, graph_data);
         }
         else {
-            RunParent(graph_data, learner, trainer, workloads, num_iterations, alpha, save_every_i,
+            RunParent(graph_data, learner, params_trainer, lookup_params_trainer, workloads, num_iterations, alpha, save_every_i,
                       updata_epoch_every_i, report_every_idate_every_i, batch_size);
         }
     }

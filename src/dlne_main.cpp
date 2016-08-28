@@ -90,8 +90,8 @@ int main(int argc, char **argv) {
     cout << "Node count: " << graph_data.node_count << endl;
     cout << "VV link count: " << graph_data.vv_edgelist.size() << endl;
     cout << "VC link count: " << graph_data.vc_edgelist.size() << endl;
-    Model model;
-    std::cout << "DBLP trainer: " << model.parameters_list().size() << std::endl;
+    Model params_model;
+    Model lookup_params_model;
 
 
     unsigned V_NEG = conf["vertex_negative"].as<unsigned>();
@@ -102,11 +102,11 @@ int main(int argc, char **argv) {
 
     ContentEmbeddingMethod *content_embedding_method;
     if (conf["embedding_method"].as<std::string>() == "WordAvg") {
-        content_embedding_method = new WordAvg_CE(model, W_EM_DIM, C_EM_DIM, conf["use_const_lookup"].as<bool>(), d);
+        content_embedding_method = new WordAvg_CE(params_model, lookup_params_model, W_EM_DIM, C_EM_DIM, conf["use_const_lookup"].as<bool>(), d);
     } else if (conf["embedding_method"].as<std::string>() == "GRU") {
-        content_embedding_method = new GRU_CE(model, W_EM_DIM, C_EM_DIM, conf["use_const_lookup"].as<bool>(), d);
+        content_embedding_method = new GRU_CE(params_model, lookup_params_model, W_EM_DIM, C_EM_DIM, conf["use_const_lookup"].as<bool>(), d);
     } else if (conf["embedding_method"].as<std::string>() == "CNN") {
-        content_embedding_method = new CNN_CE(model, W_EM_DIM, C_EM_DIM, {{2, 1},
+        content_embedding_method = new CNN_CE(params_model, lookup_params_model, W_EM_DIM, C_EM_DIM, {{2, 1},
                                                                           {3, 1},
                                                                           {4, 1}}, d);
     } else {
@@ -118,17 +118,20 @@ int main(int argc, char **argv) {
         content_embedding_method->initial_look_up_table_from_file(conf["word_embedding_file"].as<string>(), d);
     }
 
-    DLNEModel dlne(model, graph_data.node_count, V_NEG, C_NEG, V_EM_DIM, content_embedding_method);
+    DLNEModel dlne(params_model, lookup_params_model, graph_data.node_count, V_NEG, C_NEG, V_EM_DIM, content_embedding_method);
     if (conf.count("vertex_embedding_file")) {
         dlne.initialize_from_pretrained_vertex_embedding(conf["vertex_embedding_file"].as<string>(), graph_data);
     }
     if (conf.count("to_be_saved_index_file_name")) {
         dlne.set_to_be_saved_index(conf["to_be_saved_index_file_name"].as<string>(), graph_data);
     }
-    Trainer *sgd = nullptr;
-    sgd = new SimpleSGDTrainer(&model, 1e-6, conf["eta0"].as<float>());
-    sgd->eta_decay = conf["eta_decay"].as<float>();
-    mp_train::RunMultiProcess(conf["workers"].as<unsigned>(), &dlne, sgd, graph_data, conf["iterations"].as<unsigned>(),
+    Trainer *params_trainer = nullptr;
+    params_trainer = new SimpleSGDTrainer(&params_model, 1e-6, conf["eta0"].as<float>());
+    params_trainer->eta_decay = conf["eta_decay"].as<float>();
+    Trainer *lookup_params_trainer = nullptr;
+    lookup_params_trainer = new SimpleSGDTrainer(&lookup_params_model, 1e-6, conf["eta0"].as<float>());
+    lookup_params_trainer->eta_decay = conf["eta_decay"].as<float>();
+    mp_train::RunMultiProcess(conf["workers"].as<unsigned>(), &dlne, params_trainer, lookup_params_trainer, graph_data, conf["iterations"].as<unsigned>(),
                               conf["alpha"].as<float>(),
                               conf["save_every_i"].as<unsigned>(), conf["update_epoch_every_i"].as<unsigned>(),
                               conf["report_every_i"].as<unsigned>(), conf["batch_size"].as<unsigned>());

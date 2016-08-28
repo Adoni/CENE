@@ -113,14 +113,14 @@ namespace mp_train {
                     const WorkloadHeader &header);
 
 
-    void RunParent(GraphData &graph_data, DLNEModel *learner, Trainer *trainer,
+    void RunParent(GraphData &graph_data, DLNEModel *learner, Trainer *params_trainer, Trainer *lookup_params_trainer,
                    std::vector<Workload> &workloads, unsigned num_iterations,
                    float alpha, unsigned save_every_i, unsigned update_epoch_every_i, unsigned report_every_i, unsigned batch_size);
 
-    int RunChild(unsigned cid, DLNEModel *learner, Trainer *trainer,
+    int RunChild(unsigned cid, DLNEModel *learner, Trainer *params_trainer, Trainer *lookup_params_trainer,
                  std::vector<Workload> &workloads, GraphData &graph_data);
 
-    void RunMultiProcess(unsigned num_children, DLNEModel *learner, Trainer *trainer,
+    void RunMultiProcess(unsigned num_children, DLNEModel *learner, Trainer *params_trainer, Trainer *lookup_params_trainer,
                          GraphData &graph_data, unsigned num_iterations,
                          float alpha, unsigned save_every_i, unsigned updata_epoch_every_i, unsigned report_every_idate_every_i, unsigned batch_size);
 }

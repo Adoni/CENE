@@ -30,8 +30,6 @@ using namespace cnn;
 struct DLNEModel {
     LookupParameters *p_u; //lookup table for U nodes
     LookupParameters *p_v; //lookup table for V nodes
-    Parameters *W_vv;
-    Parameters *W_vc;
     unsigned NODE_SIZE;
     unsigned V_EM_DIM;
     unsigned V_NEG;
@@ -40,14 +38,12 @@ struct DLNEModel {
     std::vector<int> to_be_saved_index;
 
 
-    explicit DLNEModel(Model &model, unsigned NODE_SIZE, unsigned V_NEG, unsigned C_NEG, unsigned V_EM_DIM,
+    explicit DLNEModel(Model &params_model, Model &lookup_params_model, unsigned NODE_SIZE, unsigned V_NEG, unsigned C_NEG, unsigned V_EM_DIM,
                        ContentEmbeddingMethod *content_embedding_method)
             : NODE_SIZE(NODE_SIZE), V_EM_DIM(V_EM_DIM), V_NEG(V_NEG),
               C_NEG(C_NEG), content_embedding_method(content_embedding_method) {
-        p_u = model.add_lookup_parameters(NODE_SIZE, {V_EM_DIM});
-        p_v = model.add_lookup_parameters(NODE_SIZE, {V_EM_DIM});
-        W_vv = model.add_parameters({V_EM_DIM, V_EM_DIM});
-        W_vc = model.add_parameters({V_EM_DIM * 2, content_embedding_method->C_EM_DIM});
+        p_u = lookup_params_model.add_lookup_parameters(NODE_SIZE, {V_EM_DIM});
+        p_v = lookup_params_model.add_lookup_parameters(NODE_SIZE, {V_EM_DIM});
         init_params();
         std::cout << "Method name: " << content_embedding_method->get_method_name() << std::endl;
         to_be_saved_index.resize(NODE_SIZE);
@@ -146,7 +142,6 @@ struct DLNEModel {
         Expression i_x_u_v = lookup(cg, p_v, edge.u);
         Expression i_x_u = concatenate({i_x_u_u, i_x_u_v});
         auto negative_samples = graph_data.vc_neg_sample(V_NEG + 1, edge);
-        Expression i_W_vc = parameter(cg, W_vc);
         for (int i = 0; i < negative_samples.size(); i++) {
             int c = negative_samples[i];
             Expression i_x_c = content_embedding_method->get_embedding(graph_data.id_map.id_to_content[c], cg);
