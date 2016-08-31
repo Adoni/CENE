@@ -22,7 +22,7 @@ set(LIBS ${LIBS} ${CMAKE_THREAD_LIBS_INIT})
 
 include_directories(${include_directories} cnn)
 
-add_subdirectory(cnn)
+add_subdirectory(cnn/cnn)
 
 foreach (TARGET function_test)
     ADD_EXECUTABLE(${TARGET} src/${TARGET}.cpp)
