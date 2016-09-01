@@ -109,7 +109,7 @@ int main(int argc, char **argv) {
     } else if (conf["embedding_method"].as<std::string>() == "CNN") {
         content_embedding_method = new CNN_CE(params_model, lookup_params_model, W_EM_DIM, C_EM_DIM, {{2, 1},
                                                                           {3, 1},
-                                                                          {4, 1}}, d);
+                                                                          {4, 1},{5,1}}, d);
     } else {
         std::cerr << "Unsupported embedding method" << std::endl;
         return 1;
