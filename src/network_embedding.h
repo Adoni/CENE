@@ -172,13 +172,13 @@ struct DLNEModel {
             std::copy(value_u.begin(), value_u.end(), std::ostream_iterator<float>(output_file, " "));
             auto value_v = as_vector(lookup(cg, p_v, node_id).value());
             std::copy(value_v.begin(), value_v.end(), std::ostream_iterator<float>(output_file, " "));
-            std::vector <Expression> content_embedding;
-            for (auto content_id:graph_data.vc_graph[node_id]) {
-                content_embedding.push_back(
-                        content_embedding_method->get_embedding(graph_data.id_map.id_to_content[content_id], cg));
-            }
-            auto value_c = as_vector(cg.forward());
-            std::copy(value_c.begin(), value_c.end(), std::ostream_iterator<float>(output_file, " "));
+//            std::vector <Expression> content_embedding;
+//            for (auto content_id:graph_data.vc_graph[node_id]) {
+//                content_embedding.push_back(
+//                        content_embedding_method->get_embedding(graph_data.id_map.id_to_content[content_id], cg));
+//            }
+//            auto value_c = as_vector(cg.forward());
+//            std::copy(value_c.begin(), value_c.end(), std::ostream_iterator<float>(output_file, " "));
             output_file << "\n";
         }
     }

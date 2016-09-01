@@ -8,23 +8,22 @@
       <sourceFolder url="file://$MODULE_DIR$/src/mp_train.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/function_test.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/tests/test-cnn.cc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/tests/CMakeLists.txt" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/config.h.cmake" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/init.cc" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/conv.cc" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/exec.cc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/graph.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/lstm.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/gpu-kernels.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/param-nodes.cc" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/rnn.cc" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/tensor.cc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/deep-lstm.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/dim.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/graph.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/mp.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/nodes.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/expr.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/grad-check.cc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/c2w.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/aligned-mem-pool.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/expr.cc" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/c2w.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/gpu-ops.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/gru.cc" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/cfsm-builder.cc" isTestSource="false" />
@@ -35,8 +34,7 @@
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/nodes-common.cc" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/cnn.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/shadow-params.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/dim.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/expr.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/deep-lstm.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/random.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/cfsm-builder.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/gru.h" isTestSource="false" />
@@ -51,48 +49,24 @@
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/dim.cc" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/conv.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/init.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/lstm.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/functors.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/exec.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/fast-lstm.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/timing.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/mp.cc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/simd-functors.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/exec.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/model.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/dict.cc" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/cnn.cc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/cuda.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/nodes.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/grad-check.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/training.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/cuda.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/nodes.cc" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/fast-lstm.cc" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/saxe-init.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/fast-lstm.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/aligned-mem-pool.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/simd-functors.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/training.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/model.cc" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cnn/cnn/shadow-params.cc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/CMakeLists.txt" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/examples/xor.cc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/examples/read-write.cc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/examples/poisson-regression.cc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/examples/textcat.cc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/examples/xor-batch.cc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/examples/tag-bilstm.cc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/examples/rnnlm.cc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/examples/embed-cl.cc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/examples/nlm.cc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/examples/rnnlm-aevb.cc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/examples/xor-xent.cc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/examples/segrnn-sup.cc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/examples/rnnlm-mp.cc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/examples/rnnlm-cfsm.cc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/examples/xor-batch-lookup.cc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/examples/tok-embed.cc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/examples/rnnlm2.cc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/examples/rnnlm.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/examples/rnnlm-batch.cc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/examples/encdec.cc" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/examples/CMakeLists.txt" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/cnn/cmake/FindEigen3.cmake" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/cmake/FindEigen3.cmake" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
@@ -179,14 +153,14 @@
           <root url="file:///System/Library/Frameworks/SecurityInterface.framework/Headers" />
           <root url="file:///System/Library/Frameworks/CoreServices.framework/Headers" />
           <root url="file:///System/Library/Frameworks/CoreServices.framework/Frameworks/DictionaryServices.framework/Headers" />
-          <root url="file:///System/Library/Frameworks/CoreServices.framework/Frameworks/SearchKit.framework/Headers" />
-          <root url="file:///System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Headers" />
           <root url="file:///System/Library/Frameworks/CoreServices.framework/Frameworks/SharedFileList.framework/Headers" />
-          <root url="file:///System/Library/Frameworks/CoreServices.framework/Frameworks/AE.framework/Headers" />
+          <root url="file:///System/Library/Frameworks/CoreServices.framework/Frameworks/SearchKit.framework/Headers" />
+          <root url="file:///System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers" />
           <root url="file:///System/Library/Frameworks/CoreServices.framework/Frameworks/FSEvents.framework/Headers" />
+          <root url="file:///System/Library/Frameworks/CoreServices.framework/Frameworks/AE.framework/Headers" />
+          <root url="file:///System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Headers" />
           <root url="file:///System/Library/Frameworks/CoreServices.framework/Frameworks/OSServices.framework/Headers" />
           <root url="file:///System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Headers" />
-          <root url="file:///System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers" />
           <root url="file:///System/Library/Frameworks/DVComponentGlue.framework/Headers" />
           <root url="file:///System/Library/Frameworks/OpenDirectory.framework/Headers" />
           <root url="file:///System/Library/Frameworks/OpenDirectory.framework/Frameworks/CFOpenDirectory.framework/Headers" />
@@ -271,10 +245,7 @@
           <root url="file:///System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers" />
           <root url="file:///usr/include" />
           <root url="file:///usr/local/include" />
-          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/2d1fe32f/2d1fe32f/MinSizeRel/cnn" />
-          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/2d1fe32f/2d1fe32f/Debug/cnn" />
-          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/2d1fe32f/2d1fe32f/Release/cnn" />
-          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/2d1fe32f/2d1fe32f/RelWithDebInfo/cnn" />
+          <root url="file://$MODULE_DIR$/cnn" />
           <root url="file://$USER_HOME$/Libs/boost_1_60_0" />
           <root url="file:///Library/Frameworks/iTunesLibrary.framework/Headers" />
           <root url="file:///Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include" />
@@ -361,14 +332,14 @@
           <root url="file:///System/Library/Frameworks/SecurityInterface.framework/Headers" />
           <root url="file:///System/Library/Frameworks/CoreServices.framework/Headers" />
           <root url="file:///System/Library/Frameworks/CoreServices.framework/Frameworks/DictionaryServices.framework/Headers" />
-          <root url="file:///System/Library/Frameworks/CoreServices.framework/Frameworks/SearchKit.framework/Headers" />
-          <root url="file:///System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Headers" />
           <root url="file:///System/Library/Frameworks/CoreServices.framework/Frameworks/SharedFileList.framework/Headers" />
-          <root url="file:///System/Library/Frameworks/CoreServices.framework/Frameworks/AE.framework/Headers" />
+          <root url="file:///System/Library/Frameworks/CoreServices.framework/Frameworks/SearchKit.framework/Headers" />
+          <root url="file:///System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers" />
           <root url="file:///System/Library/Frameworks/CoreServices.framework/Frameworks/FSEvents.framework/Headers" />
+          <root url="file:///System/Library/Frameworks/CoreServices.framework/Frameworks/AE.framework/Headers" />
+          <root url="file:///System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Headers" />
           <root url="file:///System/Library/Frameworks/CoreServices.framework/Frameworks/OSServices.framework/Headers" />
           <root url="file:///System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Headers" />
-          <root url="file:///System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Headers" />
           <root url="file:///System/Library/Frameworks/DVComponentGlue.framework/Headers" />
           <root url="file:///System/Library/Frameworks/OpenDirectory.framework/Headers" />
           <root url="file:///System/Library/Frameworks/OpenDirectory.framework/Frameworks/CFOpenDirectory.framework/Headers" />
@@ -453,15 +424,73 @@
           <root url="file:///System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers" />
           <root url="file:///usr/include" />
           <root url="file:///usr/local/include" />
-          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/2d1fe32f/2d1fe32f/MinSizeRel/cnn" />
-          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/2d1fe32f/2d1fe32f/Debug/cnn" />
-          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/2d1fe32f/2d1fe32f/Release/cnn" />
-          <root url="file://$USER_HOME$/Library/Caches/CLion12/cmake/generated/2d1fe32f/2d1fe32f/RelWithDebInfo/cnn" />
+          <root url="file://$MODULE_DIR$/cnn" />
           <root url="file://$USER_HOME$/Libs/boost_1_60_0" />
           <root url="file:///Library/Frameworks/iTunesLibrary.framework/Headers" />
           <root url="file:///Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include" />
           <root url="file:///Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/7.0.0/include" />
         </SOURCES>
+        <excluded>
+          <root url="file://$MODULE_DIR$/cnn/cnn/init.cc" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/conv.cc" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/exec.cc" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/lstm.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/gpu-kernels.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/param-nodes.cc" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/rnn.cc" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/tensor.cc" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/dim.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/graph.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/mp.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/expr.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/grad-check.cc" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/aligned-mem-pool.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/expr.cc" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/c2w.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/gpu-ops.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/gru.cc" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/cfsm-builder.cc" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/saxe-init.cc" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/rnn-state-machine.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/graph.cc" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/deep-lstm.cc" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/nodes-common.cc" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/cnn.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/shadow-params.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/deep-lstm.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/random.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/cfsm-builder.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/gru.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/rnn.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/rnn-state-machine.cc" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/dict.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/CMakeLists.txt" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/training.cc" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/lstm.cc" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/param-nodes.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/tensor.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/dim.cc" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/conv.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/init.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/functors.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/fast-lstm.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/timing.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/mp.cc" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/exec.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/model.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/dict.cc" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/cnn.cc" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/nodes.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/grad-check.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/cuda.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/nodes.cc" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/fast-lstm.cc" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/saxe-init.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/simd-functors.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/training.h" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/model.cc" />
+          <root url="file://$MODULE_DIR$/cnn/cnn/shadow-params.cc" />
+        </excluded>
       </library>
     </orderEntry>
   </component>

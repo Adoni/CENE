@@ -6,31 +6,32 @@
       <config projectName="DLNE" targetName="rnnlm" />
       <config projectName="DLNE" targetName="nlm" />
       <config projectName="DLNE" targetName="cnn" />
+      <config projectName="DLNE" targetName="encdec" />
       <config projectName="WeiboNetEmbedding" targetName="rnnlm-mp" />
-      <config projectName="DLNE" targetName="segrnn-sup" />
       <config projectName="WeiboNetEmbedding" targetName="dlne" />
       <config projectName="DLNE" targetName="read-write" />
       <config projectName="DLNE" targetName="lm" />
       <config projectName="DLNE" targetName="xor" />
+      <config projectName="DLNE" targetName="test-cnn" />
       <config projectName="DLNE" targetName="rnnlm-aevb" />
       <config projectName="DLNE" targetName="textcat" />
       <config projectName="DLNE" targetName="rnnlm-mp" />
       <config projectName="DLNE" targetName="cnn_shared" />
       <config projectName="DLNE" targetName="DLNE" />
-      <config projectName="WeiboNetEmbedding" targetName="rnnlm-batch" />
+      <config projectName="DLNE" targetName="rnnlm2" />
       <config projectName="DLNE" targetName="embed-cl" />
       <config projectName="DLNE" targetName="mlc" />
+      <config projectName="WeiboNetEmbedding" targetName="poisson-regression" />
       <config projectName="WeiboNetEmbedding" targetName="rnnlm2" />
-      <config projectName="DLNE" targetName="tag-bilstm" />
       <config projectName="DLNE" targetName="dlne_main" />
       <config projectName="WeiboNetEmbedding" targetName="segrnn-sup" />
-      <config projectName="WeiboNetEmbedding" targetName="rnnlm" />
+      <config projectName="DLNE" targetName="xor-batch" />
+      <config projectName="DLNE" targetName="rnnlm-batch" />
       <config projectName="WeiboNetEmbedding" targetName="test" />
-      <config projectName="DLNE" targetName="rnnlm2" />
+      <config projectName="WeiboNetEmbedding" targetName="rnnlm" />
       <config projectName="DLNE" targetName="xor-batch-lookup" />
-      <config projectName="DLNE" targetName="poisson-regression" />
       <config projectName="DLNE" targetName="dlne" />
-      <config projectName="DLNE" targetName="encdec" />
+      <config projectName="DLNE" targetName="segrnn-sup" />
       <config projectName="WeiboNetEmbedding" targetName="nlm" />
       <config projectName="WeiboNetEmbedding" targetName="cnn" />
       <config projectName="WeiboNetEmbedding" targetName="test-cnn" />
@@ -40,23 +41,22 @@
       <config projectName="WeiboNetEmbedding" targetName="rnnlm-cfsm" />
       <config projectName="WeiboNetEmbedding" targetName="xor-xent" />
       <config projectName="WeiboNetEmbedding" targetName="tok-embed" />
-      <config projectName="WeiboNetEmbedding" targetName="poisson-regression" />
-      <config projectName="DLNE" targetName="test-cnn" />
-      <config projectName="WeiboNetEmbedding" targetName="mlc" />
+      <config projectName="WeiboNetEmbedding" targetName="rnnlm-batch" />
+      <config projectName="DLNE" targetName="tag-bilstm" />
+      <config projectName="WeiboNetEmbedding" targetName="cnn_shared" />
       <config projectName="WeiboNetEmbedding" targetName="textcat" />
-      <config projectName="WeiboNetEmbedding" targetName="read-write" />
       <config projectName="DLNE" targetName="xor-xent" />
       <config projectName="WeiboNetEmbedding" targetName="xor-batch" />
       <config projectName="DLNE" targetName="rnnlm-cfsm" />
       <config projectName="WeiboNetEmbedding" targetName="encdec" />
-      <config projectName="WeiboNetEmbedding" targetName="cnn_shared" />
+      <config projectName="WeiboNetEmbedding" targetName="mlc" />
       <config projectName="DLNE" targetName="tok-embed" />
-      <config projectName="DLNE" targetName="rnnlm-batch" />
+      <config projectName="DLNE" targetName="poisson-regression" />
       <config projectName="WeiboNetEmbedding" targetName="rnnlm-aevb" />
       <config projectName="DLNE" targetName="function_test" />
       <config projectName="WeiboNetEmbedding" targetName="embed-cl" />
       <config projectName="WeiboNetEmbedding" targetName="xor-batch-lookup" />
-      <config projectName="DLNE" targetName="xor-batch" />
+      <config projectName="WeiboNetEmbedding" targetName="read-write" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="false" GENERATION_PASS_SYSTEM_ENVIRONMENT="true">
@@ -67,8 +67,10 @@
   <component name="ChangeListManager">
     <list default="true" id="e8e586c5-adc0-4ac0-aa43-320980d1abe5" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cnn" afterPath="$PROJECT_DIR$/cnn" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/DLNE.iml" afterPath="$PROJECT_DIR$/.idea/DLNE.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMakeLists.txt" afterPath="$PROJECT_DIR$/CMakeLists.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dlne_main.cpp" afterPath="$PROJECT_DIR$/src/dlne_main.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/network_embedding.h" afterPath="$PROJECT_DIR$/src/network_embedding.h" />
     </list>
     <ignored path="DLNE.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -93,7 +95,7 @@
         <entry file="file://$PROJECT_DIR$/src/dlne_main.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="94" column="0" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
+              <caret line="44" column="42" selection-start-line="44" selection-start-column="42" selection-end-line="44" selection-end-column="42" />
               <folding>
                 <element signature="e#92#128#0" expanded="true" />
               </folding>
@@ -101,10 +103,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.27248678">
+            <state vertical-scroll-proportion="0.0">
               <caret line="24" column="24" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
               <folding />
             </state>
@@ -121,11 +123,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="network_embedding.h" pinned="false" current-in-tab="false">
+      <file leaf-file-name="network_embedding.h" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/network_embedding.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="45" column="33" selection-start-line="45" selection-start-column="33" selection-end-line="45" selection-end-column="33" />
+            <state vertical-scroll-proportion="0.5412844">
+              <caret line="174" column="14" selection-start-line="174" selection-start-column="14" selection-end-line="180" selection-end-column="104" />
               <folding>
                 <element signature="e#114#136#0" expanded="true" />
               </folding>
@@ -169,7 +171,7 @@
         <entry file="file://$PROJECT_DIR$/src/mp_train.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="235" column="31" selection-start-line="235" selection-start-column="31" selection-end-line="235" selection-end-column="31" />
+              <caret line="197" column="29" selection-start-line="197" selection-start-column="0" selection-end-line="198" selection-end-column="0" />
               <folding>
                 <element signature="e#43#64#0" expanded="true" />
               </folding>
@@ -202,12 +204,12 @@
         <option value="$PROJECT_DIR$/src/simple_mp_train.cpp" />
         <option value="$PROJECT_DIR$/src/embedding_methods.cpp" />
         <option value="$PROJECT_DIR$/src/graph_data.h" />
-        <option value="$PROJECT_DIR$/src/network_embedding.h" />
         <option value="$PROJECT_DIR$/src/mp_train.h" />
         <option value="$PROJECT_DIR$/src/embedding_methods.h" />
         <option value="$PROJECT_DIR$/src/mp_train.cpp" />
-        <option value="$PROJECT_DIR$/src/dlne_main.cpp" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/src/dlne_main.cpp" />
+        <option value="$PROJECT_DIR$/src/network_embedding.h" />
       </list>
     </option>
   </component>
@@ -277,20 +279,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DLNE" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DLNE" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cnn" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -373,11 +361,11 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10268562" sideWeight="0.4754829" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22376238" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22376238" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33267328" sideWeight="0.50289625" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.10891089" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10891089" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.10268562" sideWeight="0.52451706" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33150685" sideWeight="0.49710375" order="7" side_tool="false" content_ui="tabs" />
@@ -622,6 +610,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="13" column="24" selection-start-line="13" selection-start-column="23" selection-end-line="13" selection-end-column="24" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -629,6 +618,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -643,6 +633,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="52" column="10" selection-start-line="52" selection-start-column="10" selection-end-line="52" selection-end-column="10" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -650,6 +641,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -678,6 +670,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="169" column="6" selection-start-line="169" selection-start-column="6" selection-end-line="169" selection-end-column="6" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -685,6 +678,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="5336" column="0" selection-start-line="5336" selection-start-column="0" selection-end-line="5336" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -699,6 +693,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="19" column="7" selection-start-line="19" selection-start-column="7" selection-end-line="19" selection-end-column="7" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -706,6 +701,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="79" column="107" selection-start-line="79" selection-start-column="107" selection-end-line="79" selection-end-column="107" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -713,6 +709,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="272" column="21" selection-start-line="272" selection-start-column="21" selection-end-line="272" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -740,16 +739,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/network_embedding.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="45" column="33" selection-start-line="45" selection-start-column="33" selection-end-line="45" selection-end-column="33" />
-          <folding>
-            <element signature="e#114#136#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/embedding_methods.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -760,10 +749,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="24" column="24" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/mp_train.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="235" column="31" selection-start-line="235" selection-start-column="31" selection-end-line="235" selection-end-column="31" />
+          <caret line="197" column="29" selection-start-line="197" selection-start-column="0" selection-end-line="198" selection-end-column="0" />
           <folding>
             <element signature="e#43#64#0" expanded="true" />
           </folding>
@@ -773,18 +770,20 @@
     <entry file="file://$PROJECT_DIR$/src/dlne_main.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="94" column="0" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
+          <caret line="44" column="42" selection-start-line="44" selection-start-column="42" selection-end-line="44" selection-end-column="42" />
           <folding>
             <element signature="e#92#128#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+    <entry file="file://$PROJECT_DIR$/src/network_embedding.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.27248678">
-          <caret line="24" column="24" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
-          <folding />
+        <state vertical-scroll-proportion="0.5412844">
+          <caret line="174" column="14" selection-start-line="174" selection-start-column="14" selection-end-line="180" selection-end-column="104" />
+          <folding>
+            <element signature="e#114#136#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

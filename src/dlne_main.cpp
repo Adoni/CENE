@@ -94,6 +94,7 @@ int main(int argc, char **argv) {
     Model lookup_params_model;
 
 
+
     unsigned V_NEG = conf["vertex_negative"].as<unsigned>();
     unsigned C_NEG = conf["content_negative"].as<unsigned>();
     unsigned V_EM_DIM = 100;
