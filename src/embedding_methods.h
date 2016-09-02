@@ -151,6 +151,63 @@ public:
     }
 };
 
+class BiGRU_CE : public ContentEmbeddingMethod {
+public:
+    GRUBuilder builder;
+
+    explicit BiGRU_CE(
+            Model &params_model,
+            Model &lookup_params_model,
+            unsigned word_embedding_size,
+            unsigned content_embedding_size,
+            bool use_const_lookup,
+            Dict &d) {
+        this->W_EM_DIM = word_embedding_size;
+        this->C_EM_DIM = content_embedding_size;
+        this->method_name = "GRU";
+        this->use_const_lookup = use_const_lookup;
+
+        builder = GRUBuilder(1, W_EM_DIM, C_EM_DIM, &params_model);
+        p = lookup_params_model.add_lookup_parameters(d.size(), {W_EM_DIM});
+        initial_look_up_table(d.size());
+    }
+
+    ~BiGRU_CE() { }
+
+    Expression get_embedding(const CONTENT_TYPE &content, ComputationGraph &cg) {
+        std::vector<Expression> all_hidden;
+        assert(content.size() > 0);
+        for (auto s:content) {
+            assert(s.size() > 0);
+
+            builder.new_graph(cg);
+            builder.start_new_sequence();
+            std::vector<Expression> sent1;
+
+            for (auto w:s) {
+                Expression i_x_t = lookup(cg, p, w);
+                sent1.push_back(builder.add_input(i_x_t));
+            }
+
+            builder.new_graph(cg);
+            builder.start_new_sequence();
+            std::vector<Expression> sent2;
+            for (int i=s.size()-1;i>=0;i--) {
+                Expression i_x_t = lookup(cg, p, s[i]);
+                sent2.push_back(builder.add_input(i_x_t));
+            }
+
+            std::vector<Expression> sent;
+            for(int i=0;i<s.size();i++){
+                sent.push_back(concatenate({sent1[i],sent2[i]}));
+            }
+
+            all_hidden.push_back(average(sent));
+        }
+        return average(all_hidden);
+    }
+};
+
 class CNN_CE : public ContentEmbeddingMethod {
 public:
     explicit CNN_CE(Model &params_model,
