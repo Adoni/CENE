@@ -21,7 +21,7 @@ namespace mp_train {
     std::string GenerateQueueName() {
         std::ostringstream ss;
         ss << "DBNE_QUEUE";
-//        ss << rand();
+        ss << rand();
         return ss.str();
     }
 
@@ -167,7 +167,7 @@ namespace mp_train {
 
         for (unsigned iter = 1; iter < num_iterations; ++iter) {
             unsigned vv_or_vc;
-
+            int batch_count=0;
             if (dis(*cnn::rndeng) < alpha) {
                 vv_or_vc = 0;
                 if (vv_begin == vv_train_indices.end()) {
@@ -179,6 +179,7 @@ namespace mp_train {
                     end = vv_train_indices.end();
                 }
                 loss += RunDataSet(vv_begin, end, workloads, mq, {vv_or_vc});
+                batch_count=distance(vv_begin, end);
                 vv_begin = end;
             }
             else {
@@ -192,10 +193,10 @@ namespace mp_train {
                     end = vc_train_indices.end();
                 }
                 loss += RunDataSet(vc_begin, end, workloads, mq, {vv_or_vc});
+                batch_count=distance(vc_begin, end);
                 vc_begin = end;
             }
-
-            params_trainer->update();
+            params_trainer->update(1.0/(float)batch_count);
 
             if (iter % update_epoch_every_i == 0) {
                 params_trainer->update_epoch();

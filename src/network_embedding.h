@@ -151,7 +151,6 @@ struct DLNEModel {
             else {
                 errs.push_back(log(logistic(-1 * dot_product(i_x_u, i_x_c))));
             }
-
         }
         Expression i_nerr = -1 * sum(errs);
         cnn::real loss = as_scalar(cg.forward());
