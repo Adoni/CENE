@@ -167,7 +167,7 @@ public:
         this->method_name = "GRU";
         this->use_const_lookup = use_const_lookup;
 
-        builder = GRUBuilder(1, W_EM_DIM, C_EM_DIM, &params_model);
+        builder = GRUBuilder(1, W_EM_DIM, C_EM_DIM/2, &params_model);
         p = lookup_params_model.add_lookup_parameters(d.size(), {W_EM_DIM});
         initial_look_up_table(d.size());
     }
