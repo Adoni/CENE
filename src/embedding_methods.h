@@ -164,7 +164,7 @@ public:
             Dict &d) {
         this->W_EM_DIM = word_embedding_size;
         this->C_EM_DIM = content_embedding_size;
-        this->method_name = "GRU";
+        this->method_name = "BiGRU";
         this->use_const_lookup = use_const_lookup;
 
         builder = GRUBuilder(1, W_EM_DIM, C_EM_DIM/2, &params_model);
