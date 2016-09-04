@@ -110,7 +110,7 @@ int main(int argc, char **argv) {
     } else if (conf["embedding_method"].as<std::string>() == "BiGRU") {
         content_embedding_method = new BiGRU_CE(params_model, lookup_params_model, W_EM_DIM, C_EM_DIM, conf["use_const_lookup"].as<bool>(), d);
     } else if (conf["embedding_method"].as<std::string>() == "CNN") {
-        unsigned f_count=conf["cnn_filter_count"].as<>(unsigned);
+        unsigned f_count=conf["cnn_filter_count"].as<unsigned>();
         content_embedding_method = new CNN_CE(params_model, lookup_params_model, W_EM_DIM, C_EM_DIM, {{2, f_count},
                                                                           {3, f_count},
                                                                           {4, f_count},{5,3}}, d);
