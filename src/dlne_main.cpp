@@ -38,6 +38,7 @@ void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
             ("embedding_method", po::value<std::string>(), "method to learn embedding from content: WordAvg or GRU")
             ("strictly_content_required", po::value<bool>(), "if the content for each vertex is strictly required")
             ("use_const_lookup", po::value<bool>(), "use const_lookup or lookup")
+            ("cnn_filter_count", po::value<unsigned>()->default_value(1), "the count of each filter")
 
             ("help", "Help");
     po::options_description dcmdline_options;
@@ -109,9 +110,10 @@ int main(int argc, char **argv) {
     } else if (conf["embedding_method"].as<std::string>() == "BiGRU") {
         content_embedding_method = new BiGRU_CE(params_model, lookup_params_model, W_EM_DIM, C_EM_DIM, conf["use_const_lookup"].as<bool>(), d);
     } else if (conf["embedding_method"].as<std::string>() == "CNN") {
-        content_embedding_method = new CNN_CE(params_model, lookup_params_model, W_EM_DIM, C_EM_DIM, {{2, 3},
-                                                                          {3, 3},
-                                                                          {4, 3},{5,3}}, d);
+        unsigned f_count=conf["cnn_filter_count"].as<>(unsigned);
+        content_embedding_method = new CNN_CE(params_model, lookup_params_model, W_EM_DIM, C_EM_DIM, {{2, f_count},
+                                                                          {3, f_count},
+                                                                          {4, f_count},{5,3}}, d);
     } else {
         std::cerr << "Unsupported embedding method" << std::endl;
         return 1;
