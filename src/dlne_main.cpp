@@ -109,9 +109,9 @@ int main(int argc, char **argv) {
     } else if (conf["embedding_method"].as<std::string>() == "BiGRU") {
         content_embedding_method = new BiGRU_CE(params_model, lookup_params_model, W_EM_DIM, C_EM_DIM, conf["use_const_lookup"].as<bool>(), d);
     } else if (conf["embedding_method"].as<std::string>() == "CNN") {
-        content_embedding_method = new CNN_CE(params_model, lookup_params_model, W_EM_DIM, C_EM_DIM, {{2, 1},
-                                                                          {3, 1},
-                                                                          {4, 1},{5,1}}, d);
+        content_embedding_method = new CNN_CE(params_model, lookup_params_model, W_EM_DIM, C_EM_DIM, {{2, 3},
+                                                                          {3, 3},
+                                                                          {4, 3},{5,3}}, d);
     } else {
         std::cerr << "Unsupported embedding method" << std::endl;
         return 1;
