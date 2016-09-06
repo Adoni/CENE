@@ -260,7 +260,7 @@ public:
                 auto bias = cnn::expr::parameter(cg, p_biases[ii][jj]);
                 auto t = cnn::expr::conv1d_narrow(cnn::expr::concatenate_cols(s), filter);
                 t = colwise_add(t, bias);
-                t = cnn::expr::rectify(cnn::expr::kmax_pooling(t, 1));
+                t = cnn::expr::tanh(cnn::expr::kmax_pooling(t, 1));
                 tmp.push_back(t);
             }
             for (unsigned p = 0; p < filter_width - 1; ++p) { s.pop_back(); }
