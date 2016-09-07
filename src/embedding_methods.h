@@ -265,7 +265,7 @@ public:
             }
             for (unsigned p = 0; p < filter_width - 1; ++p) { s.pop_back(); }
         }
-        return cnn::rectify(cnn::expr::parameter(cg, p_W) * cnn::expr::concatenate(tmp));
+        return cnn::expr::rectify(cnn::expr::parameter(cg, p_W) * cnn::expr::concatenate(tmp));
     }
 
 
