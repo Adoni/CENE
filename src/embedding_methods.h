@@ -254,18 +254,18 @@ public:
             const auto &filter_width = filters_info[ii].first;
             const auto &nb_filters = filters_info[ii].second;
 
-            for (unsigned p = 0; p < filter_width - 1; ++p) { s.push_back(padding); }
+            for (unsigned pp = 0; pp < filter_width - 1; ++pp) { s.push_back(padding); }
             for (unsigned jj = 0; jj < nb_filters; ++jj) {
                 auto filter = cnn::expr::parameter(cg, p_filters[ii][jj]);
                 auto bias = cnn::expr::parameter(cg, p_biases[ii][jj]);
                 auto t = cnn::expr::conv1d_narrow(cnn::expr::concatenate_cols(s), filter);
                 t = colwise_add(t, bias);
-                t = cnn::expr::tanh(cnn::expr::kmax_pooling(t, 1));
+                t = cnn::expr::rectify(cnn::expr::kmax_pooling(t, 1));
                 tmp.push_back(t);
             }
             for (unsigned p = 0; p < filter_width - 1; ++p) { s.pop_back(); }
         }
-        return cnn::expr::parameter(cg, p_W) * cnn::expr::concatenate(tmp);
+        return cnn::rectify(cnn::expr::parameter(cg, p_W) * cnn::expr::concatenate(tmp));
     }
 
 
