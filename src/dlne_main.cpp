@@ -39,6 +39,8 @@ void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
             ("strictly_content_required", po::value<bool>(), "if the content for each vertex is strictly required")
             ("use_const_lookup", po::value<bool>(), "use const_lookup or lookup")
             ("cnn_filter_count", po::value<unsigned>()->default_value(1), "the count of each filter")
+            ("word_embedding_size", po::value<unsigned>(), "word embedding size ")
+
 
             ("help", "Help");
     po::options_description dcmdline_options;
@@ -98,9 +100,10 @@ int main(int argc, char **argv) {
 
     unsigned V_NEG = conf["vertex_negative"].as<unsigned>();
     unsigned C_NEG = conf["content_negative"].as<unsigned>();
-    unsigned V_EM_DIM = 150;
-    unsigned W_EM_DIM = 300;
-    unsigned C_EM_DIM = 300;
+
+    unsigned W_EM_DIM = conf["word_embedding_size"].as<unsigned>();
+    unsigned V_EM_DIM = W_EM_DIM/2;
+    unsigned C_EM_DIM = W_EM_DIM;
 
     ContentEmbeddingMethod *content_embedding_method;
     if (conf["embedding_method"].as<std::string>() == "WordAvg") {
