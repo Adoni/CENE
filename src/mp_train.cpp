@@ -156,7 +156,8 @@ namespace mp_train {
         update_epoch_every_i = update_epoch_every_i / batch_size;
         num_iterations = num_iterations / batch_size;
         int save_model_every_i = 1000000;
-        cnn::real loss = 0.0;
+        cnn::real vv_loss = 0.0;
+        cnn::real vc_loss = 0.0;
 
         std::cout << "Batch size: " << batch_size << std::endl;
         std::cout << "Iteration number: " << num_iterations << " batch" << std::endl;
@@ -178,7 +179,7 @@ namespace mp_train {
                 if (end > vv_train_indices.end()) {
                     end = vv_train_indices.end();
                 }
-                loss += RunDataSet(vv_begin, end, workloads, mq, {vv_or_vc});
+                vv_loss += RunDataSet(vv_begin, end, workloads, mq, {vv_or_vc});
                 batch_count=distance(vv_begin, end);
                 vv_begin = end;
             }
@@ -192,7 +193,7 @@ namespace mp_train {
                 if (end > vc_train_indices.end()) {
                     end = vc_train_indices.end();
                 }
-                loss += RunDataSet(vc_begin, end, workloads, mq, {vv_or_vc});
+                vc_loss += RunDataSet(vc_begin, end, workloads, mq, {vv_or_vc});
                 batch_count=distance(vc_begin, end);
                 vc_begin = end;
             }
@@ -203,21 +204,9 @@ namespace mp_train {
                 lookup_params_trainer->update_epoch();
             }
             if (iter % report_every_i == 0) {
-                std::ostringstream ss;
-                if (vv_or_vc == 0) {
-                    ss << "Eta = " << params_trainer->eta << "\tVV" << " loss = " << loss << std::endl;
-                    std::string loss_info = ss.str();
-                    std::cout << loss_info;
-                    out_for_vv_losses << loss_info;
-                } else {
-                    ss << "Eta = " << params_trainer->eta << "\tVC" << " loss = " << loss << std::endl;
-                    std::string loss_info = ss.str();
-                    std::cout << loss_info;
-                    out_for_vc_losses << loss_info;
-                }
-                loss = 0.0;
-//                std::string info = ElapsedTimeString(total_start_time, iter*update_every_i / 100000);
-//                std::cerr << info;
+                std::cout << "Eta = " << params_trainer->eta << "\tVV" << " loss = " << vv_loss << "\tVC" << " loss = " << vc_loss << std::endl;
+                vv_loss = 0.0;
+                vc_loss = 0.0;
             }
 
             if (iter % save_every_i == 0) {
