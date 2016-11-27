@@ -1,0 +1,26 @@
+/Applications/CLion.app/Contents/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DEIGEN3_INCLUDE_DIR=/Users/sunxiaofei/ClionProjects/eigen -DDYNET_INCLUDE_DIR=/Users/sunxiaofei/ClionProjects/dynet -DDYNET_LINK_DIR=/Users/sunxiaofei/ClionProjects/dynet/build/dynet -G "CodeBlocks - Unix Makefiles" /Users/sunxiaofei/ClionProjects/DLNE
+CMake Warning at /Applications/CLion.app/Contents/bin/cmake/share/cmake-3.6/Modules/FindBoost.cmake:743 (message):
+  Imported targets not available for Boost version 106200
+Call Stack (most recent call first):
+  /Applications/CLion.app/Contents/bin/cmake/share/cmake-3.6/Modules/FindBoost.cmake:842 (_Boost_COMPONENT_DEPENDENCIES)
+  /Applications/CLion.app/Contents/bin/cmake/share/cmake-3.6/Modules/FindBoost.cmake:1395 (_Boost_MISSING_DEPENDENCIES)
+  CMakeLists.txt:9 (find_package)
+
+
+CMake Warning at /Applications/CLion.app/Contents/bin/cmake/share/cmake-3.6/Modules/FindBoost.cmake:743 (message):
+  Imported targets not available for Boost version 106200
+Call Stack (most recent call first):
+  /Applications/CLion.app/Contents/bin/cmake/share/cmake-3.6/Modules/FindBoost.cmake:842 (_Boost_COMPONENT_DEPENDENCIES)
+  /Applications/CLion.app/Contents/bin/cmake/share/cmake-3.6/Modules/FindBoost.cmake:1395 (_Boost_MISSING_DEPENDENCIES)
+  CMakeLists.txt:9 (find_package)
+
+
+-- Boost version: 1.62.0
+-- Found the following Boost libraries:
+--   program_options
+--   serialization
+-- Dynet dir is /Users/sunxiaofei/ClionProjects/dynet
+-- Dynet link is /Users/sunxiaofei/ClionProjects/dynet/build/dynet
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug

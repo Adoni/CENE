@@ -25,7 +25,7 @@ namespace mp_train {
         return ss.str();
     }
 
-    cnn::real RunDataSet(std::vector<unsigned>::iterator begin, std::vector<unsigned>::iterator end,
+    dynet::real RunDataSet(std::vector<unsigned>::iterator begin, std::vector<unsigned>::iterator end,
                          const std::vector<Workload> &workloads,
                          boost::interprocess::message_queue &mq, const WorkloadHeader &header) {
 
@@ -51,9 +51,9 @@ namespace mp_train {
         }
 
         // Wait for each child to finish training its load
-        cnn::real loss = 0.0;
+        dynet::real loss = 0.0;
         for (unsigned cid = 0; cid < num_children; ++cid) {
-            loss += Read<cnn::real>(workloads[cid].c2p[0]);
+            loss += Read<dynet::real>(workloads[cid].c2p[0]);
         };
         return loss;
     }
@@ -65,11 +65,11 @@ namespace mp_train {
         return ss.str();
     }
 
-    cnn::real SumValues(const std::vector<cnn::real> &values) {
+    dynet::real SumValues(const std::vector<dynet::real> &values) {
         return accumulate(values.begin(), values.end(), 0.0);
     }
 
-    cnn::real Mean(const std::vector<cnn::real> &values) {
+    dynet::real Mean(const std::vector<dynet::real> &values) {
         return SumValues(values) / values.size();
     }
 
@@ -156,8 +156,8 @@ namespace mp_train {
         update_epoch_every_i = update_epoch_every_i / batch_size;
         num_iterations = num_iterations / batch_size;
         int save_model_every_i = 1000000;
-        cnn::real vv_loss = 0.0;
-        cnn::real vc_loss = 0.0;
+        dynet::real vv_loss = 0.0;
+        dynet::real vc_loss = 0.0;
 
         std::cout << "Batch size: " << batch_size << std::endl;
         std::cout << "Iteration number: " << num_iterations << " batch" << std::endl;
@@ -169,10 +169,10 @@ namespace mp_train {
         for (unsigned iter = 1; iter < num_iterations; ++iter) {
             unsigned vv_or_vc;
             int batch_count=0;
-            if (dis(*cnn::rndeng) < alpha) {
+            if (dis(*dynet::rndeng) < alpha) {
                 vv_or_vc = 0;
                 if (vv_begin == vv_train_indices.end()) {
-                    std::shuffle(vv_train_indices.begin(), vv_train_indices.end(), (*cnn::rndeng));
+                    std::shuffle(vv_train_indices.begin(), vv_train_indices.end(), (*dynet::rndeng));
                     vv_begin = vv_train_indices.begin();
                 }
                 std::vector<unsigned>::iterator end = vv_begin + batch_size;
@@ -187,7 +187,7 @@ namespace mp_train {
                 vv_or_vc = 1;
                 if (vc_begin == vc_train_indices.end()) {
                     vc_begin = vc_train_indices.begin();
-                    std::shuffle(vc_train_indices.begin(), vc_train_indices.end(), (*cnn::rndeng));
+                    std::shuffle(vc_train_indices.begin(), vc_train_indices.end(), (*dynet::rndeng));
                 }
                 std::vector<unsigned>::iterator end = vc_begin + batch_size;
                 if (end > vc_train_indices.end()) {
@@ -255,7 +255,7 @@ namespace mp_train {
             WorkloadHeader header = Read<WorkloadHeader>(workloads[cid].p2c[0]);
 
             // Run the actual training loop
-            cnn::real loss = 0.0;
+            dynet::real loss = 0.0;
             int child_counter = 0;
             while (true) {
                 mq.receive(&i, sizeof(unsigned), recvd_size, priority);

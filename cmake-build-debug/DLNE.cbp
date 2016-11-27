@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="DLNE"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="clang"/>
+		<Option virtualFolders="CMake Files\;CMake Files\cmake\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="dlne_main">
+				<Option output="/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/dlne_main" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Users/sunxiaofei/ClionProjects/eigen"/>
+					<Add directory="/Users/sunxiaofei/ClionProjects/dynet"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../lib/clang/8.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 dlne_main"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="dlne_main/fast">
+				<Option output="/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/dlne_main" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Users/sunxiaofei/ClionProjects/eigen"/>
+					<Add directory="/Users/sunxiaofei/ClionProjects/dynet"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../lib/clang/8.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 dlne_main/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="function_test">
+				<Option output="/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/function_test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Users/sunxiaofei/ClionProjects/eigen"/>
+					<Add directory="/Users/sunxiaofei/ClionProjects/dynet"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../lib/clang/8.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 function_test"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="function_test/fast">
+				<Option output="/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/function_test" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="clang"/>
+				<Compiler>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/Users/sunxiaofei/ClionProjects/eigen"/>
+					<Add directory="/Users/sunxiaofei/ClionProjects/dynet"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../lib/clang/8.0.0/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 function_test/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/sunxiaofei/ClionProjects/DLNE/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/Users/sunxiaofei/ClionProjects/DLNE/src/dlne_main.cpp">
+			<Option target="dlne_main"/>
+		</Unit>
+		<Unit filename="/Users/sunxiaofei/ClionProjects/DLNE/src/function_test.cpp">
+			<Option target="function_test"/>
+		</Unit>
+		<Unit filename="/Users/sunxiaofei/ClionProjects/DLNE/src/mp_train.cpp">
+			<Option target="dlne_main"/>
+		</Unit>
+		<Unit filename="/Users/sunxiaofei/ClionProjects/DLNE/src/mp_train.h">
+			<Option target="dlne_main"/>
+		</Unit>
+		<Unit filename="/Users/sunxiaofei/ClionProjects/DLNE/src/sp_train.h">
+			<Option target="dlne_main"/>
+		</Unit>
+		<Unit filename="/Users/sunxiaofei/ClionProjects/DLNE/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/sunxiaofei/ClionProjects/DLNE/cmake/FindEigen3.cmake">
+			<Option virtualFolder="CMake Files\cmake\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

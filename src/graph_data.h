@@ -7,8 +7,8 @@
 #ifndef WEIBONETEMBEDDING_GRAPH_DATA_H
 #define WEIBONETEMBEDDING_GRAPH_DATA_H
 
-#include "cnn/cnn.h"
-#include "cnn/dict.h"
+#include "dynet/dynet.h"
+#include "dynet/dict.h"
 
 #include <iostream>
 #include <fstream>
@@ -74,7 +74,7 @@ struct GraphData {
     explicit GraphData(std::string graph_file_name,
                        std::string content_file_name,
                        bool strictly_content_required,
-                       cnn::Dict &d) {
+                       dynet::Dict &d) {
         std::cout << "Graph file: " << graph_file_name << std::endl;
         std::cout << "Content file: " << content_file_name << std::endl;
 
@@ -85,8 +85,8 @@ struct GraphData {
         vv_table_size=1e8;
         InitUnigramTable();
         std::string UNK = "UNKNOWN_WORD";
-        d.Freeze();
-        d.SetUnk(UNK);
+        d.freeze();
+        d.set_unk(UNK);
     }
 
     void get_node_count(std::string graph_file_name, std::string content_file_name, bool strictly_content_required){
@@ -156,7 +156,7 @@ struct GraphData {
 
     }
 
-    void read_content_from_file(std::string content_file_name, cnn::Dict &d){
+    void read_content_from_file(std::string content_file_name, dynet::Dict &d){
         std::cout<<"Load content"<<std::endl;
         std::string line;
         std::ifstream content_in(content_file_name);
@@ -179,7 +179,7 @@ struct GraphData {
                     break;
                 }
                 sub = line.substr(start_pos, end_pos-start_pos);
-                content.push_back(ReadSentence(sub, &d));
+                content.push_back(read_sentence(sub, &d));
                 start_pos=end_pos+4;
             }
 
@@ -224,7 +224,7 @@ struct GraphData {
         std::uniform_int_distribution<> dis(0, node_count - 1);
         while (i < sample_size) {
 //            unsigned nv = vv_unitable[dis(*cnn::rndeng)];
-            unsigned nv = dis(*cnn::rndeng);
+            unsigned nv = dis(*dynet::rndeng);
             assert(nv<node_count);
             if (nv == edge.u || nv == edge.v || relation_type(edge.u, nv) == 1) continue;
             vs[i] = nv;
@@ -240,7 +240,7 @@ struct GraphData {
         std::random_device rd;
         std::uniform_int_distribution<> dis(0, vc_edgelist.size()-1);
         while (i < sample_size) {
-            unsigned edge_id = dis(*cnn::rndeng);
+            unsigned edge_id = dis(*dynet::rndeng);
             if (vc_edgelist[edge_id].u == edge.u) continue;
             cs[i] = vc_edgelist[edge_id].v;
             i++;

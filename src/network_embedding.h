@@ -5,15 +5,15 @@
 #ifndef DLNE_NETWORK_EMBEDDING_H_H
 #define DLNE_NETWORK_EMBEDDING_H_H
 
-#include "cnn/nodes.h"
-#include "cnn/cnn.h"
-#include "cnn/training.h"
-#include "cnn/timing.h"
-#include "cnn/rnn.h"
-#include "cnn/gru.h"
-#include "cnn/lstm.h"
-#include "cnn/dict.h"
-#include "cnn/expr.h"
+#include "dynet/nodes.h"
+#include "dynet/dynet.h"
+#include "dynet/training.h"
+#include "dynet/timing.h"
+#include "dynet/rnn.h"
+#include "dynet/gru.h"
+#include "dynet/lstm.h"
+#include "dynet/dict.h"
+#include "dynet/expr.h"
 
 #include "graph_data.h"
 #include "embedding_methods.h"
@@ -25,11 +25,11 @@
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
 
-using namespace cnn;
+using namespace dynet;
 
 struct DLNEModel {
-    LookupParameters *p_u; //lookup table for U nodes
-    LookupParameters *p_v; //lookup table for V nodes
+    LookupParameter p_u; //lookup table for U nodes
+    LookupParameter p_v; //lookup table for V nodes
     unsigned NODE_SIZE;
     unsigned V_EM_DIM;
     unsigned V_NEG;
@@ -56,14 +56,14 @@ struct DLNEModel {
             init[j] = 0.0;
         }
         for (int i = 0; i < NODE_SIZE; i++) {
-            p_v->Initialize(i, init);
+            p_v.initialize(i, init);
         }
         std::uniform_real_distribution<> dis(-0.5, 0.5);
         for (int i = 0; i < NODE_SIZE; i++) {
             for (int j = 0; j < init.size(); j++) {
-                init[j] = (float) dis(*cnn::rndeng) / V_EM_DIM;
+                init[j] = (float) dis(*dynet::rndeng) / V_EM_DIM;
             }
-            p_u->Initialize(i, init);
+            p_u.initialize(i, init);
         }
     }
 
@@ -91,8 +91,8 @@ struct DLNEModel {
             if (index == -1U) continue;
             initialized_word_count++;
             assert(index < NODE_SIZE);
-            p_u->Initialize(index, eu);
-            p_v->Initialize(index, ev);
+            p_u.initialize(index, eu);
+            p_v.initialize(index, ev);
         }
         std::cout << "Initialize " << initialized_word_count << " vertices" << std::endl;
         std::cout << NODE_SIZE - initialized_word_count << " vertices not initialized" << std::endl;
@@ -112,7 +112,7 @@ struct DLNEModel {
     }
 
     // return Expression of total loss
-    cnn::real TrainVVEdge(const Edge edge, GraphData &graph_data) {
+    dynet::real TrainVVEdge(const Edge edge, GraphData &graph_data) {
         ComputationGraph cg;
         std::vector<Expression> errs;
         Expression i_x_u = lookup(cg, p_u, edge.u);
@@ -130,12 +130,12 @@ struct DLNEModel {
         }
 
         Expression i_nerr = -1 * sum(errs);
-        cnn::real loss = as_scalar(cg.forward());
-        cg.backward();
+        dynet::real loss = as_scalar(cg.forward(i_nerr));
+        cg.backward(i_nerr);
         return loss;
     }
 
-    cnn::real TrainVCEdge(const Edge edge, GraphData &graph_data) {
+    dynet::real TrainVCEdge(const Edge edge, GraphData &graph_data) {
         ComputationGraph cg;
         std::vector<Expression> errs;
         Expression i_x_u_u = lookup(cg, p_u, edge.u);
@@ -153,8 +153,8 @@ struct DLNEModel {
             }
         }
         Expression i_nerr = -1 * sum(errs);
-        cnn::real loss = as_scalar(cg.forward());
-        cg.backward();
+        dynet::real loss = as_scalar(cg.forward(i_nerr));
+        cg.backward(i_nerr);
         return loss;
     }
 

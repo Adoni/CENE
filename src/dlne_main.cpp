@@ -12,7 +12,7 @@
 #include "sp_train.h"
 
 using namespace std;
-using namespace cnn;
+using namespace dynet;
 namespace po = boost::program_options;
 
 void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
@@ -80,10 +80,10 @@ void output_all_information(int argc, char **argv) {
 
 
 int main(int argc, char **argv) {
-    cnn::Initialize(argc, argv, 1, true);
+    dynet::initialize(argc, argv, true);
     po::variables_map conf;
     InitCommandLine(argc, argv, &conf);
-    cnn::Dict d;
+    dynet::Dict d;
     cout << "Pid: " << getpid() << endl;
     output_all_information(argc, argv);
     GraphData graph_data(conf["graph_file"].as<string>(), conf["content_file"].as<string>(),

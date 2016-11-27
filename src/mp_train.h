@@ -4,11 +4,11 @@
 
 #pragma once
 
-#include "cnn/cnn.h"
-#include "cnn/training.h"
-#include "cnn/expr.h"
-#include "cnn/dict.h"
-#include "cnn/lstm.h"
+#include "dynet/dynet.h"
+#include "dynet/training.h"
+#include "dynet/expr.h"
+#include "dynet/dict.h"
+#include "dynet/lstm.h"
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/algorithm/string.hpp>
@@ -34,7 +34,7 @@
 #include "graph_data.h"
 #include "network_embedding.h"
 
-using namespace cnn;
+using namespace dynet;
 
 namespace mp_train {
     extern std::string queue_name;
@@ -96,9 +96,9 @@ namespace mp_train {
 
     std::string GenerateSharedMemoryName();
 
-    cnn::real SumValues(const std::vector<cnn::real> &values);
+    dynet::real SumValues(const std::vector<dynet::real> &values);
 
-    cnn::real Mean(const std::vector<cnn::real> &values);
+    dynet::real Mean(const std::vector<dynet::real> &values);
 
     std::string ElapsedTimeString(const std::chrono::time_point<std::chrono::high_resolution_clock> start,
                                   double fractional_iter);
@@ -108,7 +108,7 @@ namespace mp_train {
     std::vector<Workload> CreateWorkloads(unsigned num_children);
 
     // Called by the parent to process a chunk of data
-    cnn::real RunDataSet(std::vector<unsigned>::iterator begin, std::vector<unsigned>::iterator end,
+    dynet::real RunDataSet(std::vector<unsigned>::iterator begin, std::vector<unsigned>::iterator end,
                     const std::vector<Workload> &workloads, boost::interprocess::message_queue &mq,
                     const WorkloadHeader &header);
 

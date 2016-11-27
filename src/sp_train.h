@@ -9,7 +9,7 @@
 #include <chrono>
 
 using namespace std;
-using namespace cnn;
+using namespace dynet;
 namespace sp_train {
     void RunSingleProcess(DLNEModel *learner, Trainer *trainer, GraphData &graph_data) {
         std::cout << "==================" << std::endl << "START TRAINING" << std::endl << "==================" <<
