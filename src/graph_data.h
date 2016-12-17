@@ -179,7 +179,7 @@ struct GraphData {
                     break;
                 }
                 sub = line.substr(start_pos, end_pos-start_pos);
-                content.push_back(read_sentence(sub, &d));
+                content.push_back(read_sentence(sub, d));
                 start_pos=end_pos+4;
             }
 

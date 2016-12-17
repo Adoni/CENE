@@ -66,8 +66,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e8e586c5-adc0-4ac0-aa43-320980d1abe5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cmake-build-debug/dlne_main" afterPath="$PROJECT_DIR$/cmake-build-debug/dlne_main" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dlne_main.cpp" afterPath="$PROJECT_DIR$/src/dlne_main.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/embedding_methods.h" afterPath="$PROJECT_DIR$/src/embedding_methods.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/graph_data.h" afterPath="$PROJECT_DIR$/src/graph_data.h" />
     </list>
     <ignored path="DLNE.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -87,96 +90,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="dlne_main.cpp" pinned="false" current-in-tab="false">
+      <file leaf-file-name="dlne_main.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/dlne_main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="725">
-              <caret line="29" column="70" lean-forward="true" selection-start-line="29" selection-start-column="70" selection-end-line="29" selection-end-column="70" />
+            <state relative-caret-position="424">
+              <caret line="144" column="44" lean-forward="false" selection-start-line="144" selection-start-column="44" selection-end-line="144" selection-end-column="44" />
               <folding>
                 <element signature="e#92#128#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="init.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../dynet/dynet/init.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="18" column="53" lean-forward="false" selection-start-line="18" selection-start-column="53" selection-end-line="18" selection-end-column="53" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="494">
-              <caret line="43" column="23" lean-forward="false" selection-start-line="43" selection-start-column="23" selection-end-line="43" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="325">
-              <caret line="13" column="5" lean-forward="true" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="network_embedding.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/network_embedding.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3900">
-              <caret line="156" column="26" lean-forward="false" selection-start-line="156" selection-start-column="26" selection-end-line="156" selection-end-column="26" />
-              <folding>
-                <element signature="e#114#138#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="embedding_methods.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/embedding_methods.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6675">
-              <caret line="267" column="69" lean-forward="false" selection-start-line="267" selection-start-column="68" selection-end-line="267" selection-end-column="69" />
-              <folding>
-                <element signature="e#110#133#0" expanded="true" />
-                <marker date="1480256706000" expanded="true" signature="372:2213" ph="{...}" />
-                <marker date="1480256706000" expanded="true" signature="553:588" ph="{...}" />
-                <marker date="1480256706000" expanded="true" signature="663:1686" ph="{...}" />
-                <marker date="1480256706000" expanded="true" signature="1747:2085" ph="{...}" />
-                <marker date="1480256706000" expanded="true" signature="2265:3628" ph="{...}" />
-                <marker date="1480256706000" expanded="true" signature="2516:2889" ph="{...}" />
-                <marker date="1480256706000" expanded="true" signature="2994:3626" ph="{...}" />
-                <marker date="1480256706000" expanded="true" signature="3676:4946" ph="{...}" />
-                <marker date="1480256706000" expanded="true" signature="3948:4323" ph="{...}" />
-                <marker date="1480256706000" expanded="true" signature="4424:4944" ph="{...}" />
-                <marker date="1480256706000" expanded="true" signature="4996:6739" ph="{...}" />
-                <marker date="1480256706000" expanded="true" signature="5270:5649" ph="{...}" />
-                <marker date="1480256706000" expanded="true" signature="5752:6737" ph="{...}" />
-                <marker date="1480256706000" expanded="true" signature="7099:8123" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="mp_train.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mp_train.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2750">
-              <caret line="110" column="9" lean-forward="false" selection-start-line="110" selection-start-column="9" selection-end-line="110" selection-end-column="9" />
-              <folding>
-                <element signature="e#57#81#0" expanded="true" />
-                <marker date="1480257005000" expanded="true" signature="918:4172" ph="{...}" />
-                <marker date="1480257005000" expanded="true" signature="1420:1662" ph="{...}" />
-                <marker date="1480257005000" expanded="true" signature="1797:2030" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -185,55 +105,28 @@
       <file leaf-file-name="graph_data.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/graph_data.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4525">
-              <caret line="181" column="47" lean-forward="false" selection-start-line="181" selection-start-column="47" selection-end-line="181" selection-end-column="47" />
-              <folding>
-                <element signature="e#171#195#0" expanded="true" />
-                <marker date="1480256292000" expanded="true" signature="570:1455" ph="{...}" />
-                <marker date="1480256292000" expanded="true" signature="808:1278" ph="{...}" />
-                <marker date="1480256292000" expanded="true" signature="1328:1416" ph="{...}" />
-                <marker date="1480256292000" expanded="true" signature="1476:8381" ph="{...}" />
-                <marker date="1480256292000" expanded="true" signature="2128:2665" ph="{...}" />
-                <marker date="1480256292000" expanded="true" signature="2782:3795" ph="{...}" />
-                <marker date="1480256292000" expanded="true" signature="3855:4962" ph="{...}" />
-                <marker date="1480256292000" expanded="true" signature="5042:6297" ph="{...}" />
-                <marker date="1480256292000" expanded="true" signature="6328:7012" ph="{...}" />
-                <marker date="1480256292000" expanded="true" signature="7065:7188" ph="{...}" />
-                <marker date="1480256292000" expanded="true" signature="7263:7865" ph="{...}" />
-                <marker date="1480256292000" expanded="true" signature="7940:8379" ph="{...}" />
-              </folding>
+            <state relative-caret-position="366">
+              <caret line="181" column="53" lean-forward="false" selection-start-line="181" selection-start-column="53" selection-end-line="181" selection-end-column="53" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mp_train.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/mp_train.cpp">
+      <file leaf-file-name="dict.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../dynet/dynet/dict.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6325">
-              <caret line="253" column="28" lean-forward="false" selection-start-line="253" selection-start-column="28" selection-end-line="253" selection-end-column="28" />
-              <folding>
-                <element signature="e#43#64#0" expanded="true" />
-                <marker date="1480257088000" expanded="true" signature="181:13066" ph="{...}" />
-                <marker date="1480257088000" expanded="true" signature="497:610" ph="{...}" />
-                <marker date="1480257088000" expanded="true" signature="1891:2012" ph="{...}" />
-                <marker date="1480257088000" expanded="true" signature="2080:2149" ph="{...}" />
-                <marker date="1480257088000" expanded="true" signature="2212:2269" ph="{...}" />
-                <marker date="1480257088000" expanded="true" signature="2436:2905" ph="{...}" />
-                <marker date="1480257088000" expanded="true" signature="2968:3532" ph="{...}" />
-                <marker date="1480257088000" expanded="true" signature="3599:3924" ph="{...}" />
-                <marker date="1480257088000" expanded="true" signature="4274:9567" ph="{...}" />
-                <marker date="1480257088000" expanded="true" signature="9751:11657" ph="{...}" />
-                <marker date="1480257088000" expanded="true" signature="12032:13064" ph="{...}" />
-              </folding>
+            <state relative-caret-position="349">
+              <caret line="86" column="0" lean-forward="false" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sp_train.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/sp_train.h">
+      <file leaf-file-name="embedding_methods.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/embedding_methods.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="15" column="18" lean-forward="false" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
+            <state relative-caret-position="216">
+              <caret line="169" column="0" lean-forward="false" selection-start-line="169" selection-start-column="0" selection-end-line="169" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -278,14 +171,14 @@
         <option value="$PROJECT_DIR$/src/simple_mp_train.cpp" />
         <option value="$PROJECT_DIR$/src/embedding_methods.cpp" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/src/graph_data.h" />
-        <option value="$PROJECT_DIR$/src/embedding_methods.h" />
         <option value="$PROJECT_DIR$/src/network_embedding.h" />
         <option value="$PROJECT_DIR$/src/mp_train.h" />
         <option value="$PROJECT_DIR$/src/mp_train.cpp" />
         <option value="$PROJECT_DIR$/src/sp_train.h" />
-        <option value="$PROJECT_DIR$/src/dlne_main.cpp" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/src/graph_data.h" />
+        <option value="$PROJECT_DIR$/src/embedding_methods.h" />
+        <option value="$PROJECT_DIR$/src/dlne_main.cpp" />
       </list>
     </option>
   </component>
@@ -326,6 +219,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="DLNE" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DLNE" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DLNE" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -548,12 +455,12 @@
       <option name="presentableId" value="Default" />
       <updated>1468937832734</updated>
       <workItem from="1480252125423" duration="3816000" />
-      <workItem from="1481980014540" duration="64000" />
+      <workItem from="1481980014540" duration="1339000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3880000" />
+    <option name="totallyTimeSpent" value="5155000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-362" y="-1080" width="1920" height="1080" extended-state="0" />
@@ -561,22 +468,22 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15376514" sideWeight="0.4754829" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32970297" sideWeight="0.49710375" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43465346" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33267328" sideWeight="0.50289625" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3049505" sideWeight="0.49815693" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2851485" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2851485" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.10268562" sideWeight="0.52451706" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.49815693" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32970297" sideWeight="0.49710375" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3049505" sideWeight="0.49815693" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32970297" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.49815693" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -600,13 +507,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/dlne_main.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -697,52 +597,6 @@
     <entry file="file://$PROJECT_DIR$/cnn/cnn/training.h" />
     <entry file="file://$PROJECT_DIR$/cnn/cnn/gru.cc" />
     <entry file="file://$PROJECT_DIR$/cnn/examples/rnnlm-batch.cc" />
-    <entry file="file://$PROJECT_DIR$/src/graph_data.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4525">
-          <caret line="181" column="47" lean-forward="false" selection-start-line="181" selection-start-column="47" selection-end-line="181" selection-end-column="47" />
-          <folding>
-            <element signature="e#171#195#0" expanded="true" />
-            <marker date="1480256292000" expanded="true" signature="570:1455" ph="{...}" />
-            <marker date="1480256292000" expanded="true" signature="808:1278" ph="{...}" />
-            <marker date="1480256292000" expanded="true" signature="1328:1416" ph="{...}" />
-            <marker date="1480256292000" expanded="true" signature="1476:8381" ph="{...}" />
-            <marker date="1480256292000" expanded="true" signature="2128:2665" ph="{...}" />
-            <marker date="1480256292000" expanded="true" signature="2782:3795" ph="{...}" />
-            <marker date="1480256292000" expanded="true" signature="3855:4962" ph="{...}" />
-            <marker date="1480256292000" expanded="true" signature="5042:6297" ph="{...}" />
-            <marker date="1480256292000" expanded="true" signature="6328:7012" ph="{...}" />
-            <marker date="1480256292000" expanded="true" signature="7065:7188" ph="{...}" />
-            <marker date="1480256292000" expanded="true" signature="7263:7865" ph="{...}" />
-            <marker date="1480256292000" expanded="true" signature="7940:8379" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/embedding_methods.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6675">
-          <caret line="267" column="69" lean-forward="false" selection-start-line="267" selection-start-column="68" selection-end-line="267" selection-end-column="69" />
-          <folding>
-            <element signature="e#110#133#0" expanded="true" />
-            <marker date="1480256706000" expanded="true" signature="372:2213" ph="{...}" />
-            <marker date="1480256706000" expanded="true" signature="553:588" ph="{...}" />
-            <marker date="1480256706000" expanded="true" signature="663:1686" ph="{...}" />
-            <marker date="1480256706000" expanded="true" signature="1747:2085" ph="{...}" />
-            <marker date="1480256706000" expanded="true" signature="2265:3628" ph="{...}" />
-            <marker date="1480256706000" expanded="true" signature="2516:2889" ph="{...}" />
-            <marker date="1480256706000" expanded="true" signature="2994:3626" ph="{...}" />
-            <marker date="1480256706000" expanded="true" signature="3676:4946" ph="{...}" />
-            <marker date="1480256706000" expanded="true" signature="3948:4323" ph="{...}" />
-            <marker date="1480256706000" expanded="true" signature="4424:4944" ph="{...}" />
-            <marker date="1480256706000" expanded="true" signature="4996:6739" ph="{...}" />
-            <marker date="1480256706000" expanded="true" signature="5270:5649" ph="{...}" />
-            <marker date="1480256706000" expanded="true" signature="5752:6737" ph="{...}" />
-            <marker date="1480256706000" expanded="true" signature="7099:8123" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/network_embedding.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3900">
@@ -803,30 +657,54 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/dlne_main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="725">
-          <caret line="29" column="70" lean-forward="true" selection-start-line="29" selection-start-column="70" selection-end-line="29" selection-end-column="70" />
-          <folding>
-            <element signature="e#92#128#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitmodules" />
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
-          <caret line="43" column="23" lean-forward="false" selection-start-line="43" selection-start-column="23" selection-end-line="43" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="325">
           <caret line="13" column="5" lean-forward="true" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="28" column="22" lean-forward="true" selection-start-line="28" selection-start-column="22" selection-end-line="28" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../dynet/dynet/dict.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="86" column="0" lean-forward="false" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/graph_data.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="366">
+          <caret line="181" column="53" lean-forward="false" selection-start-line="181" selection-start-column="53" selection-end-line="181" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/embedding_methods.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="169" column="0" lean-forward="false" selection-start-line="169" selection-start-column="0" selection-end-line="169" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dlne_main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="424">
+          <caret line="144" column="44" lean-forward="false" selection-start-line="144" selection-start-column="44" selection-end-line="144" selection-end-column="44" />
+          <folding>
+            <element signature="e#92#128#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
