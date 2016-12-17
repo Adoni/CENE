@@ -134,10 +134,10 @@ int main(int argc, char **argv) {
         dlne.set_to_be_saved_index(conf["to_be_saved_index_file_name"].as<string>(), graph_data);
     }
     Trainer *params_trainer = nullptr;
-    params_trainer = new SimpleSGDTrainer(&params_model, 1e-6, conf["eta0"].as<float>());
+    params_trainer = new SimpleSGDTrainer(params_model, 1e-6, conf["eta0"].as<float>());
     params_trainer->eta_decay = conf["eta_decay"].as<float>();
     Trainer *lookup_params_trainer = nullptr;
-    lookup_params_trainer = new SimpleSGDTrainer(&lookup_params_model, 1e-6, conf["eta0"].as<float>());
+    lookup_params_trainer = new SimpleSGDTrainer(lookup_params_model, 1e-6, conf["eta0"].as<float>());
     lookup_params_trainer->eta_decay = conf["eta_decay"].as<float>();
     mp_train::RunMultiProcess(conf["workers"].as<unsigned>(), &dlne, params_trainer, lookup_params_trainer, graph_data, conf["iterations"].as<unsigned>(),
                               conf["alpha"].as<float>(),
