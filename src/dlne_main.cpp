@@ -58,7 +58,7 @@ void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
     vector<string> required_options{"graph_file", "content_file", "eta0", "eta_decay", "workers",
                                     "iterations", "batch_size", "save_every_i", "update_epoch_every_i",
                                     "report_every_i",
-                                    "vertex_negative", "content_negative", "alpha", "strictly_content_required","use_const_lookup"};
+                                    "vertex_negative", "content_negative", "alpha", "strictly_content_required","use_const_lookup","word_embedding_size"};
 
     for (auto opt_str:required_options) {
         if (conf->count(opt_str) == 0) {
