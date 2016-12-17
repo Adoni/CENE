@@ -122,6 +122,7 @@ int main(int argc, char **argv) {
         return 1;
     }
 
+    cout << "Content Embedding Method Done." << endl;
     if (conf.count("word_embedding_file")) {
         content_embedding_method->initial_look_up_table_from_file(conf["word_embedding_file"].as<string>(), d);
     }
