@@ -1,5 +1,5 @@
-build
 build/*
+!build/*.py
 CMakeCache.txt
 CMakeFiles/*
 # Compiled Object files
