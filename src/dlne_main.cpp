@@ -39,6 +39,7 @@ void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
             ("use_const_lookup", po::value<bool>(), "use const_lookup or lookup")
             ("cnn_filter_count", po::value<unsigned>()->default_value(1), "the count of each filter")
             ("word_embedding_size", po::value<unsigned>(), "word embedding size ")
+            ("language_model", po::value<string>(), "GRU language model")
 
 
             ("help", "Help");
@@ -106,7 +107,7 @@ int main(int argc, char **argv) {
         content_embedding_method = new WordAvg_CE(params_model, W_EM_DIM, C_EM_DIM, conf["use_const_lookup"].as<bool>(),
                                                   d);
     } else if (conf["embedding_method"].as<std::string>() == "GRU") {
-        content_embedding_method = new GRU_CE(params_model, W_EM_DIM, C_EM_DIM, conf["use_const_lookup"].as<bool>(), d);
+        content_embedding_method = new GRU_CE(params_model, W_EM_DIM, C_EM_DIM, conf["use_const_lookup"].as<bool>(), d, conf["language_model"].as<string>());
     } else if (conf["embedding_method"].as<std::string>() == "BiGRU") {
         content_embedding_method = new BiGRU_CE(params_model, W_EM_DIM, C_EM_DIM, conf["use_const_lookup"].as<bool>(),
                                                 d);

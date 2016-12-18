@@ -14,6 +14,10 @@
 #include "dynet/training.h"
 #include <vector>
 #include <string>
+#include <iostream>
+#include <fstream>
+#include <boost/archive/binary_iarchive.hpp>
+
 
 using namespace dynet;
 
@@ -117,13 +121,20 @@ public:
             unsigned word_embedding_size,
             unsigned content_embedding_size,
             bool use_const_lookup,
-            Dict &d) {
+            Dict &d, std::string language_model_file="") {
         this->W_EM_DIM = word_embedding_size;
         this->C_EM_DIM = content_embedding_size;
         this->method_name = "GRU";
         this->use_const_lookup = use_const_lookup;
 
         builder = GRUBuilder(1, W_EM_DIM, C_EM_DIM, params_model);
+        if(language_model_file!=""){
+            std::cout << "Reading language model parameters from " << language_model_file << "...\n";
+            std::ifstream in(language_model_file);
+            assert(in);
+            boost::archive::binary_iarchive ia(in);
+            ia >> params_model;
+        }
         p = params_model.add_lookup_parameters(d.size(), {W_EM_DIM});
         initial_look_up_table(d.size());
     }

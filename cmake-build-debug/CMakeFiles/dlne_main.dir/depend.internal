@@ -7,7 +7,6 @@ CMakeFiles/dlne_main.dir/src/dlne_main.cpp.o
  /Users/sunxiaofei/ClionProjects/DLNE/src/graph_data.h
  /Users/sunxiaofei/ClionProjects/DLNE/src/mp_train.h
  /Users/sunxiaofei/ClionProjects/DLNE/src/network_embedding.h
- /Users/sunxiaofei/ClionProjects/DLNE/src/sp_train.h
  /Users/sunxiaofei/ClionProjects/dynet/dynet/aligned-mem-pool.h
  /Users/sunxiaofei/ClionProjects/dynet/dynet/cuda.h
  /Users/sunxiaofei/ClionProjects/dynet/dynet/devices.h
@@ -450,11 +449,15 @@ CMakeFiles/dlne_main.dir/src/dlne_main.cpp.o
  /usr/local/include/boost/any.hpp
  /usr/local/include/boost/archive/archive_exception.hpp
  /usr/local/include/boost/archive/basic_archive.hpp
+ /usr/local/include/boost/archive/basic_binary_iarchive.hpp
+ /usr/local/include/boost/archive/basic_binary_iprimitive.hpp
  /usr/local/include/boost/archive/basic_streambuf_locale_saver.hpp
  /usr/local/include/boost/archive/basic_text_iarchive.hpp
  /usr/local/include/boost/archive/basic_text_iprimitive.hpp
  /usr/local/include/boost/archive/basic_text_oarchive.hpp
  /usr/local/include/boost/archive/basic_text_oprimitive.hpp
+ /usr/local/include/boost/archive/binary_iarchive.hpp
+ /usr/local/include/boost/archive/binary_iarchive_impl.hpp
  /usr/local/include/boost/archive/codecvt_null.hpp
  /usr/local/include/boost/archive/detail/abi_prefix.hpp
  /usr/local/include/boost/archive/detail/abi_suffix.hpp
@@ -2054,11 +2057,15 @@ CMakeFiles/dlne_main.dir/src/mp_train.cpp.o
  /usr/local/include/boost/align/detail/is_alignment.hpp
  /usr/local/include/boost/archive/archive_exception.hpp
  /usr/local/include/boost/archive/basic_archive.hpp
+ /usr/local/include/boost/archive/basic_binary_iarchive.hpp
+ /usr/local/include/boost/archive/basic_binary_iprimitive.hpp
  /usr/local/include/boost/archive/basic_streambuf_locale_saver.hpp
  /usr/local/include/boost/archive/basic_text_iarchive.hpp
  /usr/local/include/boost/archive/basic_text_iprimitive.hpp
  /usr/local/include/boost/archive/basic_text_oarchive.hpp
  /usr/local/include/boost/archive/basic_text_oprimitive.hpp
+ /usr/local/include/boost/archive/binary_iarchive.hpp
+ /usr/local/include/boost/archive/binary_iarchive_impl.hpp
  /usr/local/include/boost/archive/codecvt_null.hpp
  /usr/local/include/boost/archive/detail/abi_prefix.hpp
  /usr/local/include/boost/archive/detail/abi_suffix.hpp
