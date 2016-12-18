@@ -19,7 +19,7 @@ using namespace dynet;
 
 class ContentEmbeddingMethod {
 public:
-    virtual ~ContentEmbeddingMethod() { }
+    virtual ~ContentEmbeddingMethod() {}
 
     virtual Expression get_embedding(const CONTENT_TYPE &content, ComputationGraph &cg) = 0;
 
@@ -76,7 +76,6 @@ class WordAvg_CE : public ContentEmbeddingMethod {
 public:
     explicit WordAvg_CE(
             Model &params_model,
-            Model &lookup_params_model,
             unsigned word_embedding_size,
             unsigned content_embedding_size,
             bool use_const_lookup,
@@ -86,11 +85,11 @@ public:
         this->C_EM_DIM = content_embedding_size;
         this->method_name = "WordAvg";
         this->use_const_lookup = use_const_lookup;
-        p = lookup_params_model.add_lookup_parameters(d.size(), {W_EM_DIM});
+        p = params_model.add_lookup_parameters(d.size(), {W_EM_DIM});
         initial_look_up_table(d.size());
     }
 
-    ~WordAvg_CE() { }
+    ~WordAvg_CE() {}
 
     Expression get_embedding(const CONTENT_TYPE &content, ComputationGraph &cg) {
         std::vector<Expression> all_word_embedding;
@@ -99,8 +98,7 @@ public:
             for (int j = 0; j < content[i].size(); j++) {
                 if (use_const_lookup) {
                     sentence_expression.push_back(const_lookup(cg, p, content[i][j]));
-                }
-                else {
+                } else {
                     sentence_expression.push_back(lookup(cg, p, content[i][j]));
                 }
             }
@@ -116,7 +114,6 @@ public:
 
     explicit GRU_CE(
             Model &params_model,
-            Model &lookup_params_model,
             unsigned word_embedding_size,
             unsigned content_embedding_size,
             bool use_const_lookup,
@@ -127,11 +124,11 @@ public:
         this->use_const_lookup = use_const_lookup;
 
         builder = GRUBuilder(1, W_EM_DIM, C_EM_DIM, params_model);
-        p = lookup_params_model.add_lookup_parameters(d.size(), {W_EM_DIM});
+        p = params_model.add_lookup_parameters(d.size(), {W_EM_DIM});
         initial_look_up_table(d.size());
     }
 
-    ~GRU_CE() { }
+    ~GRU_CE() {}
 
     Expression get_embedding(const CONTENT_TYPE &content, ComputationGraph &cg) {
         std::vector<Expression> all_hidden;
@@ -157,7 +154,6 @@ public:
 
     explicit BiGRU_CE(
             Model &params_model,
-            Model &lookup_params_model,
             unsigned word_embedding_size,
             unsigned content_embedding_size,
             bool use_const_lookup,
@@ -167,12 +163,12 @@ public:
         this->method_name = "BiGRU";
         this->use_const_lookup = use_const_lookup;
 
-        builder = GRUBuilder(1, W_EM_DIM, C_EM_DIM/2, params_model);
-        p = lookup_params_model.add_lookup_parameters(d.size(), {W_EM_DIM});
+        builder = GRUBuilder(1, W_EM_DIM, C_EM_DIM / 2, params_model);
+        p = params_model.add_lookup_parameters(d.size(), {W_EM_DIM});
         initial_look_up_table(d.size());
     }
 
-    ~BiGRU_CE() { }
+    ~BiGRU_CE() {}
 
     Expression get_embedding(const CONTENT_TYPE &content, ComputationGraph &cg) {
         std::vector<Expression> all_hidden;
@@ -192,14 +188,14 @@ public:
             builder.new_graph(cg);
             builder.start_new_sequence();
             std::vector<Expression> sent2;
-            for (int i=s.size()-1;i>=0;i--) {
+            for (int i = s.size() - 1; i >= 0; i--) {
                 Expression i_x_t = lookup(cg, p, s[i]);
                 sent2.push_back(builder.add_input(i_x_t));
             }
 
             std::vector<Expression> sent;
-            for(int i=0;i<s.size();i++){
-                sent.push_back(concatenate({sent1[i],sent2[i]}));
+            for (int i = 0; i < s.size(); i++) {
+                sent.push_back(concatenate({sent1[i], sent2[i]}));
             }
 
             all_hidden.push_back(average(sent));
@@ -211,13 +207,15 @@ public:
 class CNN_CE : public ContentEmbeddingMethod {
 public:
     explicit CNN_CE(Model &params_model,
-                    Model &lookup_params_model, unsigned word_embedding_size, unsigned content_embedding_size,
-                    const std::vector<std::pair<unsigned, unsigned>> &info, Dict &d) :
+                    unsigned word_embedding_size,
+                    unsigned content_embedding_size,
+                    const std::vector<std::pair<unsigned, unsigned>> &info,
+                    Dict &d) :
             zeros(word_embedding_size, 0.), filters_info(info) {
         this->W_EM_DIM = word_embedding_size;
         this->C_EM_DIM = content_embedding_size;
         this->method_name = "CNN";
-        p = lookup_params_model.add_lookup_parameters(d.size(), {W_EM_DIM});
+        p = params_model.add_lookup_parameters(d.size(), {W_EM_DIM});
         initial_look_up_table(d.size());
 
         unsigned n_filter_types = info.size();

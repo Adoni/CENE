@@ -38,12 +38,12 @@ struct DLNEModel {
     std::vector<int> to_be_saved_index;
 
 
-    explicit DLNEModel(Model &params_model, Model &lookup_params_model, unsigned NODE_SIZE, unsigned V_NEG, unsigned C_NEG, unsigned V_EM_DIM,
+    explicit DLNEModel(Model &params_model, unsigned NODE_SIZE, unsigned V_NEG, unsigned C_NEG, unsigned V_EM_DIM,
                        ContentEmbeddingMethod *content_embedding_method)
             : NODE_SIZE(NODE_SIZE), V_EM_DIM(V_EM_DIM), V_NEG(V_NEG),
               C_NEG(C_NEG), content_embedding_method(content_embedding_method) {
-        p_u = lookup_params_model.add_lookup_parameters(NODE_SIZE, {V_EM_DIM});
-        p_v = lookup_params_model.add_lookup_parameters(NODE_SIZE, {V_EM_DIM});
+        p_u = params_model.add_lookup_parameters(NODE_SIZE, {V_EM_DIM});
+        p_v = params_model.add_lookup_parameters(NODE_SIZE, {V_EM_DIM});
         init_params();
         std::cout << "Method name: " << content_embedding_method->get_method_name() << std::endl;
         to_be_saved_index.resize(NODE_SIZE);

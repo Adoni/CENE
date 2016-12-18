@@ -9,7 +9,6 @@
 #include "embedding_methods.h"
 #include "network_embedding.h"
 #include "mp_train.h"
-#include "sp_train.h"
 
 using namespace std;
 using namespace dynet;
@@ -94,9 +93,6 @@ int main(int argc, char **argv) {
     cout << "VV link count: " << graph_data.vv_edgelist.size() << endl;
     cout << "VC link count: " << graph_data.vc_edgelist.size() << endl;
     Model params_model;
-    Model lookup_params_model;
-
-
 
     unsigned V_NEG = conf["vertex_negative"].as<unsigned>();
     unsigned C_NEG = conf["content_negative"].as<unsigned>();
@@ -107,16 +103,18 @@ int main(int argc, char **argv) {
 
     ContentEmbeddingMethod *content_embedding_method;
     if (conf["embedding_method"].as<std::string>() == "WordAvg") {
-        content_embedding_method = new WordAvg_CE(params_model, lookup_params_model, W_EM_DIM, C_EM_DIM, conf["use_const_lookup"].as<bool>(), d);
+        content_embedding_method = new WordAvg_CE(params_model, W_EM_DIM, C_EM_DIM, conf["use_const_lookup"].as<bool>(),
+                                                  d);
     } else if (conf["embedding_method"].as<std::string>() == "GRU") {
-        content_embedding_method = new GRU_CE(params_model, lookup_params_model, W_EM_DIM, C_EM_DIM, conf["use_const_lookup"].as<bool>(), d);
+        content_embedding_method = new GRU_CE(params_model, W_EM_DIM, C_EM_DIM, conf["use_const_lookup"].as<bool>(), d);
     } else if (conf["embedding_method"].as<std::string>() == "BiGRU") {
-        content_embedding_method = new BiGRU_CE(params_model, lookup_params_model, W_EM_DIM, C_EM_DIM, conf["use_const_lookup"].as<bool>(), d);
+        content_embedding_method = new BiGRU_CE(params_model, W_EM_DIM, C_EM_DIM, conf["use_const_lookup"].as<bool>(),
+                                                d);
     } else if (conf["embedding_method"].as<std::string>() == "CNN") {
         unsigned f_count=conf["cnn_filter_count"].as<unsigned>();
-        content_embedding_method = new CNN_CE(params_model, lookup_params_model, W_EM_DIM, C_EM_DIM, {{2, f_count},
-                                                                          {3, f_count},
-                                                                          {4, f_count},{5,3}}, d);
+        content_embedding_method = new CNN_CE(params_model, W_EM_DIM, C_EM_DIM, {{2, f_count},
+                                                                                 {3, f_count},
+                                                                                 {4, f_count}, {5, 3}}, d);
     } else {
         std::cerr << "Unsupported embedding method" << std::endl;
         return 1;
@@ -127,7 +125,7 @@ int main(int argc, char **argv) {
         content_embedding_method->initial_look_up_table_from_file(conf["word_embedding_file"].as<string>(), d);
     }
 
-    DLNEModel dlne(params_model, lookup_params_model, graph_data.node_count, V_NEG, C_NEG, V_EM_DIM, content_embedding_method);
+    DLNEModel dlne(params_model, graph_data.node_count, V_NEG, C_NEG, V_EM_DIM, content_embedding_method);
     if (conf.count("vertex_embedding_file")) {
         dlne.initialize_from_pretrained_vertex_embedding(conf["vertex_embedding_file"].as<string>(), graph_data);
     }
@@ -137,10 +135,8 @@ int main(int argc, char **argv) {
     Trainer *params_trainer = nullptr;
     params_trainer = new SimpleSGDTrainer(params_model, 1e-6, conf["eta0"].as<float>());
     params_trainer->eta_decay = conf["eta_decay"].as<float>();
-    Trainer *lookup_params_trainer = nullptr;
-    lookup_params_trainer = new SimpleSGDTrainer(lookup_params_model, 1e-6, conf["eta0"].as<float>());
-    lookup_params_trainer->eta_decay = conf["eta_decay"].as<float>();
-    mp_train::RunMultiProcess(conf["workers"].as<unsigned>(), &dlne, params_trainer, lookup_params_trainer, graph_data, conf["iterations"].as<unsigned>(),
+    mp_train::RunMultiProcess(conf["workers"].as<unsigned>(), &dlne, params_trainer, graph_data,
+                              conf["iterations"].as<unsigned>(),
                               conf["alpha"].as<float>(),
                               conf["save_every_i"].as<unsigned>(), conf["update_epoch_every_i"].as<unsigned>(),
                               conf["report_every_i"].as<unsigned>(), conf["batch_size"].as<unsigned>());
