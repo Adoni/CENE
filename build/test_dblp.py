@@ -4,7 +4,8 @@ import subprocess
 def main():
     command = [
             './dlne_main',
-            '--cnn_mem 1500',
+            '--dynet-mem 4500',
+            '--dynet-seed 1',
             '--graph_file ~/DLNE_data/dblp/outputacm_graph.data',
             '--content_file ~/DLNE_data/dblp/outputacm_tokenized_splited_document.data',
             #'--content_file ~/DLNE_data/dblp/outputacm_tokenized_document.data',
@@ -24,7 +25,8 @@ def main():
             '--embedding_method CNN',
             '--strictly_content_required false',
             '--use_const_lookup false',
-            '--cnn_filter_count 10'
+            '--cnn_filter_count 10',
+            '--word_embedding_size 200'
         ]
     command = ' '.join(command)
     print(command)
