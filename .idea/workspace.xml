@@ -65,10 +65,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e8e586c5-adc0-4ac0-aa43-320980d1abe5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dlne_main.cpp" afterPath="$PROJECT_DIR$/src/dlne_main.cpp" />
-    </list>
+    <list default="true" id="e8e586c5-adc0-4ac0-aa43-320980d1abe5" name="Default" comment="" />
     <ignored path="DLNE.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -608,7 +605,7 @@
       <updated>1468937832734</updated>
       <workItem from="1480252125423" duration="3816000" />
       <workItem from="1481980014540" duration="1717000" />
-      <workItem from="1481984588352" duration="3020000" />
+      <workItem from="1481984588352" duration="3061000" />
     </task>
     <task id="LOCAL-00001" summary="merge lookup_params_model and params_model">
       <created>1482045158664</created>
@@ -617,11 +614,18 @@
       <option name="project" value="LOCAL" />
       <updated>1482045158664</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="fix sgd initialize params to new version">
+      <created>1482047489615</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1482047489615</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8553000" />
+    <option name="totallyTimeSpent" value="8594000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-362" y="-1080" width="1920" height="1080" extended-state="0" />
@@ -663,7 +667,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="merge lookup_params_model and params_model" />
-    <option name="LAST_COMMIT_MESSAGE" value="merge lookup_params_model and params_model" />
+    <MESSAGE value="fix sgd initialize params to new version" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix sgd initialize params to new version" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
