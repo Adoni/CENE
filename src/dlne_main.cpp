@@ -16,6 +16,7 @@ namespace po = boost::program_options;
 
 void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
     po::options_description opts("Configuration options");
+    //TODO: reconstruct the whole project
     opts.add_options()
             // Data option
             ("graph_file", po::value<string>(), "Graph file, adjacency list")
