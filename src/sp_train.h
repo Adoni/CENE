@@ -5,7 +5,7 @@
 #ifndef DLNE_SP_TRAIN_H
 #define DLNE_SP_TRAIN_H
 
-#include "graph_data.h"
+#include "network_data.h"
 #include <chrono>
 
 using namespace std;

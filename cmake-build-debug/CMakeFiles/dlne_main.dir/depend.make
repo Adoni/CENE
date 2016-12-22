@@ -3,8 +3,8 @@
 
 CMakeFiles/dlne_main.dir/src/dlne_main.cpp.o: ../src/dlne_main.cpp
 CMakeFiles/dlne_main.dir/src/dlne_main.cpp.o: ../src/embedding_methods.h
-CMakeFiles/dlne_main.dir/src/dlne_main.cpp.o: ../src/graph_data.h
 CMakeFiles/dlne_main.dir/src/dlne_main.cpp.o: ../src/mp_train.h
+CMakeFiles/dlne_main.dir/src/dlne_main.cpp.o: ../src/network_data.h
 CMakeFiles/dlne_main.dir/src/dlne_main.cpp.o: ../src/network_embedding.h
 CMakeFiles/dlne_main.dir/src/dlne_main.cpp.o: /Users/sunxiaofei/ClionProjects/dynet/dynet/aligned-mem-pool.h
 CMakeFiles/dlne_main.dir/src/dlne_main.cpp.o: /Users/sunxiaofei/ClionProjects/dynet/dynet/cuda.h
@@ -1611,9 +1611,9 @@ CMakeFiles/dlne_main.dir/src/dlne_main.cpp.o: /usr/local/include/boost/utility/s
 CMakeFiles/dlne_main.dir/src/dlne_main.cpp.o: /usr/local/include/boost/version.hpp
 
 CMakeFiles/dlne_main.dir/src/mp_train.cpp.o: ../src/embedding_methods.h
-CMakeFiles/dlne_main.dir/src/mp_train.cpp.o: ../src/graph_data.h
 CMakeFiles/dlne_main.dir/src/mp_train.cpp.o: ../src/mp_train.cpp
 CMakeFiles/dlne_main.dir/src/mp_train.cpp.o: ../src/mp_train.h
+CMakeFiles/dlne_main.dir/src/mp_train.cpp.o: ../src/network_data.h
 CMakeFiles/dlne_main.dir/src/mp_train.cpp.o: ../src/network_embedding.h
 CMakeFiles/dlne_main.dir/src/mp_train.cpp.o: /Users/sunxiaofei/ClionProjects/dynet/dynet/aligned-mem-pool.h
 CMakeFiles/dlne_main.dir/src/mp_train.cpp.o: /Users/sunxiaofei/ClionProjects/dynet/dynet/cuda.h

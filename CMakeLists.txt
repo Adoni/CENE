@@ -36,8 +36,12 @@ endforeach ()
 
 set(DLNE_MAIN_SOURCE
         src/dlne_main.cpp
-        src/mp_train
-        src/sp_train
+        src/mp_train.cpp
+        src/mp_train.h
+        src/sp_train.h
+        src/embedding_methods.h
+        src/network_embedding.h
+        src/network_data.h
         )
 add_executable(dlne_main ${DLNE_MAIN_SOURCE})
 target_link_libraries(dlne_main dynet ${LIBS})

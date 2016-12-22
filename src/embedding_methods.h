@@ -5,7 +5,7 @@
 #ifndef DLNE_EMBEDDING_METHODS_H
 #define DLNE_EMBEDDING_METHODS_H
 
-#include "graph_data.h"
+#include "network_data.h"
 #include "dynet/dynet.h"
 #include "dynet/expr.h"
 #include "dynet/lstm.h"
@@ -82,7 +82,7 @@ public:
             Model &params_model,
             unsigned word_embedding_size,
             unsigned content_embedding_size,
-            bool use_const_lookup,
+
             Dict &d) {
         assert(word_embedding_size == content_embedding_size);
         this->W_EM_DIM = word_embedding_size;
@@ -120,15 +120,14 @@ public:
             Model &params_model,
             unsigned word_embedding_size,
             unsigned content_embedding_size,
-            bool use_const_lookup,
-            Dict &d, std::string language_model_file="") {
+            Dict &d, std::string language_model_file = "") {
         this->W_EM_DIM = word_embedding_size;
         this->C_EM_DIM = content_embedding_size;
         this->method_name = "GRU";
         this->use_const_lookup = use_const_lookup;
 
         builder = GRUBuilder(1, W_EM_DIM, C_EM_DIM, params_model);
-        if(language_model_file!=""){
+        if (language_model_file != "") {
             std::cout << "Reading language model parameters from " << language_model_file << "...\n";
             std::ifstream in(language_model_file);
             assert(in);
@@ -167,7 +166,7 @@ public:
             Model &params_model,
             unsigned word_embedding_size,
             unsigned content_embedding_size,
-            bool use_const_lookup,
+
             Dict &d) {
         this->W_EM_DIM = word_embedding_size;
         this->C_EM_DIM = content_embedding_size;

@@ -4,8 +4,8 @@
 CMakeFiles/dlne_main.dir/src/dlne_main.cpp.o
  /Users/sunxiaofei/ClionProjects/DLNE/src/dlne_main.cpp
  /Users/sunxiaofei/ClionProjects/DLNE/src/embedding_methods.h
- /Users/sunxiaofei/ClionProjects/DLNE/src/graph_data.h
  /Users/sunxiaofei/ClionProjects/DLNE/src/mp_train.h
+ /Users/sunxiaofei/ClionProjects/DLNE/src/network_data.h
  /Users/sunxiaofei/ClionProjects/DLNE/src/network_embedding.h
  /Users/sunxiaofei/ClionProjects/dynet/dynet/aligned-mem-pool.h
  /Users/sunxiaofei/ClionProjects/dynet/dynet/cuda.h
@@ -1612,9 +1612,9 @@ CMakeFiles/dlne_main.dir/src/dlne_main.cpp.o
  /usr/local/include/boost/version.hpp
 CMakeFiles/dlne_main.dir/src/mp_train.cpp.o
  /Users/sunxiaofei/ClionProjects/DLNE/src/embedding_methods.h
- /Users/sunxiaofei/ClionProjects/DLNE/src/graph_data.h
  /Users/sunxiaofei/ClionProjects/DLNE/src/mp_train.cpp
  /Users/sunxiaofei/ClionProjects/DLNE/src/mp_train.h
+ /Users/sunxiaofei/ClionProjects/DLNE/src/network_data.h
  /Users/sunxiaofei/ClionProjects/DLNE/src/network_embedding.h
  /Users/sunxiaofei/ClionProjects/dynet/dynet/aligned-mem-pool.h
  /Users/sunxiaofei/ClionProjects/dynet/dynet/cuda.h

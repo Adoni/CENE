@@ -31,7 +31,7 @@
 #include <algorithm>
 #include <chrono>
 
-#include "graph_data.h"
+#include "network_data.h"
 #include "network_embedding.h"
 
 using namespace dynet;
@@ -109,18 +109,19 @@ namespace mp_train {
 
     // Called by the parent to process a chunk of data
     dynet::real RunDataSet(std::vector<unsigned>::iterator begin, std::vector<unsigned>::iterator end,
-                    const std::vector<Workload> &workloads, boost::interprocess::message_queue &mq,
-                    const WorkloadHeader &header);
+                    const std::vector<Workload> &workloads, boost::interprocess::message_queue &mq);
 
 
-    void RunParent(GraphData &graph_data, DLNEModel *learner, Trainer *params_trainer,
-                   std::vector<Workload> &workloads, unsigned num_iterations,
-                   float alpha, unsigned save_every_i, unsigned update_epoch_every_i, unsigned report_every_i, unsigned batch_size);
+    void RunParentRunParent(NetworkData &network_data, DLNEModel *learner, Trainer *params_trainer,
+                            std::vector<Workload> &workloads, unsigned num_iterations,
+                            unsigned save_every_i, unsigned report_every_i,
+                            unsigned batch_size);
 
     int RunChild(unsigned cid, DLNEModel *learner, Trainer *params_trainer,
-                 std::vector<Workload> &workloads, GraphData &graph_data);
+                 std::vector<Workload> &workloads, NetworkData &network_data);
 
     void RunMultiProcess(unsigned num_children, DLNEModel *learner, Trainer *params_trainer,
-                         GraphData &graph_data, unsigned num_iterations,
-                         float alpha, unsigned save_every_i, unsigned updata_epoch_every_i, unsigned report_every_idate_every_i, unsigned batch_size);
+                         NetworkData &network_data, unsigned num_iterations,
+                         unsigned save_every_i,
+                         unsigned report_every_idate_every_i, unsigned batch_size);
 }
