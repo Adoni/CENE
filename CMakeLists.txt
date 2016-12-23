@@ -13,9 +13,9 @@ set(LIBS ${LIBS} ${Boost_LIBRARIES})
 find_package(Eigen3 REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
 
-#find_package(Threads REQUIRED)
-#find_package(Threads)
-#set(LIBS ${LIBS} ${CMAKE_THREAD_LIBS_INIT})
+find_package(Threads REQUIRED)
+find_package(Threads)
+set(LIBS ${LIBS} ${CMAKE_THREAD_LIBS_INIT})
 
 #include_directories(${include_directories} cnn)
 
