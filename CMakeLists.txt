@@ -17,6 +17,7 @@ if(NOT APPLE)
     find_package(Threads REQUIRED)
     set(LIBS ${LIBS} ${CMAKE_THREAD_LIBS_INIT})
 endif()
+
 #include_directories(${include_directories} cnn)
 
 #add_subdirectory(cnn/cnn)

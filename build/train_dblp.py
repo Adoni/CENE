@@ -11,7 +11,7 @@ def main():
             #'--content_file ~/DLNE_data/dblp/outputacm_tokenized_document.data',
             '--word_embedding_file ~/DLNE_data/dblp/outputacm_pre_word_embedding.data',
             '--to_be_saved_index_file_name ~/DLNE_data/dblp/outputacm_to_be_saved_index.data',
-            '--eta0 0.03',
+            '--eta0 0.3',
             '--eta_decay 0.003',
             '--workers 10',
             '--iterations 600000000',
@@ -21,12 +21,13 @@ def main():
             '--report_every_i 10000',
             '--vertex_negative 15',
             '--content_negative 35',
-            '--alpha 0.7',
-            '--embedding_method CNN',
+            '--alpha 1.0',
+            '--embedding_method WordAvg',
             '--strictly_content_required false',
             '--use_const_lookup false',
             '--cnn_filter_count 10',
-            '--word_embedding_size 200'
+            '--word_embedding_size 200',
+            #'--dynet-weight-decay 0.1'
         ]
     command = ' '.join(command)
     print(command)
