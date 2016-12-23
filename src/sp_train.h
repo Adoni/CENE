@@ -13,9 +13,9 @@ using namespace dynet;
 namespace sp_train {
     void RunSingleProcess(DLNEModel *learner, Trainer *trainer, GraphData &graph_data) {
         std::cout << "==================" << std::endl << "START TRAINING" << std::endl << "==================" <<
-        std::endl;
-        std::cout<<"Single trainer: "<<trainer->model->lookup_parameters_list().size()<<std::endl;
-        int MAX_ITERATION=100;
+                  std::endl;
+        std::cout << "Single trainer: " << trainer->model->lookup_parameters_list().size() << std::endl;
+        int MAX_ITERATION = 100;
         const unsigned report_every_i = graph_data.vv_edgelist.size();
         const unsigned update_epoch_every_i = 10000;
         const int save_every_i = graph_data.vv_edgelist.size() * 10;
@@ -33,10 +33,11 @@ namespace sp_train {
                 trainer->update();
 
                 total_iteration += 1;
-                pair+=1;
+                pair += 1;
                 if (total_iteration % update_epoch_every_i == 0) {
                     //                trainer->update_epoch();
-                    trainer->eta = trainer->eta0 * (1 - total_iteration / (float) (MAX_ITERATION * graph_data.vv_edgelist.size() + 1));
+                    trainer->eta = trainer->eta0 *
+                                   (1 - total_iteration / (float) (MAX_ITERATION * graph_data.vv_edgelist.size() + 1));
                     if (trainer->eta < trainer->eta0 * 0.0001) {
                         trainer->eta = trainer->eta0 * 0.0001;
                     }
@@ -46,10 +47,11 @@ namespace sp_train {
                     trainer->status();
                     cerr << " E = " << loss / pair << " ppl=" << exp(loss / pair) << endl;
                     cerr << "Totally using " <<
-                    std::chrono::duration<double, std::milli>(now_time - total_start_time).count() / 60000 << " min" <<
-                    endl;
+                         std::chrono::duration<double, std::milli>(now_time - total_start_time).count() / 60000
+                         << " min" <<
+                         endl;
                     loss = 0;
-                    pair=0;
+                    pair = 0;
                 }
             }
             epoch++;

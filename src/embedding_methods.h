@@ -89,7 +89,7 @@ public:
         this->C_EM_DIM = content_embedding_size;
         this->method_name = "WordAvg";
         this->use_const_lookup = use_const_lookup;
-        p = params_model.add_lookup_parameters(d.size(), {(unsigned)W_EM_DIM});
+        p = params_model.add_lookup_parameters(d.size(), {(unsigned) W_EM_DIM});
         initial_look_up_table(d.size());
     }
 

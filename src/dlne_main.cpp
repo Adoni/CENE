@@ -58,7 +58,7 @@ void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
                                     "eta0", "eta_decay", "workers",
                                     "iterations", "batch_size", "save_every_i",
                                     "report_every_i",
-                                    "negative", "alpha","embedding_method"};
+                                    "negative", "alpha", "embedding_method"};
 
     for (auto opt_str:required_options) {
         if (conf->count(opt_str) == 0) {
@@ -81,10 +81,30 @@ void output_all_information(int argc, char **argv) {
 unsigned get_word_embedding_size(string word_embedding_file_name) {
     ifstream file_in(word_embedding_file_name);
     assert(file_in);
-    unsigned word_embedding_size;
-    file_in >> word_embedding_size;
+    unsigned word_embedding_size, word_count;
+    file_in >> word_count >> word_embedding_size;
     file_in.close();
     return word_embedding_size;
+}
+
+void initialize_word_dict(string word_embedding_file_name, dynet::Dict &d) {
+    ifstream file_in(word_embedding_file_name);
+    assert(file_in);
+    unsigned word_embedding_size, word_count;
+    file_in >> word_count >> word_embedding_size;
+    for (int i = 0; i < word_count; i++) {
+        string word;
+        float embedding;
+        file_in >> word;
+        d.convert(word);
+        for (int j = 0; j < word_embedding_size; j++) {
+            file_in >> embedding;
+        }
+    }
+    d.freeze();
+    d.set_unk("<unk>");
+    file_in.close();
+    cout << "Initialized " << d.size() << " words" << endl;
 }
 
 int main(int argc, char **argv) {
@@ -95,6 +115,7 @@ int main(int argc, char **argv) {
     cout << "Pid: " << getpid() << endl;
     cout << "Conf:" << endl;
     output_all_information(argc, argv);
+    initialize_word_dict(conf["word_embedding_file"].as<string>(), d);
     NetworkData network_data(conf["node_list_file"].as<string>(), conf["edge_list_file"].as<string>(),
                              conf["content_node_file"].as<string>(), d);
 
@@ -103,6 +124,7 @@ int main(int argc, char **argv) {
     cout << "Embedding Size: " << network_data.normal_node_count << endl;
     cout << "Link count: " << network_data.edge_list.size() << endl;
     Model params_model;
+
 
     //word embedding dim
     unsigned W_EM_DIM = get_word_embedding_size(conf["word_embedding_file"].as<string>());

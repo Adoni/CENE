@@ -52,7 +52,7 @@ namespace mp_train {
 
 
     struct SharedObject {
-        SharedObject() : update_mutex(1), counter_mutex(1), counter(0) { }
+        SharedObject() : update_mutex(1), counter_mutex(1), counter(0) {}
 
         boost::interprocess::interprocess_semaphore update_mutex;
         boost::interprocess::interprocess_semaphore counter_mutex;
@@ -105,7 +105,7 @@ namespace mp_train {
 
     // Called by the parent to process a chunk of data
     dynet::real RunDataSet(std::vector<int>::iterator begin, std::vector<int>::iterator end,
-                    const std::vector<Workload> &workloads, boost::interprocess::message_queue &mq);
+                           const std::vector<Workload> &workloads, boost::interprocess::message_queue &mq);
 
 
     void RunParentRunParent(NetworkData &network_data, DLNEModel *learner, Trainer *params_trainer,

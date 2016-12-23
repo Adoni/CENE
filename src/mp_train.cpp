@@ -24,8 +24,8 @@ namespace mp_train {
     }
 
     dynet::real RunDataSet(std::vector<unsigned>::iterator begin, std::vector<unsigned>::iterator end,
-                         const std::vector<Workload> &workloads,
-                         boost::interprocess::message_queue &mq) {
+                           const std::vector<Workload> &workloads,
+                           boost::interprocess::message_queue &mq) {
 
         const unsigned num_children = workloads.size();
 
@@ -76,11 +76,11 @@ namespace mp_train {
         auto now_time = std::chrono::high_resolution_clock::now();
 
         ss << std::chrono::duration<double, std::milli>(now_time - start).count() / 3600000 << " hours for " <<
-        fractional_iter << " epoch"
-        << std::endl;
+           fractional_iter << " epoch"
+           << std::endl;
         ss << std::chrono::duration<double, std::milli>(now_time - start).count() / 3600000 / fractional_iter <<
-        " hours for each epoch"
-        << std::endl;
+           " hours for each epoch"
+           << std::endl;
 
         return ss.str();
     }
@@ -95,8 +95,7 @@ namespace mp_train {
             if (pid == -1) {
                 std::cerr << "Fork failed. Exiting ..." << std::endl;
                 return 1;
-            }
-            else if (pid == 0) {
+            } else if (pid == 0) {
                 // children shouldn't continue looping
                 break;
             }
@@ -124,9 +123,9 @@ namespace mp_train {
 
         std::cout << "Iterations: " << batch_size << std::endl;
         std::cout << "Batch size: " << batch_size << std::endl;
-        std::cout << "Save every " << save_every_i << "iterations"<<std::endl;
+        std::cout << "Save every " << save_every_i << "iterations" << std::endl;
         report_every_i = report_every_i / batch_size;
-        std::cout << "Report every " << report_every_i << "batches"<<std::endl;
+        std::cout << "Report every " << report_every_i << "batches" << std::endl;
 
         const unsigned num_children = unsigned(workloads.size());
         boost::interprocess::message_queue mq(boost::interprocess::open_or_create, queue_name.c_str(), 10000,
@@ -137,9 +136,9 @@ namespace mp_train {
         std::vector<unsigned>::iterator begin = train_indices.begin();
 
         for (unsigned iter = 1; iter < num_iterations; ++iter) {
-            unsigned batch_count=0;
+            unsigned batch_count = 0;
             float loss;
-            while(begin!=train_indices.end()){
+            while (begin != train_indices.end()) {
                 std::vector<unsigned>::iterator end = begin + batch_size;
                 if (end > train_indices.end()) {
                     end = train_indices.end();
@@ -158,10 +157,10 @@ namespace mp_train {
             if (iter % save_every_i == 0) {
                 std::ostringstream ss;
                 ss << learner->get_learner_name() << "_embedding_pid" << getpid() << "_alpha_";
-                for (auto alpha:learner->alpha){
-                    ss<<std::setprecision(2) << alpha << "_";
+                for (auto alpha:learner->alpha) {
+                    ss << std::setprecision(2) << alpha << "_";
                 }
-                ss<<unsigned(iter / save_every_i) << ".data";
+                ss << unsigned(iter / save_every_i) << ".data";
                 learner->SaveEmbedding(ss.str(), network_data);
             }
 //            if (iter % save_model_every_i == 0) {
@@ -234,8 +233,7 @@ namespace mp_train {
         unsigned cid = SpawnChildren(workloads);
         if (cid < num_children) {
             RunChild(cid, learner, params_trainer, workloads, network_data);
-        }
-        else {
+        } else {
             RunParent(network_data, learner, params_trainer, workloads, num_iterations, save_every_i,
                       report_every_idate_every_i, batch_size);
         }

@@ -86,7 +86,7 @@ struct NetworkData {
     }
 
     void read_node_list_from_file(string node_list_file_name) {
-        cout << "Load graph" << endl;
+        cout << "Reading node list ..." << endl;
         string line;
 
         ifstream file_in(node_list_file_name);
@@ -97,7 +97,7 @@ struct NetworkData {
             string node;
             file_in>>node;
             int node_id=node_id_map.convert(node);
-            cout<<node<<" "<<node_id<<" "<<i<<endl;
+//            cout<<node<<" "<<node_id<<" "<<i<<endl;
             assert(node_id==i);
             node_list[node_id].with_content=false;
         }
@@ -106,7 +106,7 @@ struct NetworkData {
     }
 
     void read_edge_list_from_file(string edge_list_file_name) {
-        cout << "Load graph" << endl;
+        cout << "Reading edge list ..." << endl;
         string line;
 
         ifstream file_in(edge_list_file_name);
@@ -133,8 +133,7 @@ struct NetworkData {
     }
 
     void read_content_from_file(string content_file_name, dynet::Dict &d) {
-        d.set_unk("<unk>");
-        cout << "Load content" << endl;
+        cout << "Reading content ..." << endl;
         string line;
         ifstream file_in(content_file_name);
         assert(file_in);
@@ -156,7 +155,6 @@ struct NetworkData {
             node_list[node_id].content = content;
             node_list[node_id].with_content = true;
         }
-        d.freeze();
         file_in.close();
     }
 

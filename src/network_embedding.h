@@ -40,7 +40,7 @@ struct DLNEModel {
 
 
     explicit DLNEModel(Model &params_model, unsigned embedding_node_size,
-                       unsigned embedding_dimension,vector<unsigned> negative_sampling_size,
+                       unsigned embedding_dimension, vector<unsigned> negative_sampling_size,
                        ContentEmbeddingMethod *content_embedding_method, vector<float> alpha)
             : embedding_node_size(embedding_node_size), negative_sampling_size(negative_sampling_size),
               content_embedding_method(content_embedding_method), alpha(alpha) {
@@ -87,21 +87,19 @@ struct DLNEModel {
         ComputationGraph cg;
         vector<Expression> errs;
         Expression i_x_u;
-        if (network_data.node_list[edge.u_id].with_content){
-            i_x_u=content_embedding_method->get_embedding(network_data.node_list[edge.u_id].content, cg);
-        }
-        else {
-            i_x_u=lookup(cg, p_u, network_data.node_list[edge.u_id].embedding_id);
+        if (network_data.node_list[edge.u_id].with_content) {
+            i_x_u = content_embedding_method->get_embedding(network_data.node_list[edge.u_id].content, cg);
+        } else {
+            i_x_u = lookup(cg, p_u, network_data.node_list[edge.u_id].embedding_id);
         }
         auto negative_samples = network_data.vv_neg_sample(negative_sampling_size[edge.edge_type] + 1, edge);
         // Expression i_W_vv = parameter(cg, W_vv);
         for (unsigned v_id:negative_samples) {
             Expression i_x_v;
-            if (network_data.node_list[edge.v_id].with_content){
-                i_x_v=content_embedding_method->get_embedding(network_data.node_list[v_id].content, cg);
-            }
-            else {
-                i_x_v=lookup(cg, p_v, network_data.node_list[v_id].embedding_id);
+            if (network_data.node_list[edge.v_id].with_content) {
+                i_x_v = content_embedding_method->get_embedding(network_data.node_list[v_id].content, cg);
+            } else {
+                i_x_v = lookup(cg, p_v, network_data.node_list[v_id].embedding_id);
             }
             unsigned relation_type = network_data.relation_type(edge.u_id, v_id, edge.edge_type);
             if (relation_type == 1) {
