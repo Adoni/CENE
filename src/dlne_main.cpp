@@ -58,7 +58,7 @@ void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
                                     "eta0", "eta_decay", "workers",
                                     "iterations", "batch_size", "save_every_i",
                                     "report_every_i",
-                                    "negative", "alpha"};
+                                    "negative", "alpha","embedding_method"};
 
     for (auto opt_str:required_options) {
         if (conf->count(opt_str) == 0) {
@@ -94,9 +94,6 @@ int main(int argc, char **argv) {
     dynet::Dict d;
     cout << "Pid: " << getpid() << endl;
     cout << "Conf" << endl;
-    for (auto f:conf["graph_files"].as<vector<string>>()) {
-        std::cout << f << " ";
-    }
     output_all_information(argc, argv);
     NetworkData network_data(conf["node_list_file"].as<string>(), conf["edge_list_file"].as<string>(),
                              conf["content_file"].as<string>(), d);
