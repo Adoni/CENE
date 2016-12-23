@@ -93,10 +93,10 @@ int main(int argc, char **argv) {
     InitCommandLine(argc, argv, &conf);
     dynet::Dict d;
     cout << "Pid: " << getpid() << endl;
-    cout << "Conf" << endl;
+    cout << "Conf:" << endl;
     output_all_information(argc, argv);
     NetworkData network_data(conf["node_list_file"].as<string>(), conf["edge_list_file"].as<string>(),
-                             conf["content_file"].as<string>(), d);
+                             conf["content_node_file"].as<string>(), d);
 
     cout << "Vocabulary count: " << d.size() << endl;
     cout << "Node count: " << network_data.node_count << endl;

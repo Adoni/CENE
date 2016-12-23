@@ -59,9 +59,10 @@ struct NetworkData {
                          string content_file_name,
                          dynet::Dict &d) {
 
-        cout << "Graph files: " << edge_list_file_name << " " << endl;
-
+        cout << "Node list file: " << content_file_name << endl;
+        cout << "Edge list files: " << edge_list_file_name << endl;
         cout << "Content file: " << content_file_name << endl;
+
 
         read_node_list_from_file(node_list_file_name);
         read_edge_list_from_file(edge_list_file_name);
@@ -96,6 +97,7 @@ struct NetworkData {
             string node;
             file_in>>node;
             int node_id=node_id_map.convert(node);
+            cout<<node<<" "<<node_id<<" "<<i<<endl;
             assert(node_id==i);
             node_list[node_id].with_content=false;
         }
