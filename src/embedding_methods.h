@@ -33,22 +33,22 @@ public:
 
     void initial_look_up_table_from_file(std::string file_name, Dict &d) {
         std::cout << "Initializing lookup table from " << file_name << " ..." << std::endl;
-        std::string UNK = "UNKNOWN_WORD";
+        std::string UNK = "<unk>";
         std::ifstream em_in(file_name);
         assert(em_in);
         unsigned em_count, em_size;
-        int unknow_id = d.convert(UNK);
+        unsigned unknow_id = d.convert(UNK);
         em_in >> em_count >> em_size;
         assert(em_size == W_EM_DIM);
         std::vector<float> e(em_size);
         std::string w;
-        int initialized_word_count = 0;
-        for (int i = 0; i < em_count; i++) {
+        unsigned initialized_word_count = 0;
+        for (unsigned i = 0; i < em_count; i++) {
             em_in >> w;
-            for (int j = 0; j < em_size; j++) {
+            for (unsigned j = 0; j < em_size; j++) {
                 em_in >> e[j];
             }
-            int index = d.convert(w);
+            unsigned index = d.convert(w);
             if (index == unknow_id) continue;
             initialized_word_count++;
             assert(index < d.size() && index >= 0);
@@ -61,8 +61,8 @@ public:
     void initial_look_up_table(unsigned lookup_table_size) {
         std::vector<float> init(W_EM_DIM);
         std::uniform_real_distribution<> dis(-0.5, 0.5);
-        for (int i = 0; i < lookup_table_size; i++) {
-            for (int j = 0; j < init.size(); j++) {
+        for (unsigned i = 0; i < lookup_table_size; i++) {
+            for (unsigned j = 0; j < init.size(); j++) {
                 init[j] = (float) dis(*dynet::rndeng) / W_EM_DIM;
             }
             p.initialize(i, init);
@@ -89,7 +89,7 @@ public:
         this->C_EM_DIM = content_embedding_size;
         this->method_name = "WordAvg";
         this->use_const_lookup = use_const_lookup;
-        p = params_model.add_lookup_parameters(d.size(), {W_EM_DIM});
+        p = params_model.add_lookup_parameters(d.size(), {(unsigned)W_EM_DIM});
         initial_look_up_table(d.size());
     }
 
@@ -97,9 +97,9 @@ public:
 
     Expression get_embedding(const CONTENT_TYPE &content, ComputationGraph &cg) {
         std::vector<Expression> all_word_embedding;
-        for (int i = 0; i < content.size(); i++) {
+        for (unsigned i = 0; i < content.size(); i++) {
             std::vector<Expression> sentence_expression;
-            for (int j = 0; j < content[i].size(); j++) {
+            for (unsigned j = 0; j < content[i].size(); j++) {
                 if (use_const_lookup) {
                     sentence_expression.push_back(const_lookup(cg, p, content[i][j]));
                 } else {
@@ -134,7 +134,7 @@ public:
             boost::archive::binary_iarchive ia(in);
             ia >> params_model;
         }
-        p = params_model.add_lookup_parameters(d.size(), {W_EM_DIM});
+        p = params_model.add_lookup_parameters(d.size(), {(unsigned)W_EM_DIM});
         initial_look_up_table(d.size());
     }
 
@@ -249,7 +249,7 @@ public:
 
     dynet::expr::Expression get_embedding(const CONTENT_TYPE &content, ComputationGraph &cg) {
         unsigned len = content.size();
-        auto padding = dynet::expr::zeroes(cg, {(unsigned int) zeros.size()});
+        auto padding = dynet::expr::zeroes(cg, {(unsigned) zeros.size()});
         std::vector<dynet::expr::Expression> s;
         for (auto c:content) {
             for (auto w:c) {

@@ -73,15 +73,15 @@ void output_all_information(int argc, char **argv) {
     std::ostringstream ss;
     ss << getpid() << "_info.data";
     std::ofstream output_file(ss.str());
-    for (int i = 0; i < argc; i++) {
+    for (unsigned i = 0; i < argc; i++) {
         output_file << argv[i] << std::endl;
     }
 }
 
-int get_word_embedding_size(string word_embedding_file_name) {
+unsigned get_word_embedding_size(string word_embedding_file_name) {
     ifstream file_in(word_embedding_file_name);
     assert(file_in);
-    int word_embedding_size;
+    unsigned word_embedding_size;
     file_in >> word_embedding_size;
     file_in.close();
     return word_embedding_size;
@@ -135,7 +135,7 @@ int main(int argc, char **argv) {
     cout << "Content Embedding Method Done." << endl;
     content_embedding_method->initial_look_up_table_from_file(conf["word_embedding_file"].as<string>(), d);
 
-    DLNEModel dlne(params_model, network_data.normal_node_count, N_EM_DIM, conf["negative"].as<vector<int>>(),
+    DLNEModel dlne(params_model, network_data.normal_node_count, N_EM_DIM, conf["negative"].as<vector<unsigned>>(),
                    content_embedding_method, conf["alpha"].as<vector<float>>());
     if (conf.count("to_be_saved_index_file_name")) {
         dlne.set_to_be_saved_index(conf["to_be_saved_index_file_name"].as<string>(), network_data);

@@ -85,7 +85,7 @@ namespace mp_train {
         return ss.str();
     }
 
-    unsigned SpawnChildren(std::vector<Workload> &workloads) {
+    int SpawnChildren(std::vector<Workload> &workloads) {
         const unsigned num_children = workloads.size();
         assert (workloads.size() == num_children);
         pid_t pid;
@@ -137,7 +137,7 @@ namespace mp_train {
         std::vector<unsigned>::iterator begin = train_indices.begin();
 
         for (unsigned iter = 1; iter < num_iterations; ++iter) {
-            int batch_count=0;
+            unsigned batch_count=0;
             float loss;
             while(begin!=train_indices.end()){
                 std::vector<unsigned>::iterator end = begin + batch_size;
@@ -161,7 +161,7 @@ namespace mp_train {
                 for (auto alpha:learner->alpha){
                     ss<<std::setprecision(2) << alpha << "_";
                 }
-                ss<<int(iter / save_every_i) << ".data";
+                ss<<unsigned(iter / save_every_i) << ".data";
                 learner->SaveEmbedding(ss.str(), network_data);
             }
 //            if (iter % save_model_every_i == 0) {

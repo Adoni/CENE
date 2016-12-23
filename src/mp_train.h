@@ -40,10 +40,6 @@ namespace mp_train {
     extern std::string queue_name;
     extern std::string shared_memory_name;
 
-    struct WorkloadHeader {
-        unsigned vv_or_vc; // to determain which kind of link is used
-    };
-
     // A simple struct to hold information about a child process
     struct Workload {
         pid_t pid;
@@ -60,7 +56,7 @@ namespace mp_train {
 
         boost::interprocess::interprocess_semaphore update_mutex;
         boost::interprocess::interprocess_semaphore counter_mutex;
-        unsigned counter;
+        int counter;
     };
 
 
@@ -103,12 +99,12 @@ namespace mp_train {
     std::string ElapsedTimeString(const std::chrono::time_point<std::chrono::high_resolution_clock> start,
                                   double fractional_iter);
 
-    unsigned SpawnChildren(std::vector<Workload> &workloads);
+    int SpawnChildren(std::vector<Workload> &workloads);
 
-    std::vector<Workload> CreateWorkloads(unsigned num_children);
+    std::vector<Workload> CreateWorkloads(int num_children);
 
     // Called by the parent to process a chunk of data
-    dynet::real RunDataSet(std::vector<unsigned>::iterator begin, std::vector<unsigned>::iterator end,
+    dynet::real RunDataSet(std::vector<int>::iterator begin, std::vector<int>::iterator end,
                     const std::vector<Workload> &workloads, boost::interprocess::message_queue &mq);
 
 
@@ -117,7 +113,7 @@ namespace mp_train {
                             unsigned save_every_i, unsigned report_every_i,
                             unsigned batch_size);
 
-    int RunChild(unsigned cid, DLNEModel *learner, Trainer *params_trainer,
+    int RunChild(int cid, DLNEModel *learner, Trainer *params_trainer,
                  std::vector<Workload> &workloads, NetworkData &network_data);
 
     void RunMultiProcess(unsigned num_children, DLNEModel *learner, Trainer *params_trainer,

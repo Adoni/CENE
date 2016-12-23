@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 project(DLNE)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
@@ -13,10 +13,10 @@ set(LIBS ${LIBS} ${Boost_LIBRARIES})
 find_package(Eigen3 REQUIRED)
 include_directories(${EIGEN3_INCLUDE_DIR})
 
-find_package(Threads REQUIRED)
-find_package(Threads)
-set(LIBS ${LIBS} ${CMAKE_THREAD_LIBS_INIT})
-
+if(NOT APPLE)
+    find_package(Threads REQUIRED)
+    set(LIBS ${LIBS} ${CMAKE_THREAD_LIBS_INIT})
+endif()
 #include_directories(${include_directories} cnn)
 
 #add_subdirectory(cnn/cnn)

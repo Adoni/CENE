@@ -32,15 +32,15 @@ struct DLNEModel {
     LookupParameter p_u; //lookup table for U nodes
     LookupParameter p_v; //lookup table for V nodes
     unsigned embedding_node_size;
-    int embedding_dimension;
-    vector<int> negative_sampling_size;
+    unsigned embedding_dimension;
+    vector<unsigned> negative_sampling_size;
     ContentEmbeddingMethod *content_embedding_method;
-    vector<int> to_be_saved_index;
+    vector<unsigned> to_be_saved_index;
     vector<float> alpha;
 
 
     explicit DLNEModel(Model &params_model, unsigned embedding_node_size,
-                       unsigned embedding_dimension,vector<int> negative_sampling_size,
+                       unsigned embedding_dimension,vector<unsigned> negative_sampling_size,
                        ContentEmbeddingMethod *content_embedding_method, vector<float> alpha)
             : embedding_node_size(embedding_node_size), negative_sampling_size(negative_sampling_size),
               content_embedding_method(content_embedding_method), alpha(alpha) {
@@ -54,15 +54,15 @@ struct DLNEModel {
 
     void init_params() {
         vector<float> init(embedding_dimension);
-        for (int j = 0; j < init.size(); j++) {
+        for (unsigned j = 0; j < init.size(); j++) {
             init[j] = 0.0;
         }
-        for (int i = 0; i < embedding_node_size; i++) {
+        for (unsigned i = 0; i < embedding_node_size; i++) {
             p_v.initialize(i, init);
         }
         uniform_real_distribution<> dis(-0.5, 0.5);
-        for (int i = 0; i < embedding_node_size; i++) {
-            for (int j = 0; j < init.size(); j++) {
+        for (unsigned i = 0; i < embedding_node_size; i++) {
+            for (unsigned j = 0; j < init.size(); j++) {
                 init[j] = (float) dis(*dynet::rndeng) / embedding_dimension;
             }
             p_u.initialize(i, init);
@@ -77,7 +77,7 @@ struct DLNEModel {
         string line;
         while (getline(to_be_saved_index_file_in, line)) {
             boost::trim(line);
-            int node_id = network_data.node_id_map.convert(line);
+            unsigned node_id = network_data.node_id_map.convert(line);
             to_be_saved_index.push_back(node_id);
         }
     }
@@ -95,7 +95,7 @@ struct DLNEModel {
         }
         auto negative_samples = network_data.vv_neg_sample(negative_sampling_size[edge.edge_type] + 1, edge);
         // Expression i_W_vv = parameter(cg, W_vv);
-        for (int v_id:negative_samples) {
+        for (unsigned v_id:negative_samples) {
             Expression i_x_v;
             if (network_data.node_list[edge.v_id].with_content){
                 i_x_v=content_embedding_method->get_embedding(network_data.node_list[v_id].content, cg);
@@ -103,7 +103,7 @@ struct DLNEModel {
             else {
                 i_x_v=lookup(cg, p_v, network_data.node_list[v_id].embedding_id);
             }
-            int relation_type = network_data.relation_type(edge.u_id, v_id, edge.edge_type);
+            unsigned relation_type = network_data.relation_type(edge.u_id, v_id, edge.edge_type);
             if (relation_type == 1) {
                 errs.push_back(log(logistic(dot_product(i_x_u, i_x_v))));
             } else {

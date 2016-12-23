@@ -31,10 +31,9 @@ struct Edge {
 };
 
 struct Node {
-    int node_type;
     bool with_content;
     CONTENT_TYPE content;
-    unsigned embedding_id;
+    int embedding_id;
 };
 
 
@@ -42,7 +41,6 @@ struct NetworkData {
     dynet::Dict node_id_map;
 
     int edge_type_count;
-    int node_type_count;
     int edge_count;
     int node_count;
     int normal_node_count;
@@ -92,15 +90,13 @@ struct NetworkData {
 
         ifstream file_in(node_list_file_name);
         assert(file_in);
-        file_in>>node_count>>node_type_count;
+        file_in>>node_count;
         node_list.resize(node_count);
         for(int i=0;i<node_count;i++){
             string node;
-            int node_type;
-            file_in>>node>>node_type;
+            file_in>>node;
             int node_id=node_id_map.convert(node);
             assert(node_id==i);
-            node_list[node_id].node_type=node_type;
             node_list[node_id].with_content=false;
         }
         node_id_map.freeze();
