@@ -4,6 +4,8 @@
 //
 
 #include <boost/program_options.hpp>
+#include <iostream>
+#include <vector>
 
 #include "network_data.h"
 #include "embedding_methods.h"
@@ -18,9 +20,9 @@ void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
     po::options_description opts("Configuration options");
     opts.add_options()
             // Data option
-            ("node_list_file", po::value<string>(),
+            ("node_list_file", po::value<vector<string>>()->multitoken(),
              "Node list; first line is node_count and node_type_count; each of rest line is two input: node_name, node_type")
-            ("edge_list_file", po::value<string>(),
+            ("edge_list_file", po::value<vector<string>>()->multitoken(),
              "Edge list, first line is edge_count and edge_type_count; each of rest line is three input: u_id, v_id, node_type")
             ("content_node_file", po::value<string>(), "Content file")
 
@@ -117,7 +119,7 @@ int main(int argc, char **argv) {
     cout << "Pid: " << getpid() << endl;
     output_all_information(argc, argv);
     initialize_word_dict(conf["word_embedding_file"].as<string>(), d);
-    NetworkData network_data(conf["node_list_file"].as<string>(), conf["edge_list_file"].as<string>(),
+    NetworkData network_data(conf["node_list_file"].as<vector<string>>(), conf["edge_list_file"].as<vector<string>>(),
                              conf["content_node_file"].as<string>(), d);
 
     cout << "Vocabulary count: " << d.size() << endl;

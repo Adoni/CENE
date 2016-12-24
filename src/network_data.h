@@ -55,17 +55,17 @@ struct NetworkData {
     vector<vector<int>> uni_tables;
 
 
-    explicit NetworkData(string node_list_file_name, string edge_list_file_name,
+    explicit NetworkData(vector<string> node_list_file_names, vector<string> edge_list_file_names,
                          string content_file_name,
                          dynet::Dict &d) {
 
-        cout << "Node list file: " << content_file_name << endl;
-        cout << "Edge list files: " << edge_list_file_name << endl;
-        cout << "Content file: " << content_file_name << endl;
+//        cout << "Node list file: " << content_file_name << endl;
+//        cout << "Edge list files: " << edge_list_file_name << endl;
+//        cout << "Content file: " << content_file_name << endl;
 
 
-        read_node_list_from_file(node_list_file_name);
-        read_edge_list_from_file(edge_list_file_name);
+        read_node_list_from_file(node_list_file_names);
+        read_edge_list_from_file(edge_list_file_names);
         read_content_from_file(content_file_name, d);
 
         {
@@ -85,51 +85,59 @@ struct NetworkData {
         InitUniTables();
     }
 
-    void read_node_list_from_file(string node_list_file_name) {
+    void read_node_list_from_file(vector<string> node_list_file_names) {
         cout << "Reading node list ..." << endl;
-        string line;
 
-        ifstream file_in(node_list_file_name);
-        assert(file_in);
-        file_in>>node_count;
-        node_list.resize(node_count);
-        for(int i=0;i<node_count;i++){
-            string node;
-            file_in>>node;
-            int node_id=node_id_map.convert(node);
-//            cout<<node<<" "<<node_id<<" "<<i<<endl;
-            assert(node_id==i);
-            node_list[node_id].with_content=false;
+        for (auto node_list_file_name:node_list_file_names){
+            ifstream file_in(node_list_file_name);
+            assert(file_in);
+            int part_node_count;
+            file_in>>part_node_count;
+            node_count+=part_node_count;
+            node_list.resize(node_count);
+            for(int i=0;i<node_count;i++){
+                string node;
+                file_in>>node;
+                int node_id=node_id_map.convert(node);
+                assert(node_id==node_count-part_node_count+i);
+                node_list[node_id].with_content=false;
+            }
+            node_id_map.freeze();
+            file_in.close();
         }
-        node_id_map.freeze();
-        file_in.close();
     }
 
-    void read_edge_list_from_file(string edge_list_file_name) {
+    void read_edge_list_from_file(vector<string> edge_list_file_names) {
         cout << "Reading edge list ..." << endl;
         string line;
 
-        ifstream file_in(edge_list_file_name);
-        assert(file_in);
-        file_in>>edge_count>>edge_type_count;
-        utov_graph.resize(edge_type_count);
-        vtou_graph.resize(edge_type_count);
-        for(int i=0;i<edge_type_count;i++){
-            utov_graph[i].resize(node_count);
-            vtou_graph[i].resize(node_count);
+        for(auto edge_list_file_name:edge_list_file_names){
+            ifstream file_in(edge_list_file_name);
+            assert(file_in);
+            int part_edge_count;
+            file_in>>part_edge_count>>edge_type_count;
+            edge_count+=part_edge_count;
+            if (edge_type_count>utov_graph.size()){
+                utov_graph.resize(edge_type_count);
+                vtou_graph.resize(edge_type_count);
+                for(int i=0;i<edge_type_count;i++){
+                    utov_graph[i].resize(node_count);
+                    vtou_graph[i].resize(node_count);
+                }
+            }
+            for(int i=0;i<part_edge_count;i++) {
+                string u,v;
+                int edge_type;
+                file_in >> u >> v >> edge_type;
+                int u_id = node_id_map.convert(u);
+                int v_id = node_id_map.convert(v);
+                this->edge_list.push_back(Edge{u_id, v_id, edge_type});
+                utov_graph[edge_type][u_id].insert(v_id);
+                vtou_graph[edge_type][v_id].insert(u_id);
+            }
+            file_in.close();
         }
-        for(int i=0;i<edge_count;i++) {
-            string u,v;
-            int edge_type;
-            file_in >> u >> v >> edge_type;
 
-            int u_id = node_id_map.convert(u);
-            int v_id = node_id_map.convert(v);
-            this->edge_list.push_back(Edge{u_id, v_id, edge_type});
-            utov_graph[edge_type][u_id].insert(v_id);
-            vtou_graph[edge_type][v_id].insert(u_id);
-        }
-        file_in.close();
     }
 
     void read_content_from_file(string content_file_name, dynet::Dict &d) {

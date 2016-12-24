@@ -92,15 +92,15 @@ struct DLNEModel {
         }
         auto negative_samples = network_data.vv_neg_sample(negative_sampling_size[edge.edge_type] + 1, edge);
         // Expression i_W_vv = parameter(cg, W_vv);
-        for (unsigned v_id:negative_samples) {
+        for (int i=0;i<negative_samples.size();i++) {
+            int v_id=negative_samples[i];
             Expression i_x_v;
             if (network_data.node_list[edge.v_id].with_content) {
                 i_x_v = content_embedding_method->get_embedding(network_data.node_list[v_id].content, cg);
             } else {
                 i_x_v = lookup(cg, p_v, network_data.node_list[v_id].embedding_id);
             }
-            unsigned relation_type = network_data.relation_type(edge.u_id, v_id, edge.edge_type);
-            if (relation_type == 1) {
+            if (i == 0) {
                 errs.push_back(log(logistic(dot_product(i_x_u, i_x_v))));
             } else {
                 errs.push_back(log(logistic(-1 * dot_product(i_x_u, i_x_v))));
