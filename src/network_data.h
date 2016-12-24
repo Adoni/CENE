@@ -87,7 +87,7 @@ struct NetworkData {
 
     void read_node_list_from_file(vector<string> node_list_file_names) {
         cout << "Reading node list ..." << endl;
-
+        node_count=0;
         for (auto node_list_file_name:node_list_file_names){
             ifstream file_in(node_list_file_name);
             assert(file_in);
@@ -95,16 +95,16 @@ struct NetworkData {
             file_in>>part_node_count;
             node_count+=part_node_count;
             node_list.resize(node_count);
-            for(int i=0;i<node_count;i++){
+            for(int i=0;i<part_node_count;i++){
                 string node;
                 file_in>>node;
                 int node_id=node_id_map.convert(node);
-                assert(node_id==node_count-part_node_count+i);
+                assert(node_id==(node_count-part_node_count+i));
                 node_list[node_id].with_content=false;
             }
-            node_id_map.freeze();
             file_in.close();
         }
+        node_id_map.freeze();
     }
 
     void read_edge_list_from_file(vector<string> edge_list_file_names) {
