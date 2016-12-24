@@ -171,34 +171,16 @@ struct NetworkData {
             }
             cout << "normalizer: " << normalizer << endl;
             int i = 0;
-            while(i<node_count && vtou_graph[edge_type][i].size()==0){
-                i++;
-            }
-            assert(i<node_count);
             d1 = pow(vtou_graph[edge_type][i].size(), power) / (double) normalizer;
             for (int a = 0; a < table_size; a++) {
-                uni_tables[edge_type][a] = i;
-                if (a / (double) table_size > d1) {
+                while(a / (double) table_size >= d1){
                     i++;
-                    while(i<node_count && vtou_graph[edge_type][i].size()==0){
-                        i++;
-                    }
-                    if (i >= node_count) i = node_count - 1;
-                    while(node_list[i].with_content){
-                        i--;
-                    }
                     d1 += pow(vtou_graph[edge_type][i].size(), power) / (double) normalizer;
                 }
-                else{
-                    if (i >= node_count) i = node_count - 1;
-                    while(node_list[i].with_content){
-                        i--;
-                    }
-                }
+                uni_tables[edge_type][a]=i;
 
             }
         }
-
     }
 
     int relation_type(int u_id, int v_id, int edge_type) {
