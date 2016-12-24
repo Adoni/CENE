@@ -42,7 +42,8 @@ struct DLNEModel {
     explicit DLNEModel(Model &params_model, unsigned embedding_node_size,
                        unsigned embedding_dimension, vector<unsigned> negative_sampling_size,
                        ContentEmbeddingMethod *content_embedding_method, vector<float> alpha)
-            : embedding_node_size(embedding_node_size), embedding_dimension(embedding_dimension), negative_sampling_size(negative_sampling_size),
+            : embedding_node_size(embedding_node_size), embedding_dimension(embedding_dimension),
+              negative_sampling_size(negative_sampling_size),
               content_embedding_method(content_embedding_method), alpha(alpha) {
         p_u = params_model.add_lookup_parameters(embedding_node_size, {embedding_dimension});
         p_v = params_model.add_lookup_parameters(embedding_node_size, {embedding_dimension});
@@ -53,7 +54,7 @@ struct DLNEModel {
     }
 
     void init_params() {
-        vector<float> init(embedding_dimension,0.0);
+        vector<float> init(embedding_dimension, 0.0);
         for (unsigned i = 0; i < embedding_node_size; i++) {
             p_v.initialize(i, init);
         }

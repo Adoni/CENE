@@ -45,7 +45,7 @@ struct NetworkData {
     int node_count;
     int normal_node_count;
 
-    int table_size;
+    int int table_size;
 
     vector<vector<unordered_set<int>>> utov_graph; //保存以u为中心点的vv邻接表
     vector<vector<unordered_set<int>>> vtou_graph; //保存以v为中心点的v
@@ -171,23 +171,31 @@ struct NetworkData {
             }
             cout << "normalizer: " << normalizer << endl;
             int i = 0;
-            while(node_list[i].with_content){
+            while(i<node_count && vtou_graph[edge_type][i].size()==0){
                 i++;
             }
+            assert(i<node_count);
             d1 = pow(vtou_graph[edge_type][i].size(), power) / (double) normalizer;
             for (int a = 0; a < table_size; a++) {
                 uni_tables[edge_type][a] = i;
                 if (a / (double) table_size > d1) {
                     i++;
-                    while(node_list[i].with_content){
+                    while(i<node_count && vtou_graph[edge_type][i].size()==0){
                         i++;
+                    }
+                    if (i >= node_count) i = node_count - 1;
+                    while(node_list[i].with_content){
+                        i--;
                     }
                     d1 += pow(vtou_graph[edge_type][i].size(), power) / (double) normalizer;
                 }
-                if (i >= node_count) i = node_count - 1;
-                while(node_list[i].with_content){
-                    i--;
+                else{
+                    if (i >= node_count) i = node_count - 1;
+                    while(node_list[i].with_content){
+                        i--;
+                    }
                 }
+
             }
         }
 
