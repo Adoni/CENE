@@ -111,7 +111,7 @@ namespace mp_train {
     void RunParentRunParent(NetworkData &network_data, DLNEModel *learner, Trainer *params_trainer,
                             std::vector<Workload> &workloads, unsigned num_iterations,
                             unsigned save_every_i, unsigned report_every_i,
-                            unsigned batch_size);
+                            unsigned batch_size, unsigned update_epoch_every_i);
 
     int RunChild(int cid, DLNEModel *learner, Trainer *params_trainer,
                  std::vector<Workload> &workloads, NetworkData &network_data);
@@ -119,5 +119,5 @@ namespace mp_train {
     void RunMultiProcess(unsigned num_children, DLNEModel *learner, Trainer *params_trainer,
                          NetworkData &network_data, unsigned num_iterations,
                          unsigned save_every_i,
-                         unsigned report_every_idate_every_i, unsigned batch_size);
+                         unsigned report_every_i, unsigned batch_size, unsigned update_epoch_every_i);
 }

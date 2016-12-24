@@ -67,7 +67,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e8e586c5-adc0-4ac0-aa43-320980d1abe5" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/network_data.h" afterPath="$PROJECT_DIR$/src/network_data.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mp_train.cpp" afterPath="$PROJECT_DIR$/src/mp_train.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mp_train.h" afterPath="$PROJECT_DIR$/src/mp_train.h" />
     </list>
     <ignored path="DLNE.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -107,11 +108,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="network_data.h" pinned="false" current-in-tab="true">
+      <file leaf-file-name="network_data.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/network_data.h">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="369">
               <caret line="165" column="53" lean-forward="true" selection-start-line="165" selection-start-column="53" selection-end-line="165" selection-end-column="53" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mp_train.cpp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/mp_train.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="269">
+              <caret line="229" column="28" lean-forward="true" selection-start-line="229" selection-start-column="28" selection-end-line="229" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mp_train.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/mp_train.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="544">
+              <caret line="119" column="43" lean-forward="false" selection-start-line="119" selection-start-column="43" selection-end-line="119" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -224,13 +245,13 @@
         <option value="$PROJECT_DIR$/src/graph_data.h" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/src/embedding_methods.h" />
-        <option value="$PROJECT_DIR$/src/mp_train.cpp" />
-        <option value="$PROJECT_DIR$/src/mp_train.h" />
         <option value="$PROJECT_DIR$/src/sp_train.h" />
         <option value="$PROJECT_DIR$/src/dlne_main.cpp" />
         <option value="$PROJECT_DIR$/src/function_test.cpp" />
         <option value="$PROJECT_DIR$/src/network_embedding.h" />
         <option value="$PROJECT_DIR$/src/network_data.h" />
+        <option value="$PROJECT_DIR$/src/mp_train.h" />
+        <option value="$PROJECT_DIR$/src/mp_train.cpp" />
       </list>
     </option>
   </component>
@@ -530,7 +551,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="56799000" />
+    <option name="totallyTimeSpent" value="57158000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-362" y="-1080" width="1920" height="1080" extended-state="0" />
@@ -737,22 +758,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/mp_train.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="449">
-          <caret line="121" column="70" lean-forward="false" selection-start-line="121" selection-start-column="70" selection-end-line="121" selection-end-column="70" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/mp_train.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="599">
-          <caret line="141" column="56" lean-forward="false" selection-start-line="141" selection-start-column="56" selection-end-line="141" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../dynet/dynet/model.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="185">
@@ -799,6 +804,22 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="369">
           <caret line="165" column="53" lean-forward="true" selection-start-line="165" selection-start-column="53" selection-end-line="165" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mp_train.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="119" column="43" lean-forward="false" selection-start-line="119" selection-start-column="43" selection-end-line="119" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/mp_train.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="229" column="28" lean-forward="true" selection-start-line="229" selection-start-column="28" selection-end-line="229" selection-end-column="28" />
           <folding />
         </state>
       </provider>

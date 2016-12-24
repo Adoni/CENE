@@ -119,7 +119,7 @@ namespace mp_train {
     void RunParent(NetworkData &network_data, DLNEModel *learner, Trainer *params_trainer,
                    std::vector<Workload> &workloads, unsigned num_iterations,
                    unsigned save_every_i, unsigned report_every_i,
-                   unsigned batch_size) {
+                   unsigned batch_size, unsigned update_epoch_every_i) {
 
         std::cout << "Iterations: " << batch_size << std::endl;
         std::cout << "Batch size: " << batch_size << std::endl;
@@ -149,6 +149,9 @@ namespace mp_train {
                 if (batch_count % report_every_i == 0) {
                     std::cout << "Eta = " << params_trainer->eta << "\tloss = " << loss << std::endl;
                     loss = 0.0;
+                }
+                if (batch_count % update_epoch_every_i == 0){
+                    params_trainer->update_epoch();
                 }
             }
             std::shuffle(train_indices.begin(), train_indices.end(), (*dynet::rndeng));
@@ -221,7 +224,7 @@ namespace mp_train {
     void RunMultiProcess(unsigned num_children, DLNEModel *learner, Trainer *params_trainer,
                          NetworkData &network_data, unsigned num_iterations,
                          unsigned save_every_i,
-                         unsigned report_every_idate_every_i, unsigned batch_size) {
+                         unsigned report_every_idate_every_i, unsigned batch_size, unsigned update_epoch_every_i) {
         std::cout << "========" << std::endl << "START TRAINING" << std::endl << "========" << std::endl;
         queue_name = GenerateQueueName();
         boost::interprocess::message_queue::remove(queue_name.c_str());
@@ -230,12 +233,12 @@ namespace mp_train {
         boost::interprocess::shared_memory_object::remove(shared_memory_name.c_str());
         shared_object = GetSharedMemory<SharedObject>();
         std::vector<Workload> workloads = CreateWorkloads(num_children);
-        unsigned cid = SpawnChildren(workloads);
+        int cid = SpawnChildren(workloads);
         if (cid < num_children) {
             RunChild(cid, learner, params_trainer, workloads, network_data);
         } else {
             RunParent(network_data, learner, params_trainer, workloads, num_iterations, save_every_i,
-                      report_every_idate_every_i, batch_size);
+                      report_every_idate_every_i, batch_size, update_epoch_every_i);
         }
     }
 }
