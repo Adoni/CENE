@@ -136,16 +136,15 @@ namespace mp_train {
         std::shuffle(train_indices.begin(), train_indices.end(), (*dynet::rndeng));
         std::vector<unsigned>::iterator begin = train_indices.begin();
 
-        for (unsigned iter = 1; iter < num_iterations; ++iter) {
+        for (unsigned iter = 0; iter < num_iterations; ++iter) {
             unsigned batch_count = 0;
-            float loss;
+            float loss=0.0;
             while (begin != train_indices.end()) {
                 std::vector<unsigned>::iterator end = begin + batch_size;
                 if (end > train_indices.end()) {
                     end = train_indices.end();
                 }
                 loss += RunDataSet(begin, end, workloads, mq);
-                begin = end;
                 batch_count++;
                 if (batch_count % report_every_i == 0) {
                     std::cout << "Eta = " << params_trainer->eta << "\tloss = " << loss << std::endl;
@@ -154,6 +153,7 @@ namespace mp_train {
                 if (batch_count % update_epoch_every_i == 0){
                     params_trainer->update_epoch();
                 }
+                begin = end;
             }
             std::shuffle(train_indices.begin(), train_indices.end(), (*dynet::rndeng));
             begin = train_indices.begin();

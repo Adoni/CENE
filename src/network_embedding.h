@@ -85,6 +85,7 @@ struct DLNEModel {
         ComputationGraph cg;
         vector<Expression> errs;
         Expression i_x_u;
+        cout<<edge.u_id<<" "<<edge.v_id<<endl;
         if (network_data.node_list[edge.u_id].with_content) {
             i_x_u = content_embedding_method->get_embedding(network_data.node_list[edge.u_id].content, cg);
         } else {
@@ -92,6 +93,7 @@ struct DLNEModel {
         }
         auto negative_samples = network_data.vv_neg_sample(negative_sampling_size[edge.edge_type] + 1, edge);
         // Expression i_W_vv = parameter(cg, W_vv);
+        cout<<"N sampling successed"<<endl;
         for (int i=0;i<negative_samples.size();i++) {
             int v_id=negative_samples[i];
             Expression i_x_v;
