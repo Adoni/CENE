@@ -162,7 +162,7 @@ struct NetworkData {
     void InitUniTables() {
         uni_tables.resize(edge_type_count);
         for(int edge_type=0;edge_type<edge_type_count;edge_type++){
-            int long table_size; //vv负采样表的大小
+            cout<<"Initializing uni table ..."<<edge_type<<endl;
             uni_tables[edge_type].resize(table_size);
             long long normalizer = 0;
             double d1, power = 0.75;
