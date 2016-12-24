@@ -45,7 +45,7 @@ struct NetworkData {
     int node_count;
     int normal_node_count;
 
-    int int table_size;
+    int table_size;
 
     vector<vector<unordered_set<int>>> utov_graph; //保存以u为中心点的vv邻接表
     vector<vector<unordered_set<int>>> vtou_graph; //保存以v为中心点的v
