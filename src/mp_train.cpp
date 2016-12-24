@@ -133,6 +133,7 @@ namespace mp_train {
 
         std::vector<unsigned> train_indices(network_data.edge_list.size());
         std::iota(train_indices.begin(), train_indices.end(), 0);
+        std::shuffle(train_indices.begin(), train_indices.end(), (*dynet::rndeng));
         std::vector<unsigned>::iterator begin = train_indices.begin();
 
         for (unsigned iter = 1; iter < num_iterations; ++iter) {
