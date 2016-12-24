@@ -108,7 +108,7 @@ namespace mp_train {
                            const std::vector<Workload> &workloads, boost::interprocess::message_queue &mq);
 
 
-    void RunParentRunParent(NetworkData &network_data, DLNEModel *learner, Trainer *params_trainer,
+    void RunParent(NetworkData &network_data, DLNEModel *learner, Trainer *params_trainer,
                             std::vector<Workload> &workloads, unsigned num_iterations,
                             unsigned save_every_i, unsigned report_every_i,
                             unsigned batch_size, unsigned update_epoch_every_i);

@@ -185,7 +185,7 @@ namespace mp_train {
         }
     }
 
-    int RunChild(unsigned cid, DLNEModel *learner, Trainer *params_trainer,
+    int RunChild(int cid, DLNEModel *learner, Trainer *params_trainer,
                  std::vector<Workload> &workloads, NetworkData &network_data) {
         const unsigned num_children = workloads.size();
         assert (cid >= 0 && cid < num_children);

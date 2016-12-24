@@ -34,6 +34,8 @@ void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
             ("batch_size", po::value<unsigned>(), "Update frequency")
             ("save_every_i", po::value<unsigned>(), "Save frequency as well as the update_epoch frequency")
             ("report_every_i", po::value<unsigned>(), "Report frequency")
+            ("update_epoch_every_i", po::value<unsigned>(), "Update epoch frequency")
+
             ("negative", po::value<vector<unsigned>>()->multitoken(), "Negative sampling counts")
             ("alpha", po::value<vector<float>>()->multitoken(), "alpha to control the proportion of VV and VC")
             ("embedding_method", po::value<std::string>(), "method to learn embedding from content: WordAvg or GRU")
@@ -163,6 +165,7 @@ int main(int argc, char **argv) {
     mp_train::RunMultiProcess(conf["workers"].as<unsigned>(), &dlne, params_trainer, network_data,
                               conf["iterations"].as<unsigned>(),
                               conf["save_every_i"].as<unsigned>(),
-                              conf["report_every_i"].as<unsigned>(), conf["batch_size"].as<unsigned>());
+                              conf["report_every_i"].as<unsigned>(), conf["batch_size"].as<unsigned>(),
+                              conf["update_epoch_every_i"].as<unsigned>());
     return 0;
 }
