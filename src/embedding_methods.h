@@ -106,10 +106,10 @@ public:
                     sentence_expression.push_back(lookup(cg, p, content[i][j]));
                 }
             }
-            cout<<sentence_expression.size()<<endl;
+            assert(sentence_expression.size()>0);
             all_word_embedding.push_back(average(sentence_expression));
         }
-        cout<<all_word_embedding.size()<<endl;
+        assert(all_word_embedding.size()>0);
         return average(all_word_embedding);
     }
 };
