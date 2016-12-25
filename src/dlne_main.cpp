@@ -165,16 +165,16 @@ int main(int argc, char **argv) {
     }
     Trainer *params_trainer = nullptr;
     params_trainer = new SimpleSGDTrainer(params_model, conf["eta0"].as<float>(), conf["eta_decay"].as<float>());
-//    mp_train::RunMultiProcess(conf["workers"].as<unsigned>(), &dlne, params_trainer, network_data,
-//                              conf["iterations"].as<unsigned>(),
-//                              conf["save_every_i"].as<unsigned>(),
-//                              conf["report_every_i"].as<unsigned>(), conf["batch_size"].as<unsigned>(),
-//                              conf["update_epoch_every_i"].as<unsigned>());
-    sp_train::RunSingleProcess(&dlne, params_trainer, network_data,
+    mp_train::RunMultiProcess(conf["workers"].as<unsigned>(), &dlne, params_trainer, network_data,
                               conf["iterations"].as<unsigned>(),
                               conf["save_every_i"].as<unsigned>(),
                               conf["report_every_i"].as<unsigned>(), conf["batch_size"].as<unsigned>(),
                               conf["update_epoch_every_i"].as<unsigned>());
+//    sp_train::RunSingleProcess(&dlne, params_trainer, network_data,
+//                              conf["iterations"].as<unsigned>(),
+//                              conf["save_every_i"].as<unsigned>(),
+//                              conf["report_every_i"].as<unsigned>(), conf["batch_size"].as<unsigned>(),
+//                              conf["update_epoch_every_i"].as<unsigned>());
 
     return 0;
 }

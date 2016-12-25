@@ -210,9 +210,6 @@ struct NetworkData {
         while (i < sample_size) {
 //            int nv = vv_unitable[dis(*cnn::rndeng)];
             int neg_v_id = uni_tables[edge.edge_type][dis(*dynet::rndeng)];
-            if(neg_v_id>=node_count){
-                cout<<"Neg v id "<<neg_v_id<<endl;
-            }
             assert(neg_v_id < node_count);
             if (neg_v_id == edge.u_id || neg_v_id == edge.v_id || relation_type(edge.u_id, neg_v_id, edge.edge_type) == 1) continue;
             vs[i] = neg_v_id;

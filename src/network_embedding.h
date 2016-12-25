@@ -85,11 +85,9 @@ struct DLNEModel {
         ComputationGraph cg;
         vector<Expression> errs;
         Expression i_x_u;
-        cout<<network_data.node_id_map.convert(edge.u_id)<<" "<<network_data.node_id_map.convert(edge.v_id)<<endl;
         if (network_data.node_list[edge.u_id].with_content) {
             i_x_u = content_embedding_method->get_embedding(network_data.node_list[edge.u_id].content, cg);
         } else {
-            cout<<network_data.node_list[edge.u_id].embedding_id<<endl;
             i_x_u = lookup(cg, p_u, network_data.node_list[edge.u_id].embedding_id);
         }
         auto negative_samples = network_data.vv_neg_sample(negative_sampling_size[edge.edge_type] + 1, edge);
@@ -112,7 +110,6 @@ struct DLNEModel {
         Expression i_nerr = -1 * sum(errs);
         dynet::real loss = as_scalar(cg.forward(i_nerr));
         cg.backward(i_nerr);
-        cout<<loss<<endl;
         return loss;
     }
 
