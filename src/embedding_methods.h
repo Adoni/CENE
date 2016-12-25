@@ -20,6 +20,7 @@
 
 
 using namespace dynet;
+using namespace std;
 
 class ContentEmbeddingMethod {
 public:
@@ -82,13 +83,12 @@ public:
             Model &params_model,
             unsigned word_embedding_size,
             unsigned content_embedding_size,
-
             Dict &d) {
         assert(word_embedding_size == content_embedding_size);
         this->W_EM_DIM = word_embedding_size;
         this->C_EM_DIM = content_embedding_size;
         this->method_name = "WordAvg";
-        this->use_const_lookup = use_const_lookup;
+        this->use_const_lookup = false;
         p = params_model.add_lookup_parameters(d.size(), {(unsigned) W_EM_DIM});
         initial_look_up_table(d.size());
     }
@@ -106,8 +106,10 @@ public:
                     sentence_expression.push_back(lookup(cg, p, content[i][j]));
                 }
             }
+            cout<<sentence_expression.size()<<endl;
             all_word_embedding.push_back(average(sentence_expression));
         }
+        cout<<all_word_embedding.size()<<endl;
         return average(all_word_embedding);
     }
 };

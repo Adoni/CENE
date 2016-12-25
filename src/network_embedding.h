@@ -85,19 +85,29 @@ struct DLNEModel {
         ComputationGraph cg;
         vector<Expression> errs;
         Expression i_x_u;
-        cout<<edge.u_id<<" "<<edge.v_id<<endl;
+        cout<<network_data.node_id_map.convert(edge.u_id)<<" "<<network_data.node_id_map.convert(edge.v_id)<<endl;
         if (network_data.node_list[edge.u_id].with_content) {
             i_x_u = content_embedding_method->get_embedding(network_data.node_list[edge.u_id].content, cg);
         } else {
+            cout<<network_data.node_list[edge.u_id].embedding_id<<endl;
             i_x_u = lookup(cg, p_u, network_data.node_list[edge.u_id].embedding_id);
         }
+        cout<<"a"<<endl;
         auto negative_samples = network_data.vv_neg_sample(negative_sampling_size[edge.edge_type] + 1, edge);
         // Expression i_W_vv = parameter(cg, W_vv);
         cout<<"N sampling successed"<<endl;
         for (int i=0;i<negative_samples.size();i++) {
             int v_id=negative_samples[i];
+            cout<<network_data.node_id_map.convert(v_id)<<endl;
+            cout<<network_data.node_list[edge.v_id].with_content<<endl;
             Expression i_x_v;
             if (network_data.node_list[edge.v_id].with_content) {
+                cout<<"Content: ";
+                cout<<"Content count"<<network_data.node_list[v_id].content.size()<<endl;
+                for (auto c:network_data.node_list[v_id].content){
+                    for (auto w:c) cout<<w<<" ";
+                }
+                cout<<endl;
                 i_x_v = content_embedding_method->get_embedding(network_data.node_list[v_id].content, cg);
             } else {
                 i_x_v = lookup(cg, p_v, network_data.node_list[v_id].embedding_id);
@@ -112,6 +122,7 @@ struct DLNEModel {
         Expression i_nerr = -1 * sum(errs);
         dynet::real loss = as_scalar(cg.forward(i_nerr));
         cg.backward(i_nerr);
+        cout<<loss<<endl;
         return loss;
     }
 

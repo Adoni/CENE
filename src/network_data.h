@@ -156,10 +156,14 @@ struct NetworkData {
                 if (end_pos == string::npos) {
                     break;
                 }
-                sub = line.substr(start_pos, end_pos - start_pos);
-                content.push_back(read_sentence(sub, d));
+                string sentence_string = line.substr(start_pos, end_pos - start_pos);
+                content.push_back(read_sentence(sentence_string, d));
                 start_pos = end_pos + 4;
             }
+            if(content.size()==0){
+                cout<<"Node id: "<<sub<<endl;
+            }
+            assert(content.size()>0);
             node_list[node_id].content = content;
             node_list[node_id].with_content = true;
         }
