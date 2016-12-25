@@ -126,8 +126,8 @@ namespace mp_train {
         std::cout << "Save every " << save_every_i << "iterations" << std::endl;
         report_every_i = report_every_i / batch_size;
         std::cout << "Report every " << report_every_i << "batches" << std::endl;
-        update_every_i = update_every_i / batch_size;
-        std::cout << "Update every " << update_every_i << "batches" << std::endl;
+        update_epoch_every_i = update_epoch_every_i / batch_size;
+        std::cout << "Update every " << update_epoch_every_i << "batches" << std::endl;
 
         const unsigned num_children = unsigned(workloads.size());
         boost::interprocess::message_queue mq(boost::interprocess::open_or_create, queue_name.c_str(), 10000,
