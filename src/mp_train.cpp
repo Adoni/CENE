@@ -225,7 +225,7 @@ namespace mp_train {
     void RunMultiProcess(unsigned num_children, DLNEModel *learner, Trainer *params_trainer,
                          NetworkData &network_data, unsigned num_iterations,
                          unsigned save_every_i,
-                         unsigned report_every_idate_every_i, unsigned batch_size, unsigned update_epoch_every_i) {
+                         unsigned report_every_i, unsigned batch_size, unsigned update_epoch_every_i) {
         std::cout << "========" << std::endl << "START TRAINING" << std::endl << "========" << std::endl;
         queue_name = GenerateQueueName();
         boost::interprocess::message_queue::remove(queue_name.c_str());
@@ -239,7 +239,7 @@ namespace mp_train {
             RunChild(cid, learner, params_trainer, workloads, network_data);
         } else {
             RunParent(network_data, learner, params_trainer, workloads, num_iterations, save_every_i,
-                      report_every_idate_every_i, batch_size, update_epoch_every_i);
+                      report_every_i, batch_size, update_epoch_every_i);
         }
     }
 }

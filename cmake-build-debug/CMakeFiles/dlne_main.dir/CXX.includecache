@@ -21,6 +21,8 @@ network_embedding.h
 /Users/sunxiaofei/ClionProjects/DLNE/src/network_embedding.h
 mp_train.h
 /Users/sunxiaofei/ClionProjects/DLNE/src/mp_train.h
+sp_train.h
+/Users/sunxiaofei/ClionProjects/DLNE/src/sp_train.h
 
 /Users/sunxiaofei/ClionProjects/DLNE/src/embedding_methods.h
 network_data.h
@@ -162,6 +164,14 @@ sstream
 boost/archive/text_iarchive.hpp
 -
 boost/archive/text_oarchive.hpp
+-
+
+/Users/sunxiaofei/ClionProjects/DLNE/src/sp_train.h
+network_data.h
+/Users/sunxiaofei/ClionProjects/DLNE/src/network_data.h
+network_embedding.h
+/Users/sunxiaofei/ClionProjects/DLNE/src/network_embedding.h
+chrono
 -
 
 /Users/sunxiaofei/ClionProjects/dynet/dynet/aligned-mem-pool.h

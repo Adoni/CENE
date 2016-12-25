@@ -6,58 +6,64 @@
 #define DLNE_SP_TRAIN_H
 
 #include "network_data.h"
+#include "network_embedding.h"
 #include <chrono>
 
 using namespace std;
 using namespace dynet;
 namespace sp_train {
-    void RunSingleProcess(DLNEModel *learner, Trainer *trainer, GraphData &graph_data) {
+    void RunSingleProcess(DLNEModel *learner, Trainer *params_trainer,
+                          NetworkData &network_data, unsigned num_iterations,
+                          unsigned save_every_i,
+                          unsigned report_every_i, unsigned batch_size, unsigned update_epoch_every_i) {
         std::cout << "==================" << std::endl << "START TRAINING" << std::endl << "==================" <<
                   std::endl;
-        std::cout << "Single trainer: " << trainer->model->lookup_parameters_list().size() << std::endl;
-        int MAX_ITERATION = 100;
-        const unsigned report_every_i = graph_data.vv_edgelist.size();
-        const unsigned update_epoch_every_i = 10000;
-        const int save_every_i = graph_data.vv_edgelist.size() * 10;
-        unsigned epoch = 0;
-        int total_iteration = 0;
-        auto total_start_time = std::chrono::high_resolution_clock::now();
+        std::cout << "Iterations: " << batch_size << std::endl;
+        std::cout << "Batch size: " << batch_size << std::endl;
+        std::cout << "Save every " << save_every_i << "iterations" << std::endl;
+        report_every_i = report_every_i / batch_size;
+        std::cout << "Report every " << report_every_i << "batches" << std::endl;
 
-        double loss = 0;
-        unsigned pair = 0;
+        std::vector<unsigned> train_indices(network_data.edge_list.size());
+        std::iota(train_indices.begin(), train_indices.end(), 0);
+        std::shuffle(train_indices.begin(), train_indices.end(), (*dynet::rndeng));
+        std::vector<unsigned>::iterator begin = train_indices.begin();
 
-        while (1) {
-            for (unsigned i = 0; i < graph_data.vv_edgelist.size(); ++i) {
-                Edge edge = graph_data.vv_edgelist[i];
-                loss += learner->TrainVVEdge(edge, graph_data);
-                trainer->update();
-
-                total_iteration += 1;
-                pair += 1;
-                if (total_iteration % update_epoch_every_i == 0) {
-                    //                trainer->update_epoch();
-                    trainer->eta = trainer->eta0 *
-                                   (1 - total_iteration / (float) (MAX_ITERATION * graph_data.vv_edgelist.size() + 1));
-                    if (trainer->eta < trainer->eta0 * 0.0001) {
-                        trainer->eta = trainer->eta0 * 0.0001;
-                    }
+        for (unsigned iter = 0; iter < num_iterations; ++iter) {
+            unsigned batch_count = 0;
+            float loss=0.0;
+            while (begin != train_indices.end()) {
+                std::vector<unsigned>::iterator end = begin + batch_size;
+                if (end > train_indices.end()) {
+                    end = train_indices.end();
                 }
-                if (total_iteration % report_every_i == 0) {
-                    auto now_time = std::chrono::high_resolution_clock::now();
-                    trainer->status();
-                    cerr << " E = " << loss / pair << " ppl=" << exp(loss / pair) << endl;
-                    cerr << "Totally using " <<
-                         std::chrono::duration<double, std::milli>(now_time - total_start_time).count() / 60000
-                         << " min" <<
-                         endl;
-                    loss = 0;
-                    pair = 0;
+                for (auto instance=begin; instance<end; instance++){
+                    learner->Train(network_data.edge_list[*instance], network_data);
+                    params_trainer->update();
                 }
+                batch_count++;
+                if (batch_count % report_every_i == 0) {
+                    std::cout << "Eta = " << params_trainer->eta << "\tloss = " << loss << std::endl;
+                    loss = 0.0;
+                }
+                if (batch_count % update_epoch_every_i == 0){
+                    params_trainer->update_epoch();
+                }
+                begin = end;
             }
-            epoch++;
-            if (epoch > MAX_ITERATION) {
-                break;
+            std::shuffle(train_indices.begin(), train_indices.end(), (*dynet::rndeng));
+            begin = train_indices.begin();
+
+            if (iter % save_every_i == 0) {
+                std::ostringstream ss;
+                ss << learner->get_learner_name() << "_embedding_pid" << getpid() << "_alpha_";
+                for (auto alpha:learner->alpha) {
+                    ss << std::setprecision(2) << alpha << "_";
+                }
+                ss << unsigned(iter / save_every_i) << ".data";
+                learner->SaveEmbedding(ss.str(), network_data);
             }
+
         }
     }
 }

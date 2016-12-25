@@ -6,6 +6,7 @@ CMakeFiles/dlne_main.dir/src/dlne_main.cpp.o: ../src/embedding_methods.h
 CMakeFiles/dlne_main.dir/src/dlne_main.cpp.o: ../src/mp_train.h
 CMakeFiles/dlne_main.dir/src/dlne_main.cpp.o: ../src/network_data.h
 CMakeFiles/dlne_main.dir/src/dlne_main.cpp.o: ../src/network_embedding.h
+CMakeFiles/dlne_main.dir/src/dlne_main.cpp.o: ../src/sp_train.h
 CMakeFiles/dlne_main.dir/src/dlne_main.cpp.o: /Users/sunxiaofei/ClionProjects/dynet/dynet/aligned-mem-pool.h
 CMakeFiles/dlne_main.dir/src/dlne_main.cpp.o: /Users/sunxiaofei/ClionProjects/dynet/dynet/cuda.h
 CMakeFiles/dlne_main.dir/src/dlne_main.cpp.o: /Users/sunxiaofei/ClionProjects/dynet/dynet/devices.h
