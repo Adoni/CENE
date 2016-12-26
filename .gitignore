@@ -4,6 +4,8 @@ CMakeCache.txt
 CMakeFiles/*
 cmake-build-debug
 cmake-build-debug/*
+.idea
+.idea/*
 # Compiled Object files
 *.slo
 *.piled Headers
