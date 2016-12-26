@@ -107,7 +107,7 @@ struct DLNEModel {
             }
         }
 
-        Expression i_nerr = -1 * sum(errs);
+        Expression i_nerr = -1 *alpha[edge.edge_type]* sum(errs);
         dynet::real loss = as_scalar(cg.forward(i_nerr));
         cg.backward(i_nerr);
         return loss;
