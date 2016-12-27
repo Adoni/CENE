@@ -158,7 +158,7 @@ int main(int argc, char **argv) {
     cout << "Content Embedding Method Done." << endl;
     content_embedding_method->initial_look_up_table_from_file(conf["word_embedding_file"].as<string>(), d);
 
-    DLNEModel dlne(params_model, network_data.normal_node_count, N_EM_DIM, conf["negative"].as<vector<unsigned>>(),
+    DLNEModel dlne(params_model, network_data.normal_node_count, N_EM_DIM, network_data.edge_type_count, conf["negative"].as<vector<unsigned>>(),
                    content_embedding_method, conf["alpha"].as<vector<float>>());
     if (conf.count("to_be_saved_index_file_name")) {
         dlne.set_to_be_saved_index(conf["to_be_saved_index_file_name"].as<string>(), network_data);
