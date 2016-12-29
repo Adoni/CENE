@@ -52,7 +52,7 @@ struct DLNEModel {
         p_v = params_model.add_lookup_parameters(embedding_node_size, {embedding_dimension});
         p_relation_matrixes.resize(0);
         for (int i = 0; i < edge_type_count; i++) {
-            p_relation_matrixes.push_back(params_model.add_parameters({embedding_dimension, embedding_dimension}));
+            p_relation_matrixes.push_back(params_model.add_parameters({1, embedding_dimension}));
         }
         init_params();
         cout << "Content embedding method name: " << content_embedding_method->get_method_name() << endl;
@@ -128,7 +128,7 @@ struct DLNEModel {
     Expression bilinear_score(Expression &i_x_u, Expression &i_x_v, ComputationGraph &cg, unsigned edge_type) {
         assert(edge_type < p_relation_matrixes.size());
         Expression W = parameter(cg, p_relation_matrixes[edge_type]);
-        return dot_product(i_x_u, W * i_x_v);
+        return dot_product(i_x_u, cmult(W, i_x_v));
     }
 
     void SaveEmbedding(string file_name, NetworkData &network_data) {

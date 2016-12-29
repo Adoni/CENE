@@ -116,6 +116,7 @@ int main(int argc, char **argv) {
     dynet::initialize(argc, argv, true);
     po::variables_map conf;
     InitCommandLine(argc, argv, &conf);
+
     dynet::Dict d;
     cout << "Pid: " << getpid() << endl;
     output_all_information(argc, argv);
