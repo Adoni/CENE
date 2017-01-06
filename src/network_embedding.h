@@ -128,7 +128,7 @@ struct DLNEModel {
     Expression bilinear_score(Expression &i_x_u, Expression &i_x_v, ComputationGraph &cg, unsigned edge_type) {
         assert(edge_type < p_relation_matrixes.size());
         Expression W = parameter(cg, p_relation_matrixes[edge_type]);
-        return dot_product(softmax(i_x_u), softmax(cmult(W, i_x_v)));
+        return dot_product(i_x_u, cmult(W, i_x_v));
     }
 
     void SaveEmbedding(string file_name, NetworkData &network_data) {
