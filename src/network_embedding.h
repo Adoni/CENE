@@ -105,7 +105,7 @@ struct DLNEModel {
             if (network_data.node_list[edge.v_id].with_content) {
                 i_x_v = content_embedding_method->get_embedding(network_data.node_list[v_id].content, cg);
             } else {
-                i_x_v = lookup(cg, p_u, network_data.node_list[v_id].embedding_id);
+                i_x_v = lookup(cg, p_v, network_data.node_list[v_id].embedding_id);
             }
             Expression score = bilinear_score(i_x_u, i_x_v, cg, edge.edge_type);
             if (i == 0) {
