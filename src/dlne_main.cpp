@@ -113,6 +113,26 @@ void initialize_word_dict(string word_embedding_file_name, dynet::Dict &d) {
 }
 
 int main(int argc, char **argv) {
+//    dynet::initialize(argc, argv, true);
+//    Model model;
+//    Parameter x=model.add_parameters({1});
+//    ComputationGraph cg;
+//    Expression X=parameter(cg, x);
+//    Expression ex=logistic(X);
+//    cg.forward(ex);
+//    auto v1=as_vector(X.value());
+//    auto v2=as_vector(ex.value());
+//    for (auto i:v1){
+//        cout<<i<<endl;
+//    }
+//    cout<<"---------"<<endl;
+//    for (auto i:v2){
+//        cout<<i<<endl;
+//    }
+//
+//
+//    return 0;
+
     dynet::initialize(argc, argv, true);
     po::variables_map conf;
     InitCommandLine(argc, argv, &conf);

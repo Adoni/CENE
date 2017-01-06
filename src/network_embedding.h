@@ -109,9 +109,9 @@ struct DLNEModel {
             }
             Expression score = bilinear_score(i_x_u, i_x_v, cg, edge.edge_type);
             if (i == 0) {
-                errs.push_back(log(logistic(score)));
+                errs.push_back(log(logistic(-1*score)));
             } else {
-                errs.push_back(log(logistic(-1 * score)));
+                errs.push_back(log(logistic(score)));
             }
         }
 
