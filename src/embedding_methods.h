@@ -156,7 +156,9 @@ public:
             }
             all_hidden.push_back(average(sent));
         }
-        return average(all_hidden);
+        Expression content_embedding=average(all_hidden);
+        nobackprop(content_embedding);
+        return content_embedding;
     }
 };
 
