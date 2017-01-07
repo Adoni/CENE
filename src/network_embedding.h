@@ -107,8 +107,8 @@ struct DLNEModel {
             } else {
                 i_x_v = lookup(cg, p_v, network_data.node_list[v_id].embedding_id);
             }
-//            Expression score = bilinear_score(i_x_u, i_x_v, cg, edge.edge_type);
-            Expression score = simple_score(i_x_u, i_x_v);
+            Expression score = bilinear_score(i_x_u, i_x_v, cg, edge.edge_type);
+//            Expression score = simple_score(i_x_u, i_x_v);
             if (i == 0) {
                 errs.push_back(log(logistic(score)));
             } else {
