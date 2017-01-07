@@ -134,6 +134,15 @@ struct DLNEModel {
 
     void SaveEmbedding(string file_name, NetworkData &network_data) {
         cout << "Saving to " << file_name << endl;
+        for(int i=0;i<p_relation_matrixes.size();i++){
+            cout<<"W"<<i<<endl;
+            ComputationGraph cg;
+            auto w=as_vector(parameter(cg, p_relation_matrixes[i]).value());
+            for (auto wi:w){
+                cout<<wi<<" ";
+            }
+            cout<<endl;
+        }
 
         ofstream output_file(file_name);
         output_file << to_be_saved_index.size() << " " << embedding_dimension * 2 << "\n";
