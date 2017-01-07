@@ -54,6 +54,8 @@ struct NetworkData {
 
     vector<vector<int>> uni_tables;
 
+    vector<vector<int>> relation_negative_table;
+
 
     explicit NetworkData(vector<string> node_list_file_names, vector<string> edge_list_file_names,
                          string content_file_name,
@@ -69,38 +71,38 @@ struct NetworkData {
         read_content_from_file(content_file_name, d);
 
         {
-            int next_embedding_id=0;
-            for(int node_id=0;node_id<node_count;node_id++){
-                if(!node_list[node_id].with_content){
-                    node_list[node_id].embedding_id=next_embedding_id;
+            int next_embedding_id = 0;
+            for (int node_id = 0; node_id < node_count; node_id++) {
+                if (!node_list[node_id].with_content) {
+                    node_list[node_id].embedding_id = next_embedding_id;
                     next_embedding_id++;
-                }
-                else{
-                    node_list[node_id].embedding_id=-1;
+                } else {
+                    node_list[node_id].embedding_id = -1;
                 }
             }
-            normal_node_count=next_embedding_id;
+            normal_node_count = next_embedding_id;
         }
         table_size = 1e8;
         InitUniTables();
+        find_coexist_edge_type();
     }
 
     void read_node_list_from_file(vector<string> node_list_file_names) {
         cout << "Reading node list ..." << endl;
-        node_count=0;
-        for (auto node_list_file_name:node_list_file_names){
+        node_count = 0;
+        for (auto node_list_file_name:node_list_file_names) {
             ifstream file_in(node_list_file_name);
             assert(file_in);
             int part_node_count;
-            file_in>>part_node_count;
-            node_count+=part_node_count;
+            file_in >> part_node_count;
+            node_count += part_node_count;
             node_list.resize(node_count);
-            for(int i=0;i<part_node_count;i++){
+            for (int i = 0; i < part_node_count; i++) {
                 string node;
-                file_in>>node;
-                int node_id=node_id_map.convert(node);
-                assert(node_id==(node_count-part_node_count+i));
-                node_list[node_id].with_content=false;
+                file_in >> node;
+                int node_id = node_id_map.convert(node);
+                assert(node_id == (node_count - part_node_count + i));
+                node_list[node_id].with_content = false;
             }
             file_in.close();
         }
@@ -111,22 +113,22 @@ struct NetworkData {
         cout << "Reading edge list ..." << endl;
         string line;
 
-        for(auto edge_list_file_name:edge_list_file_names){
+        for (auto edge_list_file_name:edge_list_file_names) {
             ifstream file_in(edge_list_file_name);
             assert(file_in);
             int part_edge_count;
-            file_in>>part_edge_count>>edge_type_count;
-            edge_count+=part_edge_count;
-            if (edge_type_count>utov_graph.size()){
+            file_in >> part_edge_count >> edge_type_count;
+            edge_count += part_edge_count;
+            if (edge_type_count > utov_graph.size()) {
                 utov_graph.resize(edge_type_count);
                 vtou_graph.resize(edge_type_count);
-                for(int i=0;i<edge_type_count;i++){
+                for (int i = 0; i < edge_type_count; i++) {
                     utov_graph[i].resize(node_count);
                     vtou_graph[i].resize(node_count);
                 }
             }
-            for(int i=0;i<part_edge_count;i++) {
-                string u,v;
+            for (int i = 0; i < part_edge_count; i++) {
+                string u, v;
                 int edge_type;
                 file_in >> u >> v >> edge_type;
                 int u_id = node_id_map.convert(u);
@@ -160,7 +162,7 @@ struct NetworkData {
                 content.push_back(read_sentence(sentence_string, d));
                 start_pos = end_pos + 4;
             }
-            assert(content.size()>0);
+            assert(content.size() > 0);
             node_list[node_id].content = content;
             node_list[node_id].with_content = true;
         }
@@ -168,26 +170,66 @@ struct NetworkData {
     }
 
 
+    void find_coexist_edge_type() {
+        std::sort(edge_list.begin(), edge_list.end(), [](Edge a, Edge b) {
+            if (a.u_id != b.u_id) { return a.u_id < b.u_id; }
+            if (a.v_id != b.v_id) { return a.v_id < b.v_id; }
+            return a.edge_type<b.edge_type;
+        });
+        bool could_coexist[edge_type_count][edge_type_count];
+        for (int e1=0;e1<edge_type_count;e1++){
+            for (int e2=0;e2<edge_type_count;e2++){
+                could_coexist[e1][e2]=false;
+            }
+        }
+        auto begin=0;
+        while(begin<edge_count){
+            int end=begin;
+            while(end<edge_count && edge_list[end].u_id==edge_list[begin].u_id && edge_list[end].v_id==edge_list[begin].v_id){
+                end++;
+            }
+            vector<int> coexist_edge_type;
+            for(int i=begin;i<end;i++){
+                coexist_edge_type.push_back(edge_list[i].edge_type);
+            }
+            for(auto e1:coexist_edge_type){
+                for(auto e2:coexist_edge_type){
+                    could_coexist[e1][e2]=true;
+                }
+            }
+            begin=end;
+        }
+        relation_negative_table.resize(edge_type_count);
+        for(int e1=0;e1<edge_type_count;e1++){
+            relation_negative_table[e1].resize(0);
+            for (int e2=0;e2<edge_type_count;e2++){
+                if (e1!=e2 && could_coexist[e1][e2]){
+                    relation_negative_table[e1].push_back(e2);
+                }
+            }
+        }
+    }
+
     void InitUniTables() {
         uni_tables.resize(edge_type_count);
-        for(int edge_type=0;edge_type<edge_type_count;edge_type++){
-            cout<<"Initializing uni table ..."<<edge_type<<endl;
+        for (int edge_type = 0; edge_type < edge_type_count; edge_type++) {
+            cout << "Initializing uni table ..." << edge_type << endl;
             uni_tables[edge_type].resize(table_size);
             long long normalizer = 0;
             double d1, power = 0.75;
-            for (int node_id = 0; node_id < node_count; node_id++){
+            for (int node_id = 0; node_id < node_count; node_id++) {
                 normalizer += pow(vtou_graph[edge_type][node_id].size(), power);
             }
             cout << "normalizer: " << normalizer << endl;
             int i = 0;
             d1 = pow(vtou_graph[edge_type][i].size(), power) / (double) normalizer;
             for (int a = 0; a < table_size; a++) {
-                while(a / (double) table_size >= d1){
+                while (a / (double) table_size >= d1) {
                     i++;
                     d1 += pow(vtou_graph[edge_type][i].size(), power) / (double) normalizer;
                 }
-                assert(i<node_count);
-                uni_tables[edge_type][a]=i;
+                assert(i < node_count);
+                uni_tables[edge_type][a] = i;
 
             }
         }
@@ -211,7 +253,9 @@ struct NetworkData {
 //            int nv = vv_unitable[dis(*cnn::rndeng)];
             int neg_v_id = uni_tables[edge.edge_type][dis(*dynet::rndeng)];
             assert(neg_v_id < node_count);
-            if (neg_v_id == edge.u_id || neg_v_id == edge.v_id || relation_type(edge.u_id, neg_v_id, edge.edge_type) == 1) continue;
+            if (neg_v_id == edge.u_id || neg_v_id == edge.v_id ||
+                relation_type(edge.u_id, neg_v_id, edge.edge_type) == 1)
+                continue;
             vs[i] = neg_v_id;
             i++;
         }

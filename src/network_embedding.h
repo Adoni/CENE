@@ -123,6 +123,20 @@ struct DLNEModel {
             }
         }
 
+        if (network_data.relation_negative_table[edge.edge_type].size()>0){
+            Expression i_x_v;
+            if (network_data.node_list[edge.v_id].with_content) {
+                i_x_v = content_embedding_method->get_embedding(network_data.node_list[edge.v_id].content, cg);
+            } else {
+                i_x_v = lookup(cg, p_v, network_data.node_list[edge.v_id].embedding_id);
+            }
+            for (auto neg_edge_type:network_data.relation_negative_table[edge.edge_type]){
+                Expression score = bilinear_score(i_x_u, i_x_v, cg, neg_edge_type);
+                errs.push_back(log(logistic(-1*score)));
+            }
+        }
+
+
         Expression i_nerr = -1 * alpha[edge.edge_type] * sum(errs);
         dynet::real loss = as_scalar(cg.forward(i_nerr));
         cg.backward(i_nerr);
@@ -133,7 +147,7 @@ struct DLNEModel {
         return dot_product(i_x_u, i_x_v);
     }
 
-    Expression bilinear_score(Expression &i_x_u, Expression &i_x_v, ComputationGraph &cg, unsigned edge_type) {
+    Expression bilinear_score(Expression &i_x_u, Expression &i_x_v, ComputationGraph &cg, int edge_type) {
         assert(edge_type < p_relation_matrixes.size());
         Expression W = parameter(cg, p_relation_matrixes[edge_type]);
         return dot_product(i_x_u, cmult(W, i_x_v));

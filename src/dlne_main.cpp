@@ -148,6 +148,13 @@ int main(int argc, char **argv) {
     cout << "Node count: " << network_data.node_count << endl;
     cout << "Embedding Size: " << network_data.normal_node_count << endl;
     cout << "Link count: " << network_data.edge_list.size() << endl;
+    for (int e1=0;e1<network_data.edge_type_count;e1++){
+        cout << "Edge type "<<e1<<" could coexist with ";
+        for (auto e2:network_data.relation_negative_table[e1]){
+            cout<<"e2 ";
+        }
+        cout<<endl;
+    }
     Model params_model;
 
 
