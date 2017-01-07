@@ -52,7 +52,9 @@ struct DLNEModel {
         p_v = params_model.add_lookup_parameters(embedding_node_size, {embedding_dimension});
         p_relation_matrixes.resize(0);
         for (int i = 0; i < edge_type_count; i++) {
-            p_relation_matrixes.push_back(params_model.add_parameters({embedding_dimension}));
+            vector<float> init(embedding_dimension, 1.0);
+            ParameterInitFromVector matrix_init(init);
+            p_relation_matrixes.push_back(params_model.add_parameters({embedding_dimension},matrix_init));
         }
         init_params();
         cout << "Content embedding method name: " << content_embedding_method->get_method_name() << endl;
@@ -61,11 +63,16 @@ struct DLNEModel {
     }
 
     void init_params() {
-        vector<float> init(embedding_dimension, 0.0);
+        vector<float> init(embedding_dimension, 1.0);
+
+        uniform_real_distribution<> dis(-0.5, 0.5);
         for (unsigned i = 0; i < embedding_node_size; i++) {
+            for (unsigned j = 0; j < init.size(); j++) {
+                init[j] = (float) dis(*dynet::rndeng) / embedding_dimension;
+            }
             p_v.initialize(i, init);
         }
-        uniform_real_distribution<> dis(-0.5, 0.5);
+
         for (unsigned i = 0; i < embedding_node_size; i++) {
             for (unsigned j = 0; j < init.size(); j++) {
                 init[j] = (float) dis(*dynet::rndeng) / embedding_dimension;
