@@ -54,7 +54,7 @@ struct DLNEModel {
         for (int i = 0; i < edge_type_count; i++) {
             vector<float> init(embedding_dimension, 1.0);
             ParameterInitFromVector matrix_init(init);
-            p_relation_matrixes.push_back(params_model.add_parameters({embedding_dimension},matrix_init));
+            p_relation_matrixes.push_back(params_model.add_parameters({embedding_dimension}, matrix_init));
         }
         init_params();
         cout << "Content embedding method name: " << content_embedding_method->get_method_name() << endl;
@@ -98,44 +98,25 @@ struct DLNEModel {
     dynet::real Train(const Edge edge, NetworkData &network_data) {
         ComputationGraph cg;
         vector<Expression> errs;
-        Expression i_x_u;
-        if (network_data.node_list[edge.u_id].with_content) {
-            i_x_u = content_embedding_method->get_embedding(network_data.node_list[edge.u_id].content, cg);
-        } else {
-            i_x_u = lookup(cg, p_u, network_data.node_list[edge.u_id].embedding_id);
-        }
+        Expression i_x_u = get_node_embedding(edge.u_id, network_data, cg, true);
+        Expression i_x_v = get_node_embedding(edge.v_id, network_data, cg, false);
+
+        Expression score = bilinear_score(i_x_u, i_x_v, cg, edge.edge_type);
+        errs.push_back(log(logistic(score)));
+
         auto negative_samples = network_data.vv_neg_sample(negative_sampling_size[edge.edge_type] + 1, edge);
-        // Expression i_W_vv = parameter(cg, W_vv);
         for (int i = 0; i < negative_samples.size(); i++) {
-            int v_id = negative_samples[i];
-            Expression i_x_v;
-            if (network_data.node_list[edge.v_id].with_content) {
-                i_x_v = content_embedding_method->get_embedding(network_data.node_list[v_id].content, cg);
-            } else {
-                i_x_v = lookup(cg, p_v, network_data.node_list[v_id].embedding_id);
-            }
-            Expression score = bilinear_score(i_x_u, i_x_v, cg, edge.edge_type);
-//            Expression score = simple_score(i_x_u, i_x_v);
-            if (i == 0) {
-                errs.push_back(log(logistic(score)));
-            } else {
-                errs.push_back(log(logistic(-1*score)));
-            }
+            int neg_v_id = negative_samples[i];
+            Expression neg_i_x_v = get_node_embedding(neg_v_id, network_data, cg, true);
+            Expression score = bilinear_score(i_x_u, neg_i_x_v, cg, edge.edge_type);
+//            Expression score = simple_score(i_x_u, neg_i_x_v);
+            errs.push_back(log(logistic(-1 * score)));
         }
 
-        if (network_data.relation_negative_table[edge.edge_type].size()>0){
-            Expression i_x_v;
-            if (network_data.node_list[edge.v_id].with_content) {
-                i_x_v = content_embedding_method->get_embedding(network_data.node_list[edge.v_id].content, cg);
-            } else {
-                i_x_v = lookup(cg, p_v, network_data.node_list[edge.v_id].embedding_id);
-            }
-            for (auto neg_edge_type:network_data.relation_negative_table[edge.edge_type]){
-                Expression score = bilinear_score(i_x_u, i_x_v, cg, neg_edge_type);
-                errs.push_back(log(logistic(-1*score)));
-            }
+        for (auto neg_edge_type:network_data.relation_negative_table[edge.edge_type]) {
+            Expression score = bilinear_score(i_x_u, i_x_v, cg, neg_edge_type);
+            errs.push_back(log(logistic(-1 * score)));
         }
-
 
         Expression i_nerr = -1 * alpha[edge.edge_type] * sum(errs);
         dynet::real loss = as_scalar(cg.forward(i_nerr));
@@ -143,6 +124,17 @@ struct DLNEModel {
         return loss;
     }
 
+    Expression get_node_embedding(int node_id, NetworkData &network_data, ComputationGraph &cg, bool use_p_u){
+        if (network_data.node_list[node_id].with_content) {
+            return content_embedding_method->get_embedding(network_data.node_list[node_id].content, cg);
+        } else {
+            if (use_p_u) {
+                return lookup(cg, p_u, network_data.node_list[node_id].embedding_id);
+            }else{
+                return lookup(cg, p_v, network_data.node_list[node_id].embedding_id);
+            }
+        }
+    }
     Expression simple_score(Expression &i_x_u, Expression &i_x_v) {
         return dot_product(i_x_u, i_x_v);
     }
@@ -155,14 +147,14 @@ struct DLNEModel {
 
     void SaveEmbedding(string file_name, NetworkData &network_data) {
         cout << "Saving to " << file_name << endl;
-        for(int i=0;i<p_relation_matrixes.size();i++){
-            cout<<"W"<<i<<endl;
+        for (int i = 0; i < p_relation_matrixes.size(); i++) {
+            cout << "W" << i << endl;
             ComputationGraph cg;
-            auto w=as_vector(parameter(cg, p_relation_matrixes[i]).value());
-            for (auto wi:w){
-                cout<<wi<<" ";
+            auto w = as_vector(parameter(cg, p_relation_matrixes[i]).value());
+            for (auto wi:w) {
+                cout << wi << " ";
             }
-            cout<<endl;
+            cout << endl;
         }
 
         ofstream output_file(file_name);

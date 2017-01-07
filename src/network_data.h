@@ -244,8 +244,7 @@ struct NetworkData {
 
     vector<int> vv_neg_sample(int sample_size, Edge edge) {
         vector<int> vs(sample_size);
-        vs[0] = edge.v_id;
-        int i = 1;
+        int i = 0;
         random_device rd;
         uniform_int_distribution<> dis(0, table_size - 1);
 //        uniform_int_distribution<> dis(0, node_count - 1);
