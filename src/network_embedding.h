@@ -63,13 +63,13 @@ struct DLNEModel {
     }
 
     void init_params() {
-        vector<float> init(embedding_dimension, 1.0);
+        vector<float> init(embedding_dimension, 0.0);
 
         uniform_real_distribution<> dis(-0.5, 0.5);
         for (unsigned i = 0; i < embedding_node_size; i++) {
-            for (unsigned j = 0; j < init.size(); j++) {
-                init[j] = (float) dis(*dynet::rndeng) / embedding_dimension;
-            }
+//            for (unsigned j = 0; j < init.size(); j++) {
+//                init[j] = (float) dis(*dynet::rndeng) / embedding_dimension;
+//            }
             p_v.initialize(i, init);
         }
 
