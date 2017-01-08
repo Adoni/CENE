@@ -101,6 +101,7 @@ struct DLNEModel {
         Expression i_x_u = get_node_embedding(edge.u_id, network_data, cg, true);
         Expression i_x_v = get_node_embedding(edge.v_id, network_data, cg, false);
 
+//        Expression score = simple_score(i_x_u, i_x_v);
         Expression score = bilinear_score(i_x_u, i_x_v, cg, edge.edge_type);
         errs.push_back(log(logistic(score)));
 
