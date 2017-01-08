@@ -245,8 +245,7 @@ struct NetworkData {
     }
 
 
-    vector<Edge> u_id_neg_sample(int sample_size, Edge edge) {
-        vector<Edge> neg_edges;
+    void u_id_neg_sample(int sample_size, Edge edge, vector<Edge> &neg_edges) {
         int i = 0;
         random_device rd;
         uniform_int_distribution<> dis(0, table_size - 1);
@@ -259,11 +258,9 @@ struct NetworkData {
             neg_edges.push_back(Edge{neg_u_id, edge.v_id, edge.edge_type});
             i++;
         }
-        return neg_edges;
     }
 
-    vector<Edge> v_id_neg_sample(int sample_size, Edge edge) {
-        vector<Edge> neg_edges;
+    void v_id_neg_sample(int sample_size, Edge edge, vector<Edge> &neg_edges) {
         int i = 0;
         random_device rd;
         uniform_int_distribution<> dis(0, table_size - 1);
@@ -276,29 +273,23 @@ struct NetworkData {
             neg_edges.push_back(Edge{edge.u_id, neg_v_id, edge.edge_type});
             i++;
         }
-        return neg_edges;
     }
 
 
-    vector<Edge> edge_type_neg_sample(int sample_size, Edge edge) {
-        vector<Edge> neg_edges;
+    void edge_type_neg_sample(int sample_size, Edge edge, vector<Edge> &neg_edges) {
         for(auto possible_neg_edge_type:relation_negative_table[edge.edge_type]){
             if (relation_type(edge.u_id, edge.v_id, possible_neg_edge_type) == 1)
                 continue;
             neg_edges.push_back(Edge{edge.u_id, edge.v_id, possible_neg_edge_type});
         }
-        return neg_edges;
     }
 
     vector<Edge> edge_neg_sample(int sample_size, Edge edge) {
         vector<Edge> neg_edges;
-        auto u_id_neg_edges = u_id_neg_sample(sample_size, edge);
-        neg_edges.insert(neg_edges.end(), u_id_neg_edges.begin(), u_id_neg_edges.end());
-        auto v_id_neg_edges = v_id_neg_sample(sample_size, edge);
-        neg_edges.insert(neg_edges.end(), v_id_neg_edges.begin(), v_id_neg_edges.end());
-        auto edge_type_neg_edges = edge_type_neg_sample(sample_size, edge);
-        neg_edges.insert(neg_edges.end(), edge_type_neg_edges.begin(), edge_type_neg_edges.end());
-
+        u_id_neg_sample(sample_size, edge, neg_edges);
+        v_id_neg_sample(sample_size, edge, neg_edges);
+        edge_type_neg_sample(sample_size, edge, neg_edges);
+        return neg_edges;
     }
 };
 
