@@ -1,7 +1,7 @@
 import subprocess
 
 
-def main():                                                                                                                     [4/1885]
+def main():
     command = [
         './dlne_main',
         '--dynet-mem 5500',
