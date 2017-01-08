@@ -242,7 +242,7 @@ struct NetworkData {
         return 0;
     }
 
-    vector<int> vv_neg_sample(int sample_size, Edge edge) {
+    vector<int> v_id_neg_sample(int sample_size, Edge edge) {
         vector<int> vs(sample_size);
         int i = 0;
         random_device rd;
@@ -259,6 +259,16 @@ struct NetworkData {
             i++;
         }
         return vs;
+    }
+
+    vector<int> edge_type_neg_sample(int sample_size, Edge edge) {
+        vector<int> es;
+        for(auto possible_neg_edge_type:relation_negative_table[edge.edge_type]){
+            if (relation_type(edge.u_id, edge.v_id, possible_neg_edge_type) == 1)
+                continue;
+            es.push_back(possible_neg_edge_type);
+        }
+        return es;
     }
 };
 
