@@ -113,11 +113,12 @@ struct DLNEModel {
             errs.push_back(log(logistic(-1 * neg_score)));
         }
 
-//        auto edge_type_negative_samples = network_data.edge_type_neg_sample(negative_sampling_size[edge.edge_type], edge);
-//        for (auto neg_edge_type:edge_type_negative_samples) {
-//            Expression net_score = bilinear_score(i_x_u, i_x_v, cg, neg_edge_type);
-//            errs.push_back(log(logistic(-1 * net_score)));
-//        }
+        auto edge_type_negative_samples = network_data.edge_type_neg_sample(negative_sampling_size[edge.edge_type],
+                                                                            edge);
+        for (auto neg_edge_type:edge_type_negative_samples) {
+            Expression neg_score = bilinear_score(i_x_u, i_x_v, cg, neg_edge_type);
+            errs.push_back(log(logistic(-1 * neg_score)));
+        }
 
         Expression i_nerr = -1 * alpha[edge.edge_type] * sum(errs);
         dynet::real loss = as_scalar(cg.forward(i_nerr));
