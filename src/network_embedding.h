@@ -105,18 +105,13 @@ struct DLNEModel {
         Expression score = bilinear_score(i_x_u, i_x_v, cg, edge.edge_type);
         errs.push_back(log(logistic(score)));
 
-        auto v_id_negative_samples = network_data.v_id_neg_sample(negative_sampling_size[edge.edge_type], edge);
-        for (auto neg_v_id:v_id_negative_samples) {
-            Expression neg_i_x_v = get_node_embedding(neg_v_id, network_data, cg, false);
-//            Expression neg_score = simple_score(i_x_u, neg_i_x_v);
-            Expression neg_score = bilinear_score(i_x_u, neg_i_x_v, cg, edge.edge_type);
-            errs.push_back(log(logistic(-1 * neg_score)));
-        }
+        auto neg_edges = network_data.edge_neg_sample(negative_sampling_size[edge.edge_type], edge);
+        for (auto neg_edge:neg_edges) {
+            Expression neg_i_x_u = get_node_embedding(neg_edge.u_id, network_data, cg, true);
+            Expression neg_i_x_v = get_node_embedding(neg_edge.v_id, network_data, cg, false);
 
-        auto edge_type_negative_samples = network_data.edge_type_neg_sample(negative_sampling_size[edge.edge_type],
-                                                                            edge);
-        for (auto neg_edge_type:edge_type_negative_samples) {
-            Expression neg_score = bilinear_score(i_x_u, i_x_v, cg, neg_edge_type);
+//            Expression neg_score = simple_score(i_x_u, neg_i_x_v);
+            Expression neg_score = bilinear_score(neg_i_x_u, neg_i_x_v, cg, neg_edge.edge_type);
             errs.push_back(log(logistic(-1 * neg_score)));
         }
 

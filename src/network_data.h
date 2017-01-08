@@ -52,7 +52,8 @@ struct NetworkData {
     vector<Node> node_list;
     vector<Edge> edge_list; //保存所有vv边
 
-    vector<vector<int>> uni_tables;
+    vector<vector<int>> u_uni_tables;
+    vector<vector<int>> v_uni_tables;
 
     vector<vector<int>> relation_negative_table;
 
@@ -83,7 +84,8 @@ struct NetworkData {
             normal_node_count = next_embedding_id;
         }
         table_size = 1e8;
-        InitUniTables();
+        InitUniTables(u_uni_tables, utov_graph);
+        InitUniTables(v_uni_tables, vtou_graph);
         find_coexist_edge_type();
     }
 
@@ -210,26 +212,26 @@ struct NetworkData {
         }
     }
 
-    void InitUniTables() {
-        uni_tables.resize(edge_type_count);
+    void InitUniTables(vector<vector<int>> &tables, vector<vector<unordered_set<int>>> &graph) {
+        tables.resize(edge_type_count);
         for (int edge_type = 0; edge_type < edge_type_count; edge_type++) {
             cout << "Initializing uni table ..." << edge_type << endl;
-            uni_tables[edge_type].resize(table_size);
+            tables[edge_type].resize(table_size);
             long long normalizer = 0;
             double d1, power = 0.75;
             for (int node_id = 0; node_id < node_count; node_id++) {
-                normalizer += pow(vtou_graph[edge_type][node_id].size(), power);
+                normalizer += pow(graph[edge_type][node_id].size(), power);
             }
             cout << "normalizer: " << normalizer << endl;
             int i = 0;
-            d1 = pow(vtou_graph[edge_type][i].size(), power) / (double) normalizer;
+            d1 = pow(graph[edge_type][i].size(), power) / (double) normalizer;
             for (int a = 0; a < table_size; a++) {
                 while (a / (double) table_size >= d1) {
                     i++;
-                    d1 += pow(vtou_graph[edge_type][i].size(), power) / (double) normalizer;
+                    d1 += pow(graph[edge_type][i].size(), power) / (double) normalizer;
                 }
                 assert(i < node_count);
-                uni_tables[edge_type][a] = i;
+                tables[edge_type][a] = i;
 
             }
         }
@@ -242,33 +244,61 @@ struct NetworkData {
         return 0;
     }
 
-    vector<int> v_id_neg_sample(int sample_size, Edge edge) {
-        vector<int> vs(sample_size);
+
+    vector<Edge> u_id_neg_sample(int sample_size, Edge edge) {
+        vector<Edge> neg_edges;
         int i = 0;
         random_device rd;
         uniform_int_distribution<> dis(0, table_size - 1);
-//        uniform_int_distribution<> dis(0, node_count - 1);
         while (i < sample_size) {
-//            int nv = vv_unitable[dis(*cnn::rndeng)];
-            int neg_v_id = uni_tables[edge.edge_type][dis(*dynet::rndeng)];
+            int neg_u_id = u_uni_tables[edge.edge_type][dis(*dynet::rndeng)];
+            assert(neg_u_id < node_count);
+            if (neg_u_id == edge.u_id || neg_u_id == edge.v_id ||
+                relation_type(edge.u_id, neg_u_id, edge.edge_type) == 1)
+                continue;
+            neg_edges.push_back(Edge{neg_u_id, edge.v_id, edge.edge_type});
+            i++;
+        }
+        return neg_edges;
+    }
+
+    vector<Edge> v_id_neg_sample(int sample_size, Edge edge) {
+        vector<Edge> neg_edges;
+        int i = 0;
+        random_device rd;
+        uniform_int_distribution<> dis(0, table_size - 1);
+        while (i < sample_size) {
+            int neg_v_id = v_uni_tables[edge.edge_type][dis(*dynet::rndeng)];
             assert(neg_v_id < node_count);
             if (neg_v_id == edge.u_id || neg_v_id == edge.v_id ||
                 relation_type(edge.u_id, neg_v_id, edge.edge_type) == 1)
                 continue;
-            vs[i] = neg_v_id;
+            neg_edges.push_back(Edge{edge.u_id, neg_v_id, edge.edge_type});
             i++;
         }
-        return vs;
+        return neg_edges;
     }
 
-    vector<int> edge_type_neg_sample(int sample_size, Edge edge) {
-        vector<int> es;
+
+    vector<Edge> edge_type_neg_sample(int sample_size, Edge edge) {
+        vector<Edge> neg_edges;
         for(auto possible_neg_edge_type:relation_negative_table[edge.edge_type]){
             if (relation_type(edge.u_id, edge.v_id, possible_neg_edge_type) == 1)
                 continue;
-            es.push_back(possible_neg_edge_type);
+            neg_edges.push_back(Edge{edge.u_id, edge.v_id, possible_neg_edge_type});
         }
-        return es;
+        return neg_edges;
+    }
+
+    vector<Edge> edge_neg_sample(int sample_size, Edge edge) {
+        vector<Edge> neg_edges;
+        auto u_id_neg_edges = u_id_neg_sample(sample_size, edge);
+        neg_edges.insert(neg_edges.end(), u_id_neg_edges.begin(), u_id_neg_edges.end());
+        auto v_id_neg_edges = v_id_neg_sample(sample_size, edge);
+        neg_edges.insert(neg_edges.end(), v_id_neg_edges.begin(), v_id_neg_edges.end());
+        auto edge_type_neg_edges = edge_type_neg_sample(sample_size, edge);
+        neg_edges.insert(neg_edges.end(), edge_type_neg_edges.begin(), edge_type_neg_edges.end());
+
     }
 };
 
