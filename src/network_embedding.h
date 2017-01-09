@@ -110,7 +110,7 @@ struct DLNEModel {
             Expression neg_i_x_u = get_node_embedding(neg_edge.u_id, network_data, cg, true);
             Expression neg_i_x_v = get_node_embedding(neg_edge.v_id, network_data, cg, false);
 
-            Expression neg_score = simple_score(i_x_u, neg_i_x_v);
+            Expression neg_score = simple_score(neg_i_x_u, neg_i_x_v);
 //            Expression neg_score = bilinear_score(neg_i_x_u, neg_i_x_v, cg, neg_edge.edge_type);
             errs.push_back(log(logistic(-1 * neg_score)));
         }

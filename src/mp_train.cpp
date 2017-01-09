@@ -139,27 +139,6 @@ namespace mp_train {
         std::vector<unsigned>::iterator begin = train_indices.begin();
 
         for (unsigned iter = 0; iter < num_iterations; ++iter) {
-            unsigned batch_count = 0;
-            float loss=0.0;
-            while (begin != train_indices.end()) {
-                std::vector<unsigned>::iterator end = begin + batch_size;
-                if (end > train_indices.end()) {
-                    end = train_indices.end();
-                }
-                loss += RunDataSet(begin, end, workloads, mq);
-                batch_count++;
-                if (batch_count % report_every_i == 0) {
-                    std::cout << "Eta = " << params_trainer->eta << "\tloss = " << loss << std::endl;
-                    loss = 0.0;
-                }
-                if (batch_count % update_epoch_every_i == 0){
-                    params_trainer->update_epoch();
-                }
-                begin = end;
-            }
-            std::shuffle(train_indices.begin(), train_indices.end(), (*dynet::rndeng));
-            begin = train_indices.begin();
-
             if (iter % save_every_i == 0) {
                 std::ostringstream ss;
                 ss << learner->get_learner_name() << "_embedding_pid" << getpid() << "_alpha_";
@@ -169,6 +148,31 @@ namespace mp_train {
                 ss << unsigned(iter / save_every_i) << ".data";
                 learner->SaveEmbedding(ss.str(), network_data);
             }
+
+            unsigned batch_count = 0;
+            float loss = 0.0;
+            while (begin != train_indices.end()) {
+                std::vector<unsigned>::iterator end = begin + batch_size;
+                if (end > train_indices.end()) {
+                    end = train_indices.end();
+                }
+                loss += RunDataSet(begin, end, workloads, mq);
+                batch_count++;
+                if (batch_count % report_every_i == 0) {
+                    long distance = end - train_indices.begin();
+                    std::cout << "Ratio = " << iter + distance * 1.0 / network_data.edge_count
+                              << "\tEta = " << params_trainer->eta
+                              << "\tloss = " << loss << std::endl;
+                    loss = 0.0;
+                }
+                if (batch_count % update_epoch_every_i == 0) {
+                    params_trainer->update_epoch();
+                }
+                begin = end;
+            }
+            std::shuffle(train_indices.begin(), train_indices.end(), (*dynet::rndeng));
+            begin = train_indices.begin();
+
 //            if (iter % save_model_every_i == 0) {
 //                std::ostringstream ss;
 //                ss << learner->get_learner_name() << "_mp_model" << getpid() << ".data";
