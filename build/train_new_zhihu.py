@@ -18,7 +18,7 @@ def main():
         '--to_be_saved_index_file_name ~/zhihu_data/83095/to_be_saved_index.data',
         '--eta0 0.3',
         '--eta_decay 0.03',
-        '--workers 20',
+        '--workers 15',
         '--iterations  100',
         '--batch_size 1000',
         '--save_every_i 10',
