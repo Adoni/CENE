@@ -288,7 +288,7 @@ struct NetworkData {
         vector<Edge> neg_edges;
 //        u_id_neg_sample(sample_size, edge, neg_edges);
         v_id_neg_sample(sample_size, edge, neg_edges);
-//        edge_type_neg_sample(sample_size, edge, neg_edges);
+        edge_type_neg_sample(sample_size, edge, neg_edges);
         return neg_edges;
     }
 };
