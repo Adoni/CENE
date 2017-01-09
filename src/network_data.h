@@ -253,7 +253,7 @@ struct NetworkData {
             int neg_u_id = u_uni_tables[edge.edge_type][dis(*dynet::rndeng)];
             assert(neg_u_id < node_count);
             if (neg_u_id == edge.u_id || neg_u_id == edge.v_id ||
-                relation_type(edge.u_id, neg_u_id, edge.edge_type) == 1)
+                relation_type(neg_u_id, edge.v_id, edge.edge_type) == 1)
                 continue;
             neg_edges.push_back(Edge{neg_u_id, edge.v_id, edge.edge_type});
             i++;
