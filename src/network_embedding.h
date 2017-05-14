@@ -41,7 +41,6 @@ struct DLNEModel {
     ContentEmbeddingMethod *content_embedding_method;
     vector<unsigned> to_be_saved_index;
     vector<float> alpha;
-    float beta;
 
     explicit DLNEModel(Model &lookup_params_model,
                        Model &params_model,
@@ -52,7 +51,6 @@ struct DLNEModel {
                        vector<unsigned> negative_sampling_size,
                        ContentEmbeddingMethod *content_embedding_method,
                        vector<float> alpha,
-                       float beta,
                        NetworkData &network_data)
         : normal_embedding_node_size(normal_embedding_node_size),
           content_embedding_node_size(content_embedding_node_size),
@@ -61,8 +59,7 @@ struct DLNEModel {
           edge_type_count(edge_type_count),
           negative_sampling_size(negative_sampling_size),
           content_embedding_method(content_embedding_method),
-          alpha(alpha),
-          beta(beta){
+          alpha(alpha){
         assert(edge_type_count == negative_sampling_size.size());
         assert(edge_type_count == alpha.size());
         p_u = lookup_params_model.add_lookup_parameters(normal_embedding_node_size, {normal_embedding_dimension});
@@ -188,14 +185,9 @@ struct DLNEModel {
     Expression get_node_embedding_v(const NetEdge &edge, NetworkData &network_data, ComputationGraph &cg) {
         if (network_data.node_list[edge.v_id].with_content) {
             uniform_real_distribution<> dis(0.0, 1.0);
-            if ((float) dis(*dynet::rndeng) < beta) {
-                Expression lookup_embedding = lookup(cg, p_c, network_data.node_list[edge.v_id].embedding_id);
-                return lookup_embedding;
-            } else {
-                Expression content_embedding =
+            Expression content_embedding =
                     content_embedding_method->get_embedding(network_data.node_list[edge.v_id].content, cg);
-                return content_embedding;
-            }
+            return content_embedding;
         } else {
             return lookup(cg, p_v, network_data.node_list[edge.v_id].embedding_id);
         }

@@ -36,6 +36,7 @@ void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
         ("negative", po::value<vector<unsigned>>()->multitoken(), "Negative sampling counts")
         ("alpha", po::value<vector<float>>()->multitoken(), "alpha to control the proportion of VV and VC")
         ("embedding_method", po::value<std::string>(), "method to learn embedding from content: WordAvg or GRU")
+        ("score_function", po::value<unsigned>(), "0: simple score; 1: bilinear; 2: matrix score")
         ("lambda", po::value<float>(), "lambda for L2 regularization")
         ("help", "Help");
     po::options_description dcmdline_options;
@@ -121,7 +122,7 @@ int main(int argc, char **argv) {
     dynet::Dict d;
     cout << "Pid: " << getpid() << endl;
     output_all_information(argc, argv);
-    //initialize_word_dict(conf["word_embedding_file"].as<string>(), d);
+//    initialize_word_dict(conf["word_embedding_file"].as<string>(), d);
     NetworkData network_data(conf["node_list_file"].as<vector<string>>(),
                              conf["edge_list_file"].as<vector<string>>(),
                              conf["content_node_file"].as<string>(), d);
@@ -168,18 +169,21 @@ int main(int argc, char **argv) {
                    conf["negative"].as<vector<unsigned>>(),
                    content_embedding_method,
                    conf["alpha"].as<vector<float>>(),
-                   conf["beta"].as<float>(),
                    network_data);
     if (conf.count("to_be_saved_index_file_name")) {
         dlne.set_to_be_saved_index(conf["to_be_saved_index_file_name"].as<string>(), network_data);
     }
+    Trainer *lookup_params_trainer = nullptr;
     Trainer *params_trainer = nullptr;
+    lookup_params_trainer = new L2SimpleSGDTrainer(
+        lookup_params_model, conf["lookup_params_eta0"].as<float>(),
+        conf["lookup_params_eta_decay"].as<float>(), conf["lambda"].as<float>());
     params_trainer =
         new L2SimpleSGDTrainer(params_model, conf["params_eta0"].as<float>(),
                                conf["params_eta_decay"].as<float>(), conf["lambda"].as<float>());
 
     mp_train::RunMultiProcess(
-        conf["workers"].as<unsigned>(), &dlne,
+        conf["workers"].as<unsigned>(), &dlne, lookup_params_trainer,
         params_trainer, network_data, conf["iterations"].as<unsigned>(),
         conf["save_every_i"].as<unsigned>(),
         conf["report_every_i"].as<unsigned>(), conf["batch_size"].as<unsigned>(),

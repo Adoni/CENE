@@ -117,7 +117,8 @@ std::vector<Workload> CreateWorkloads(unsigned num_children) {
     return workloads;
 }
 
-void RunParent(NetworkData &network_data, DLNEModel *learner, Trainer *params_trainer,
+void RunParent(NetworkData &network_data, DLNEModel *learner,
+               Trainer *lookup_params_trainer, Trainer *params_trainer,
                std::vector<Workload> &workloads, unsigned num_iterations,
                unsigned save_every_i, unsigned report_every_i,
                unsigned batch_size, unsigned update_epoch_every_i) {
@@ -143,6 +144,7 @@ void RunParent(NetworkData &network_data, DLNEModel *learner, Trainer *params_tr
         ceil(1.0 * network_data.edge_list.size() / batch_size) * num_iterations;
 
     for (unsigned iter = 0; iter < num_iterations; ++iter) {
+//    learner->normalize_lookup_table();
         std::shuffle(train_indices.begin(), train_indices.end(), (*dynet::rndeng));
         std::stable_sort(train_indices.begin(),
                          train_indices.end(),
@@ -190,11 +192,24 @@ void RunParent(NetworkData &network_data, DLNEModel *learner, Trainer *params_tr
                 std::cout << "Ratio = "
                           << iter + distance * 1.0 / network_data.edge_count
                           << "\tParams Eta = " << params_trainer->eta
+                          << "\tLookup Params Eta = " << lookup_params_trainer->eta
                           << "\tloss = " << loss << std::endl;
                 loss = 0.0;
             }
             if (batch_count % update_epoch_every_i == 0) {
                 params_trainer->update_epoch();
+//                params_trainer->eta = params_trainer->eta0 *
+//                    (1.0 - 1.0 * batch_count / total_batch_count);
+//                if (params_trainer->eta < params_trainer->eta0 * 0.0001) {
+//                    params_trainer->eta = params_trainer->eta0 * 0.0001;
+//                }
+                lookup_params_trainer->update_epoch();
+//                lookup_params_trainer->eta =
+//                    lookup_params_trainer->eta0 *
+//                        (1.0 - 1.0 * batch_count / total_batch_count);
+//                if (lookup_params_trainer->eta < lookup_params_trainer->eta0 * 0.0001) {
+//                    lookup_params_trainer->eta = lookup_params_trainer->eta0 * 0.0001;
+//                }
             }
             begin = end;
         }
@@ -208,7 +223,7 @@ void RunParent(NetworkData &network_data, DLNEModel *learner, Trainer *params_tr
     }
 }
 
-int RunChild(int cid, DLNEModel *learner,
+int RunChild(int cid, DLNEModel *learner, Trainer *lookup_params_trainer,
              Trainer *params_trainer, std::vector<Workload> &workloads,
              NetworkData &network_data) {
     const unsigned num_children = workloads.size();
@@ -238,7 +253,7 @@ int RunChild(int cid, DLNEModel *learner,
             assert(i < network_data.edge_list.size());
             const NetEdge edge = network_data.edge_list[i];
             loss += learner->Train(edge, network_data);
-            params_trainer->update();
+            lookup_params_trainer->update();
         }
 
         Write(workloads[cid].c2p[1], loss);
@@ -247,7 +262,7 @@ int RunChild(int cid, DLNEModel *learner,
 }
 
 void RunMultiProcess(unsigned num_children, DLNEModel *learner,
-                     Trainer *params_trainer,
+                     Trainer *lookup_params_trainer, Trainer *params_trainer,
                      NetworkData &network_data, unsigned num_iterations,
                      unsigned save_every_i, unsigned report_every_i,
                      unsigned batch_size, unsigned update_epoch_every_i) {
@@ -263,10 +278,10 @@ void RunMultiProcess(unsigned num_children, DLNEModel *learner,
     std::vector<Workload> workloads = CreateWorkloads(num_children);
     int cid = SpawnChildren(workloads);
     if (cid < num_children) {
-        RunChild(cid, learner, params_trainer, workloads,
+        RunChild(cid, learner, lookup_params_trainer, params_trainer, workloads,
                  network_data);
     } else {
-        RunParent(network_data, learner, params_trainer,
+        RunParent(network_data, learner, lookup_params_trainer, params_trainer,
                   workloads, num_iterations, save_every_i, report_every_i,
                   batch_size, update_epoch_every_i);
     }
