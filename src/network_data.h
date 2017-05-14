@@ -105,7 +105,9 @@ struct NetworkData {
             node_list.resize(node_count);
             for (int i = 0; i < part_node_count; i++) {
                 string node;
+                int node_type;
                 file_in >> node;
+                file_in >> node_type;
                 int node_id = node_id_map.convert(node);
                 assert(node_id == (node_count - part_node_count + i));
                 node_list[node_id].with_content = false;

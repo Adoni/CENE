@@ -121,7 +121,7 @@ int main(int argc, char **argv) {
     dynet::Dict d;
     cout << "Pid: " << getpid() << endl;
     output_all_information(argc, argv);
-    initialize_word_dict(conf["word_embedding_file"].as<string>(), d);
+    //initialize_word_dict(conf["word_embedding_file"].as<string>(), d);
     NetworkData network_data(conf["node_list_file"].as<vector<string>>(),
                              conf["edge_list_file"].as<vector<string>>(),
                              conf["content_node_file"].as<string>(), d);
