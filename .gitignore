@@ -1,0 +1,32 @@
+build/*
+!build/*.py
+CMakeCache.txt
+CMakeFiles/*
+cmake-build-debug
+cmake-build-debug/*
+.idea
+.idea/*
+# Compiled Object files
+*.slo
+*.piled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
