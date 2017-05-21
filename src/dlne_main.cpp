@@ -25,6 +25,8 @@ void InitCommandLine(int argc, char **argv, po::variables_map *conf) {
         ("content_node_file", po::value<string>(), "Content file")
         ("word_embedding_file", po::value<string>(), "Emebdding file of word2vec-format")
         ("to_be_saved_index_file_name", po::value<string>(), "Indexes whose embeddings would be saved")
+        ("lookup_params_eta0", po::value<float>(), "eta0 for sgd")
+        ("lookup_params_eta_decay", po::value<float>(), "eta_decay for sgd")
         ("params_eta0", po::value<float>(), "eta0 for sgd")
         ("params_eta_decay", po::value<float>(), "eta_decay for sgd")
         ("workers", po::value<unsigned>(), "workers count")
