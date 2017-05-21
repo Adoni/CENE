@@ -172,7 +172,7 @@ class GRU_CE : public ContentEmbeddingMethod {
           builder.start_new_sequence();
           std::vector<Expression> sent;
           for (auto w:s) {
-              Expression i_x_t = lookup(cg, pw, w);
+              Expression i_x_t = const_lookup(cg, pw, w);
               sent.push_back(builder.add_input(i_x_t));
           }
           all_hidden.push_back(average(sent));
