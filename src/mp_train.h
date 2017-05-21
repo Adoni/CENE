@@ -110,7 +110,7 @@ void
 RunParent(NetworkData &network_data, DLNEModel *learner, Trainer *lookup_params_trainer, Trainer *params_trainer,
           std::vector<Workload> &workloads, unsigned num_iterations,
           unsigned save_every_i, unsigned report_every_i,
-          unsigned batch_size, unsigned update_epoch_every_i);
+          unsigned batch_size, unsigned update_epoch_every_i, Dict &d);
 
 int RunChild(int cid, DLNEModel *learner, Trainer *lookup_params_trainer, Trainer *params_trainer,
              std::vector<Workload> &workloads, NetworkData &network_data);
@@ -119,5 +119,5 @@ void
 RunMultiProcess(unsigned num_children, DLNEModel *learner, Trainer *lookup_params_trainer, Trainer *params_trainer,
                 NetworkData &network_data, unsigned num_iterations,
                 unsigned save_every_i,
-                unsigned report_every_i, unsigned batch_size, unsigned update_epoch_every_i);
+                unsigned report_every_i, unsigned batch_size, unsigned update_epoch_every_i, Dict &d);
 }

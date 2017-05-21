@@ -187,7 +187,7 @@ int main(int argc, char **argv) {
         params_trainer, network_data, conf["iterations"].as<unsigned>(),
         conf["save_every_i"].as<unsigned>(),
         conf["report_every_i"].as<unsigned>(), conf["batch_size"].as<unsigned>(),
-        conf["update_epoch_every_i"].as<unsigned>());
+        conf["update_epoch_every_i"].as<unsigned>(), d);
 
     return 0;
 }

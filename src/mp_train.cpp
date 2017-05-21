@@ -121,7 +121,7 @@ void RunParent(NetworkData &network_data, DLNEModel *learner,
                Trainer *lookup_params_trainer, Trainer *params_trainer,
                std::vector<Workload> &workloads, unsigned num_iterations,
                unsigned save_every_i, unsigned report_every_i,
-               unsigned batch_size, unsigned update_epoch_every_i) {
+               unsigned batch_size, unsigned update_epoch_every_i, Dict &d) {
     std::cout << "Iterations: " << batch_size << std::endl;
     std::cout << "Batch size: " << batch_size << std::endl;
     std::cout << "Save every " << save_every_i << "iterations" << std::endl;
@@ -176,6 +176,14 @@ void RunParent(NetworkData &network_data, DLNEModel *learner,
             ss2 << unsigned(iter / save_every_i) << ".data";
 
             learner->SaveEmbedding(ss1.str(), ss2.str(), network_data);
+        }
+
+        if (iter % 10==0){
+            std::ostringstream ss1;
+            ss1 << learner->get_learner_name() << "_pid_" << getpid() << "word_embedding";
+            ss1 << unsigned(iter) << ".data";
+
+            learner->content_embedding_method->save_lookup_table_to_file(ss1.str(), d);
         }
 
         float loss = 0.0;
@@ -265,7 +273,7 @@ void RunMultiProcess(unsigned num_children, DLNEModel *learner,
                      Trainer *lookup_params_trainer, Trainer *params_trainer,
                      NetworkData &network_data, unsigned num_iterations,
                      unsigned save_every_i, unsigned report_every_i,
-                     unsigned batch_size, unsigned update_epoch_every_i) {
+                     unsigned batch_size, unsigned update_epoch_every_i, Dict &d) {
     std::cout << "========" << std::endl
               << "START TRAINING" << std::endl
               << "========" << std::endl;
@@ -283,7 +291,7 @@ void RunMultiProcess(unsigned num_children, DLNEModel *learner,
     } else {
         RunParent(network_data, learner, lookup_params_trainer, params_trainer,
                   workloads, num_iterations, save_every_i, report_every_i,
-                  batch_size, update_epoch_every_i);
+                  batch_size, update_epoch_every_i, d);
     }
 }
 }

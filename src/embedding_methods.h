@@ -58,6 +58,23 @@ class ContentEmbeddingMethod {
       std::cout << d.size() - initialized_word_count << " words not initialized" << std::endl;
   }
 
+  void save_lookup_table_to_file(std::string file_name, Dict &d) {
+      std::cout << "Saving lookup table from " << file_name << " ..." << std::endl;
+
+      std::ofstream em_out(file_name);
+      assert(em_out);
+      unsigned em_count=d.size(), em_size=W_EM_DIM;
+      em_out << em_count << em_size;
+      unsigned initialized_word_count = 0;
+      for (unsigned i = 0; i < em_count; i++) {
+          ComputationGraph cg;
+          string w=d.convert(i);
+          em_out << w << " ";
+          auto value = as_vector(lookup(cg, pw, i).value());
+          copy(value.begin(), value.end(), ostream_iterator<float>(em_out, " "));
+      }
+  }
+
   void initial_look_up_table(unsigned lookup_table_size) {
       std::vector<float> init(W_EM_DIM);
       std::uniform_real_distribution<> dis(-0.5, 0.5);
