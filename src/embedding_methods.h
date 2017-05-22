@@ -64,7 +64,7 @@ class ContentEmbeddingMethod {
       std::ofstream em_out(file_name);
       assert(em_out);
       unsigned em_count=d.size(), em_size=W_EM_DIM;
-      em_out << em_count << em_size;
+      em_out << em_count <<" " << em_size << endl;
       unsigned initialized_word_count = 0;
       for (unsigned i = 0; i < em_count; i++) {
           ComputationGraph cg;
@@ -72,6 +72,7 @@ class ContentEmbeddingMethod {
           em_out << w << " ";
           auto value = as_vector(lookup(cg, pw, i).value());
           copy(value.begin(), value.end(), ostream_iterator<float>(em_out, " "));
+          em_out <<endl;
       }
   }
 

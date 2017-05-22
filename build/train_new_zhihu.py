@@ -4,7 +4,7 @@ import subprocess
 def main():
     command = [
         './dlne_main',
-        '--dynet-mem 5000',
+        '--dynet-mem 7000',
         '--dynet-seed 12345',
         '--node_list_file ~/zhihu_data/cikm/data/node_list_0.data',
         '~/zhihu_data/cikm/data/node_list_1.data',
